@@ -1,0 +1,42 @@
+{
+  "name": "banma-standard-c",
+  "version": "1.0.0",
+  "description": "开发 App 、微信、和小程序 必须使用 HBuilderX 运行此项目\r 其他 IDE，如 WebStorm、vscode 搭配 vue-cli 只能开发小程序和 H5",
+  "main": "main.js",
+  "dependencies": {
+    "dayjs": "^1.10.6",
+    "eslint-define-config": "^1.0.9",
+    "jweixin-module": "^1.6.0",
+    "lodash": "^4.17.21",
+    "number-precision": "^1.5.0",
+    "uni-read-pages": "^1.0.5",
+    "uni-simple-router": "^2.0.1",
+    "uview-ui": "^1.8.4",
+    "validator": "^13.6.0",
+    "vconsole": "^3.7.0",
+    "vue-clipboard2": "^0.3.1"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^12.1.4",
+    "@commitlint/config-conventional": "^12.1.4",
+    "commitizen": "^4.2.4",
+    "eslint": "^7.30.0",
+    "eslint-plugin-vue": "^7.13.0",
+    "husky": "^6.0.0",
+    "lint-staged": "^11.0.0",
+    "moment": "^2.29.1",
+    "node-sass": "^6.0.1",
+    "prettier": "^2.3.2",
+    "sass-loader": "^12.1.0"
+  },
+  "scripts": {
+    "postinstall": "npm run install:husky",
+    "install:husky": "is-ci || husky install",
+    "lint:lint-staged": "lint-staged -c ./.husky/lintstagedrc.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint:eslint": "eslint --fix --ext \"pages/**/*.{vue,less,css,scss}\"",
+    "lint:prettier": "prettier --write --loglevel warn \"components/**/*.{js,ts,json,tsx,css,less,scss,vue,html,md}\""
+  },
+  "author": "",
+  "license": "ISC"
+}

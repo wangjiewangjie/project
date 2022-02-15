@@ -1,0 +1,79 @@
+{
+  "easycom": {
+    "^u-(.*)": "uview-ui/components/u-$1/u-$1.vue"
+  },
+  "pages": [
+    {
+      "path": "pages/index/index",
+      "style": {
+        "navigationBarTitleText": "认定中心",
+        "app-plus": {
+          "titleNView": false
+        }
+      }
+    },
+    {
+      "path": "pages/exam/index",
+      "style": {
+        "navigationBarTitleText": "考试",
+        "app-plus": {
+          "titleNView": false
+        }
+      }
+    },
+    {
+      "path": "pages/query/index",
+      "style": {
+        "navigationBarTitleText": "查询",
+        "app-plus": {
+          "titleNView": false
+        }
+      }
+    },
+    {
+      "path": "pages/mine/index",
+      "style": {
+        "navigationBarTitleText": "我的",
+        "app-plus": {
+          "titleNView": false
+        }
+      }
+    }
+  ],
+  "globalStyle": {
+    "enablePullDownRefresh": false,
+    "navigationBarTextStyle": "black",
+    "navigationBarBackgroundColor": "#ffffff",
+    "app-plus": {
+      "animationDuration": 250
+    }
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "",
+        "selectedIconPath": "",
+        "text": "报名"
+      },
+      {
+        "pagePath": "pages/exam/index",
+        "iconPath": "",
+        "selectedIconPath": "",
+        "text": "考试"
+      },
+      {
+        "pagePath": "pages/query/index",
+        "iconPath": "",
+        "selectedIconPath": "",
+        "text": "查询"
+      },
+      {
+        "pagePath": "pages/mine/index",
+        "iconPath": "",
+        "selectedIconPath": "",
+        "text": "我的"
+      }
+    ]
+  }
+}

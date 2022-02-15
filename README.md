@@ -1,3 +1,7 @@
-# credit-cert-h5
+## 启动项目
+开发 App 、微信、和小程序 必须使用 HBuilderX 运行此项目
 
-证书系统的h5项目
+
+## 插件
+    1, uni-simple-router https://hhyang.cn/v2/
+    2, uview-ui https://www.uviewui.com/
