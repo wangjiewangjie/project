@@ -10,3 +10,28 @@ body,
   background: #f5f5f5;
   color: $uni-text-color;
 }
+
+page {
+  height: 100%;
+  background: $u-bg-color;
+}
+
+/* u-tabbar样式修改 */
+.u-tabbar__content__item__button {
+  top: 8rpx !important;
+}
+
+.u-tabbar__content__item__text {
+  font-size: 20rpx;
+  bottom: 8rpx !important;
+}
+
+/* u-notice-bar样式修改 */
+.u-notice-bar {
+  padding: 0 !important;
+}
+
+.u-news-item {
+  font-size: 12px !important;
+  line-height: 16px !important;
+}

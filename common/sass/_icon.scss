@@ -1,24 +1,29 @@
 @font-face {
-  font-family: 'iconfont'; /* Project id 1998087 */
-  src: url('//at.alicdn.com/t/font_1998087_vbi3ft9o1jk.woff2?t=1628048047634') format('woff2'),
-    url('//at.alicdn.com/t/font_1998087_vbi3ft9o1jk.woff?t=1628048047634') format('woff'),
-    url('//at.alicdn.com/t/font_1998087_vbi3ft9o1jk.ttf?t=1628048047634') format('truetype');
+  font-family: "custom-icon"; /* Project id 3185154 */
+  src: url('http://oss.bm001.com/static/association/credit-cert-h5/iconfont/iconfont.woff2') format('woff2');
 }
 
-.iconfont {
-  font-family: 'iconfont' !important;
+.custom-icon {
+  font-family: "custom-icon" !important;
   font-size: 16px;
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-youjiantou:before {
-  content: '\e649';
+.custom-icon-chaxunmoren:before {
+  content: "\e698";
 }
-.icon-share:before {
-  content: '\e8fa';
+
+.custom-icon-wodemoren:before {
+  content: "\e699";
 }
-.icon-close:before {
-  content: '\e623';
+
+.custom-icon-kaoshimoren:before {
+  content: "\e69a";
 }
+
+.custom-icon-baomingmoren:before {
+  content: "\e69b";
+}
+

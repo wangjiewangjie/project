@@ -3,10 +3,44 @@ import storage from '../util/storageutil';
 
 let DEVELOPER_TYPE = storage.get('DEVELOPER_TYPE') || process.env.NODE_ENV; // 开发者模式 production  线上模式
 let platform = 'bm';
-let apiHost, jwtjson, h5CodeUrl,shareH5BaseUrl,shareAuntH5BaseUrl;
+let apiHost, jwtjson, h5CodeUrl, shareH5BaseUrl, shareAuntH5BaseUrl;
 let wxAppId = 'wx98055987618aa2df'; //斑马公众号appid （wx98055987618aa2df）
-let coordinate = null // 用于固定定位；
-
+let coordinate = null; // 用于固定定位；
+let ossUrl = 'http://oss.bm001.com/static/association/credit-cert-h5/images/';
+let tabbarList = [
+  {
+    iconPath: '/static/images/tab/tabbar-baoming.png',
+    selectedIconPath: '/static/images/tab/tabbar-baoming-selected.png',
+    text: '报名',
+    isDot: false,
+    customIcon: true,
+    pagePath: '/pages/index/index',
+  },
+  {
+    iconPath: '/static/images/tab/tabbar-kaoshi.png',
+    selectedIconPath: '/static/images/tab/tabbar-kaoshi-selected.png',
+    text: '考试',
+    isDot: false,
+    customIcon: true,
+    pagePath: '/pages/exam/index',
+  },
+  {
+    iconPath: '/static/images/tab/tabbar-chaxun.png',
+    selectedIconPath: '/static/images/tab/tabbar-chaxun-selected.png',
+    text: '查询',
+    isDot: false,
+    customIcon: true,
+    pagePath: '/pages/query/index',
+  },
+  {
+    iconPath: '/static/images/tab/tabbar-wode.png',
+    selectedIconPath: '/static/images/tab/tabbar-wode-selected.png',
+    text: '我的',
+    isDot: false,
+    customIcon: true,
+    pagePath: '/pages/mine/index',
+  },
+];
 
 // 开发环境配置
 const DEVELOPMENT_CONFIG = {
@@ -15,23 +49,21 @@ const DEVELOPMENT_CONFIG = {
   // apiHost: 'http://172.19.135.92:9999/',
   wxAppId,
   jwtjson: '',
-  h5CodeUrl:
-    'https://oss.bm001.com/jfe/servicecard/h5/index.html#/pages/aunt/resume/resume',
-  shareH5BaseUrl: "https://oss.bm001.com/jfe/servicecard/h5/index.html",
-  shareAuntH5BaseUrl: "https://oss.bm001.com/jfe/servicecard/auntH5/index.html",
+  h5CodeUrl: 'https://oss.bm001.com/jfe/servicecard/h5/index.html#/pages/aunt/resume/resume',
+  shareH5BaseUrl: 'https://oss.bm001.com/jfe/servicecard/h5/index.html',
+  shareAuntH5BaseUrl: 'https://oss.bm001.com/jfe/servicecard/auntH5/index.html',
 };
 
 // 生产环境配置
 const PRODUCTION_CONFIG = {
-   // apiHost: 'https://auntcard.bmtest1.bm001.com/',
+  // apiHost: 'https://auntcard.bmtest1.bm001.com/',
   apiHost: 'https://auntcard.bm001.com/',
   wxAppId,
   jwtjson: '',
-  h5CodeUrl:
-    'https://oss.bm001.com/jfe/servicecard/prodh5/index.html#/pages/aunt/resume/resume',
-  shareH5BaseUrl: "https://oss.bm001.com/jfe/servicecard/prodh5/index.html",
+  h5CodeUrl: 'https://oss.bm001.com/jfe/servicecard/prodh5/index.html#/pages/aunt/resume/resume',
+  shareH5BaseUrl: 'https://oss.bm001.com/jfe/servicecard/prodh5/index.html',
   // shareH5BaseUrl: "https://oss.bm001.com/jfe/servicecard/h5/index.html"
-  shareAuntH5BaseUrl: "https://oss.bm001.com/jfe/servicecard/auntH5/index.html",
+  shareAuntH5BaseUrl: 'https://oss.bm001.com/jfe/servicecard/auntH5/index.html',
 };
 
 if (DEVELOPER_TYPE === 'development') {
@@ -84,5 +116,7 @@ export default {
   h5CodeUrl,
   shareH5BaseUrl,
   shareAuntH5BaseUrl,
-  coordinate
+  coordinate,
+  ossUrl,
+  tabbarList
 };

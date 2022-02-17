@@ -1,35 +1,37 @@
-// 此自定义uView主题
+// 此自定义uView主题生成于2022-02-16 11:11
 // 地址：http://www.uviewui.com/guide/theme.html
-// 主题色
-$u-type-primary: #ff6600;
-$u-type-error: #e80d0d;
-$u-type-warning: #f76e3c;
-$u-type-success: #36c17b;
-$u-type-info: #666666;
-// 主题色-浅色
-$u-type-primary-light: #e9f0ff;
-$u-type-error-light: #f7e8e3;
-$u-type-warning-light: #fff0ea;
-$u-type-success-light: #effff7;
-$u-type-info-light: #dcdcdc;
-// 主题色-深色
-$u-type-primary-dark: #2d6dad;
-$u-type-error-dark: #db0c0c;
-$u-type-warning-dark: #e56638;
-$u-type-success-dark: #32b673;
-$u-type-info-dark: #333333;
-// 主题色-不可用
-$u-type-primary-disabled: #a4bef5;
-$u-type-error-disabled: #f59797;
-$u-type-warning-disabled: #f7bea9;
-$u-type-success-disabled: #b6f5d5;
-$u-type-info-disabled: #cccccc;
-// 文字颜色
+
+$u-type-primary: #0052d9;
+$u-type-error: #e34d59;
+$u-type-warning: #ff9900;
+$u-type-success: #00a870;
+$u-type-info: #cccccc;
+
+$u-type-primary-light: #ecf5ff;
+$u-type-error-light: #fef0f0;
+$u-type-warning-light: #fdf6ec;
+$u-type-success-light: #dbf1e1;
+$u-type-info-light: #f4f4f5;
+
+$u-type-primary-dark: #2b85e4;
+$u-type-error-dark: #dd6161;
+$u-type-warning-dark: #f29100;
+$u-type-success-dark: #18b566;
+$u-type-info-dark: #82848a;
+
+$u-type-primary-disabled: rgba(#0052d9, 0.4);
+$u-type-error-disabled: #030303;
+$u-type-warning-disabled: #fcbd71;
+$u-type-success-disabled: #71d5a1;
+$u-type-info-disabled: #c8c9cc;
+
 $u-main-color: #333333;
 $u-content-color: #666666;
 $u-tips-color: #999999;
 $u-light-color: #cccccc;
-// 边框颜色
-$u-border-color: #e0e0e0;
-// 背景颜色
-$u-bg-color: #f5f5f5;
+
+$u-border-color: #eaeaea;
+$u-bg-color: #f7f7f7;
+
+$u-form-item-border-color: #eaeaea;
+$u-form-item-height: 70rpx;
