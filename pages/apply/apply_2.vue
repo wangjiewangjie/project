@@ -31,8 +31,7 @@
         <view class="contact">
           <view class="contact-tips">您还可以联系在线客服，由认定中心工作人员上传。</view>
           <button class="contact-btn">
-            <u-image width="32rpx" height="32rpx" :src="`${ossUrl}apply_2-contact.png`"></u-image
-            >联系客服
+            <u-image width="32rpx" height="32rpx" :src="`${ossUrl}contact_1.png`"></u-image>联系客服
           </button>
         </view>
       </u-form-item>
