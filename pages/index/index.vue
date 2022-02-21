@@ -24,7 +24,9 @@
       </view>
       <view class="notice-wrap-bottom">
         <text>第2022期&nbsp;&nbsp;1月14日报名截止</text>
-        <u-button class="notice-btn" type="primary" shape="circle">立即报名</u-button>
+        <u-button class="notice-btn" type="primary" shape="circle" @click="apply"
+          >立即报名</u-button
+        >
       </view>
     </view>
 
@@ -168,6 +170,11 @@
     methods: {
       examChange(index) {
         this.examCurrent = index;
+      },
+      apply() {
+        this.$u.route({
+          url: 'pages/apply/index',
+        });
       },
     },
   };

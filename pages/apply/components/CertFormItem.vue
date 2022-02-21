@@ -1,0 +1,87 @@
+<template>
+  <view>
+    <u-form-item :label="label" :prop="prop" :required="required">
+      <u-input
+        v-model="formValue"
+        :input-align="inputAlign"
+        :placeholder-style="placeholderStyle"
+        :placeholder="placeholder"
+        :type="type"
+        :select-open="selectShow"
+        @click="selectShow = true"
+        @input="handleInput"
+      />
+    </u-form-item>
+    <u-select
+      v-if="type === 'select'"
+      mode="single-column"
+      :list="selectList"
+      v-model="selectShow"
+      @confirm="selectConfirm"
+    ></u-select>
+  </view>
+</template>
+
+<script>
+  /**
+   * input 输入框
+   * @description 此组件为一个输入框，默认没有边框和样式，是专门为配合表单组件u-form而设计的，利用它可以快速实现表单验证，输入内容，下拉选择等功能。
+   * @tutorial http://uviewui.com/components/input.html
+   * @property {String} label 左侧提示文字
+   * @property {String} prop 表单域model对象的属性名，在使用 validate、resetFields 方法的情况下，该属性是必填的
+   * @property {String} required 是否显示左边的"*"号，这里仅起展示作用，如需校验必填，请通过rules配置必填规则
+   * @property {String} placeholder placeholder显示值(默认 '请输入内容')
+   * @property {String} type select / password / textarea / number
+   * @property {Array} selectList 下拉选择框内容
+   * @property {event} inputValueChange 同步修改绑定内容
+   */
+  export default {
+    props: {
+      label: {
+        type: String,
+        default: '',
+      },
+      prop: {
+        type: String,
+        default: '',
+      },
+      required: {
+        type: Boolean,
+        default: false,
+      },
+      placeholder: {
+        type: String,
+        default: '请输入',
+      },
+      type: {
+        type: String,
+        default: '',
+      },
+      selectList: {
+        type: Array,
+        default: () => [],
+      },
+    },
+    data() {
+      return {
+        selectShow: false,
+        inputAlign: 'right',
+        placeholderStyle: 'fontSize:16px;lineHeight:20px;color:#ccc',
+        formValue: '',
+      };
+    },
+    methods: {
+      handleInput(value) {
+        this.formValue = value;
+        this.$emit('inputValueChange', value);
+      },
+      selectConfirm(e) {
+        this.formValue = '';
+        e.map((val) => {
+          this.formValue += this.formValue == '' ? val.label : '-' + val.label;
+        });
+        this.$emit('inputValueChange', this.formValue);
+      },
+    },
+  };
+</script>

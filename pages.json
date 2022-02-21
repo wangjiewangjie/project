@@ -24,10 +24,7 @@
     {
       "path": "pages/query/index",
       "style": {
-        "navigationBarTitleText": "查询",
-        "app-plus": {
-          "titleNView": false
-        }
+        "navigationBarTitleText": "查询"
       }
     },
     {
@@ -46,6 +43,24 @@
         "app-plus": {
           "titleNView": false
         }
+      }
+    },
+    {
+      "path": "pages/apply/index",
+      "style": {
+        "navigationBarTitleText": "填写信息"
+      }
+    },
+    {
+      "path": "pages/apply/apply_2",
+      "style": {
+        "navigationBarTitleText": "填写信息"
+      }
+    },
+    {
+      "path": "pages/apply/apply_3",
+      "style": {
+        "navigationBarTitleText": "填写信息"
       }
     }
   ],
