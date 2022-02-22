@@ -25,6 +25,12 @@
         </view>
         <u-image width="32rpx" height="32rpx" :src="`${ossUrl}right-arrows_3.png`"></u-image>
       </view>
+      <view class="li" @click="routerQuestion">
+        <view class="li-l">
+          <u-image width="48rpx" height="48rpx" :src="`${ossUrl}mine-list_2.png`"></u-image>常见问题
+        </view>
+        <u-image width="32rpx" height="32rpx" :src="`${ossUrl}right-arrows_3.png`"></u-image>
+      </view>
     </view>
 
     <view class="school-wrap">
@@ -70,6 +76,11 @@
       routerOrder() {
         this.$u.route({
           url: 'pages/order/index',
+        });
+      },
+      routerQuestion() {
+        this.$u.route({
+          url: 'pages/questionList/index',
         });
       },
     },
@@ -123,7 +134,7 @@
         }
       }
       & + .li {
-        border-top: 1rpx solid #eaeaea;
+        border-top: 1rpx solid $u-form-item-border-color;
       }
     }
   }

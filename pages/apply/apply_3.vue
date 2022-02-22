@@ -82,8 +82,8 @@
   }
 
   .card {
-    margin: 12px 12px 0;
-    border-radius: 8px;
+    margin: 24rpx 24rpx 0;
+    border-radius: 16rpx;
     background: #fff;
   }
 
@@ -91,69 +91,69 @@
     .exam-info-header {
       display: flex;
       justify-content: space-between;
-      padding: 12px;
-      font-size: 12px;
-      line-height: 16px;
-      color: #666666;
-      border-bottom: 1px solid #f5f5f5;
+      padding: 24rpx;
+      font-size: 24rpx;
+      line-height: 32rpx;
+      color: $u-content-color;
+      border-bottom: 2rpx solid #f5f5f5;
     }
     .exam-content-wrap {
       display: flex;
-      padding: 12px 12px 20px;
+      padding: 24rpx 24rpx 40rpx;
       .exam-content {
         flex: 1;
-        margin-left: 8px;
+        margin-left: 16rpx;
         font-weight: 500;
-        font-size: 16px;
-        line-height: 20px;
-        color: #333333;
+        font-size: 32rpx;
+        line-height: 40rpx;
+        color: $u-main-color;
         .exam-price {
-          font-size: 14px;
-          line-height: 22px;
-          color: #e34d59;
+          font-size: 28rpx;
+          line-height: 44rpx;
+          color: $u-type-error;
         }
       }
     }
 
     .exam-li {
-      padding: 0 12px 12px;
-      color: #666666;
+      padding: 0 24rpx 24rpx;
+      color: $u-content-color;
     }
   }
 
   .exam-li {
     display: flex;
     justify-content: space-between;
-    font-size: 14px;
-    line-height: 18px;
+    font-size: 28rpx;
+    line-height: 36rpx;
   }
 
   .exam-ul {
-    padding: 12px;
+    padding: 24rpx;
     .exam-li {
-      color: #333333;
+      color: $u-main-color;
       & + .exam-li {
-        padding-top: 12px;
+        padding-top: 24rpx;
       }
       .exam-li-r {
         font-weight: bold;
       }
       &:nth-child(1) {
         .exam-li-r {
-          color: #e34d59;
+          color: $u-type-error;
         }
       }
     }
     .exam-ul-title {
-      font-size: 14px;
-      line-height: 18px;
-      color: #333333;
+      font-size: 28rpx;
+      line-height: 36rpx;
+      color: $u-main-color;
     }
     .exam-ol {
-      padding-top: 12px;
-      font-size: 12px;
-      line-height: 16px;
-      color: #666666;
+      padding-top: 24rpx;
+      font-size: 24rpx;
+      line-height: 32rpx;
+      color: $u-content-color;
       .a {
         color: $u-type-primary;
       }
@@ -167,30 +167,30 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 8px 12px 0;
+    padding: 16rpx 24rpx 0;
     width: 100%;
-    border-top: 0.5px solid #e0e0e0;
+    border-top: 1rpx solid #e0e0e0;
     background: #f7f7f7;
     .price-wrap {
       display: flex;
       align-items: center;
-      font-size: 12px;
-      line-height: 16px;
-      color: #333333;
+      font-size: 24rpx;
+      line-height: 32rpx;
+      color: $u-main-color;
       .price {
         font-weight: bold;
-        font-size: 24px;
-        line-height: 24px;
-        color: #e34d59;
+        font-size: 48rpx;
+        line-height: 48rpx;
+        color: $u-type-error;
       }
       .price-rmb {
-        font-size: 14px;
+        font-size: 28rpx;
       }
     }
     .pay {
       margin: 0;
-      width: 142px;
-      height: 40px;
+      width: 284rpx;
+      height: 80rpx;
     }
   }
 </style>

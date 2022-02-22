@@ -53,8 +53,8 @@
   }
 
   .card {
-    margin: 12px 12px 0;
-    border-radius: 8px;
+    margin: 24rpx 24rpx 0;
+    border-radius: 16rpx;
     background: #fff;
   }
   .success-wrap {
@@ -62,21 +62,21 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 12px;
+    padding: 24rpx;
     .u-image {
-      margin-top: 48px;
+      margin-top: 96rpx;
     }
     .success-tips {
       font-weight: 500;
-      font-size: 20px;
-      line-height: 28px;
-      color: #0052d9;
+      font-size: 40rpx;
+      line-height: 56rpx;
+      color: $u-type-primary;
     }
     .success-time {
-      margin: 8px 0 40px;
-      font-size: 14px;
-      line-height: 18px;
-      color: #999999;
+      margin: 16rpx 0 80rpx;
+      font-size: 28rpx;
+      line-height: 36rpx;
+      color: $u-tips-color;
     }
     .success-btn {
       display: flex;
@@ -85,14 +85,14 @@
       width: 100%;
       .u-btn {
         margin: 0;
-        width: 155px;
-        height: 40px;
+        width: 310rpx;
+        height: 80rpx;
       }
     }
   }
 
   .school-wrap {
-    margin: 24px 12px 0;
+    margin: 48rpx 24rpx 0;
   }
 
   .school-wrap-title {

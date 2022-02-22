@@ -57,7 +57,7 @@
   .progressbar {
     display: flex;
     justify-content: space-between;
-    padding: 16px 12px;
+    padding: 32rpx 24rpx;
     background: #fff;
 
     .progressbar-item {
@@ -65,40 +65,39 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      width: 48px;
+      width: 96rpx;
       .progressbar-success {
-        margin-bottom: 12px;
+        margin-bottom: 24rpx;
       }
       .progressbar-num {
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-bottom: 12px;
-        width: 24px;
-        height: 24px;
+        margin-bottom: 24rpx;
+        width: 48rpx;
+        height: 48rpx;
         border-radius: 100%;
         background: $u-type-primary;
         font-weight: 500;
-        font-size: 12px;
-        line-height: 16px;
+        font-size: 24rpx;
+        line-height: 32rpx;
         color: #ffffff;
       }
-
       .progressbar-num-fill {
         background: $fillColor;
       }
 
       .progressbar-title {
-        font-size: 12px;
-        line-height: 16px;
-        color: #333333;
+        font-size: 24rpx;
+        line-height: 32rpx;
+        color: $u-main-color;
       }
     }
 
     .progressbar-line {
-      margin-top: 12px;
-      width: 46px;
-      height: 2px;
+      margin-top: 24rpx;
+      width: 92rpx;
+      height: 4rpx;
       background: $u-type-primary;
     }
 

@@ -16,7 +16,7 @@
 <style lang="scss" scoped>
   .contact {
     position: fixed;
-    right: 12px;
-    bottom: 76px;
+    right: 24rpx;
+    bottom: 152rpx;
   }
 </style>

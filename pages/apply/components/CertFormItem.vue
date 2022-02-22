@@ -1,17 +1,15 @@
 <template>
-  <view>
-    <u-form-item :label="label" :prop="prop" :required="required">
-      <u-input
-        v-model="formValue"
-        :input-align="inputAlign"
-        :placeholder-style="placeholderStyle"
-        :placeholder="placeholder"
-        :type="type"
-        :select-open="selectShow"
-        @click="selectShow = true"
-        @input="handleInput"
-      />
-    </u-form-item>
+  <u-form-item :label="label" :prop="prop" :required="required">
+    <u-input
+      v-model="formValue"
+      :input-align="inputAlign"
+      :placeholder-style="placeholderStyle"
+      :placeholder="placeholder"
+      :type="type"
+      :select-open="selectShow"
+      @click="selectShow = true"
+      @input="handleInput"
+    />
     <u-select
       v-if="type === 'select'"
       mode="single-column"
@@ -19,7 +17,7 @@
       v-model="selectShow"
       @confirm="selectConfirm"
     ></u-select>
-  </view>
+  </u-form-item>
 </template>
 
 <script>

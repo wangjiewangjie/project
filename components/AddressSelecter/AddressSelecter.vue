@@ -77,7 +77,7 @@
     @include flex();
     width: 750rpx;
     background: $uni-bg-color;
-    font-size: #333;
+    font-size: $u-main-color;
     padding: 32rpx 32rpx 0rpx 32rpx;
     overflow: hidden;
 

@@ -5,7 +5,7 @@
     </view>
 
     <view class="menu-wrap">
-      <view class="menu-item" v-for="(item, index) in menuList" :key="index">
+      <view class="menu-item" v-for="(item, index) in menuList" :key="index" @click="routerInfo">
         <u-image width="96rpx" height="96rpx" :src="`${ossUrl}${item.icon}`"></u-image>
         <view class="menu-name">{{ item.name }}</view>
       </view>
@@ -74,15 +74,7 @@
       <SchoolCard></SchoolCard>
     </view>
 
-    <view class="follow-wrap">
-      <u-image width="224rpx" height="224rpx" src="/static/images/wx-code.png"></u-image>
-      <view class="follow-wrap-r">
-        <view class="follow-tips">长按识别二维码</view>
-        <view class="follow-tips">关注官方公众号</view>
-        <view class="follow-wx">阜城市家庭服务业协会认定中心</view>
-      </view>
-    </view>
-    <view class="page-footer">- 绝影天行科技公司技术支持 -</view>
+    <PageFooter></PageFooter>
 
     <u-tabbar
       v-model="current"
@@ -97,9 +89,11 @@
 <script>
   import config from '@/config/config';
   import SchoolCard from '@/components/SchoolCard/SchoolCard';
+  import PageFooter from '@/components/PageFooter/PageFooter';
   export default {
     component: {
       SchoolCard,
+      PageFooter,
     },
     data() {
       return {
@@ -174,6 +168,11 @@
       apply() {
         this.$u.route({
           url: 'pages/apply/index',
+        });
+      },
+      routerInfo() {
+        this.$u.route({
+          url: 'pages/info/index',
         });
       },
     },
@@ -310,38 +309,5 @@
       line-height: 36rpx;
       color: $u-content-color;
     }
-  }
-
-  .follow-wrap {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 160rpx;
-    padding: 24rpx;
-    .follow-wrap-r {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-    .follow-tips {
-      font-weight: 500;
-      font-size: 32rpx;
-      line-height: 40rpx;
-      color: $u-main-color;
-    }
-    .follow-wx {
-      font-size: 28rpx;
-      line-height: 36rpx;
-      color: $u-tips-color;
-    }
-  }
-
-  .page-footer {
-    padding: 24rpx 0;
-    font-size: 24rpx;
-    line-height: 28rpx;
-    color: $u-tips-color;
-    text-align: center;
   }
 </style>

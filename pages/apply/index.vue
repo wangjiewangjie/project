@@ -299,12 +299,12 @@
         /* 表单样式 */
         errorType: ['toast'],
         labelStyle: {
-          fontSize: '16px',
-          lineHeight: '20px',
+          fontSize: '32rpx',
+          lineHeight: '40rpx',
           color: '#333333',
         },
         inputAlign: 'right',
-        placeholderStyle: 'fontSize:16px;lineHeight:20px;color:#ccc',
+        placeholderStyle: 'fontSize:32rpx;lineHeight:40rpx;color:#ccc',
         ossUrl: config.ossUrl,
       };
     },
@@ -354,36 +354,36 @@
   .tips {
     display: flex;
     align-items: center;
-    margin: 12px 12px 0;
-    padding: 4px 8px 6px;
+    margin: 24rpx 24rpx 0;
+    padding: 8rpx 16rpx 12rpx;
     background: rgba(237, 123, 47, 0.1);
-    border-radius: 4px;
-    font-size: 14px;
-    line-height: 18px;
+    border-radius: 8rpx;
+    font-size: 28rpx;
+    line-height: 36rpx;
     color: #ed7b2f;
     .u-image {
-      margin-right: 4px;
+      margin-right: 8rpx;
     }
   }
 
   .u-form {
-    margin: 12px 12px 0;
-    padding: 0 12px;
+    margin: 24rpx 24rpx 0;
+    padding: 0 24rpx;
     background: #fff;
-    border-radius: 8px;
+    border-radius: 16rpx;
   }
 
   .exam-info {
-    margin: 12px 12px 76px;
-    padding: 12px;
+    margin: 24rpx 24rpx 152rpx;
+    padding: 24rpx;
     background: #ffffff;
-    border-radius: 8px;
-    font-size: 14px;
-    line-height: 18px;
-    color: #999999;
+    border-radius: 16rpx;
+    font-size: 28rpx;
+    line-height: 36rpx;
+    color: $u-tips-color;
     .exam-info-li {
       & + .exam-info-li {
-        margin-top: 8px;
+        margin-top: 16rpx;
       }
     }
   }
@@ -391,12 +391,12 @@
   .footer {
     position: fixed;
     bottom: 0;
-    padding: 8px 12px 0;
+    padding: 16rpx 24rpx 0;
     width: 100%;
-    border-top: 0.5px solid #e0e0e0;
+    border-top: 1rpx solid #e0e0e0;
     background: #f7f7f7;
     .u-checkbox {
-      margin-bottom: 12px;
+      margin-bottom: 24rpx;
     }
     .u-checkbox__label {
       font-size: 24rpx;

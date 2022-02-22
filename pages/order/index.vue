@@ -46,56 +46,56 @@
 
 <style lang="scss" scoped>
   .order-wrap {
-    margin: 12px 12px 0;
-    border-radius: 8px;
+    margin: 24rpx 24rpx 0;
+    border-radius: 16rpx;
     background: #fff;
     .order-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 12px;
-      border-bottom: 0.5px solid #eaeaea;
-      font-size: 12px;
-      line-height: 16px;
+      padding: 24rpx;
+      border-bottom: 1rpx solid $u-form-item-border-color;
+      font-size: 24rpx;
+      line-height: 32rpx;
       .order-header-l {
-        color: #666666;
+        color: $u-content-color;
       }
       .order-header-r {
-        color: #e34d59;
+        color: $u-type-error;
       }
     }
     .order-content-wrap {
       display: flex;
-      padding: 12px;
+      padding: 24rpx;
       .u-image {
-        border-radius: 4px;
+        border-radius: 8rpx;
       }
     }
     .order-content {
-      margin-left: 12px;
+      margin-left: 24rpx;
       .order-content-t {
-        margin-bottom: 4px;
+        margin-bottom: 8rpx;
         font-weight: 500;
-        font-size: 16px;
-        line-height: 22px;
-        color: #333333;
+        font-size: 32rpx;
+        line-height: 44rpx;
+        color: $u-main-color;
       }
       .order-content-m {
-        margin-bottom: 4px;
-        font-size: 12px;
-        line-height: 16px;
-        color: #666666;
+        margin-bottom: 8rpx;
+        font-size: 24rpx;
+        line-height: 32rpx;
+        color: $u-content-color;
       }
       .order-content-b {
-        line-height: 18px;
-        color: #333333;
+        line-height: 36rpx;
+        color: $u-main-color;
       }
       .order-content-b-l {
         font-weight: 500;
-        font-size: 12px;
+        font-size: 24rpx;
       }
       .order-content-b-r {
-        font-size: 14px;
+        font-size: 28rpx;
       }
     }
   }
@@ -103,19 +103,19 @@
   .order-btn {
     display: flex;
     justify-content: flex-end;
-    padding: 0 12px 12px;
+    padding: 0 24rpx 24rpx;
     .u-btn {
       margin: 0;
-      width: 80px;
-      height: 32px;
-      font-size: 12px;
+      width: 160rpx;
+      height: 64rpx;
+      font-size: 24rpx;
       & + .u-btn {
-        margin-left: 12px;
+        margin-left: 24rpx;
       }
     }
     .u-btn--info--plain {
-      color: #999 !important;
-      border-color: #999 !important;
+      color: $u-tips-color !important;
+      border-color: $u-tips-color !important;
     }
     .u-btn--info--plain,
     .u-btn--primary--plain {

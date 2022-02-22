@@ -3,19 +3,19 @@
 
 $u-type-primary: #0052d9;
 $u-type-error: #e34d59;
-$u-type-warning: #ff9900;
+$u-type-warning: #dfc483;
 $u-type-success: #00a870;
 $u-type-info: #cccccc;
 
 $u-type-primary-light: #ecf5ff;
 $u-type-error-light: #fef0f0;
-$u-type-warning-light: #fdf6ec;
+$u-type-warning-light: rgba(#dfc483, 1);
 $u-type-success-light: #dbf1e1;
 $u-type-info-light: #f4f4f5;
 
 $u-type-primary-dark: #2b85e4;
 $u-type-error-dark: #dd6161;
-$u-type-warning-dark: #f29100;
+$u-type-warning-dark: rgba(#dfc483, 1);
 $u-type-success-dark: #18b566;
 $u-type-info-dark: #82848a;
 
@@ -36,4 +36,4 @@ $u-bg-color: #f7f7f7;
 $u-form-item-border-color: #eaeaea;
 $u-form-item-height: 70rpx;
 
-$ossUrl:'http://oss.bm001.com/static/association/credit-cert-h5/images/'
+$ossUrl: 'http://oss.bm001.com/static/association/credit-cert-h5/images/';

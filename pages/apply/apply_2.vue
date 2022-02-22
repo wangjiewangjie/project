@@ -161,8 +161,8 @@
         /* 表单样式 */
         errorType: ['toast'],
         labelStyle: {
-          fontSize: '16px',
-          lineHeight: '20px',
+          fontSize: '32rpx',
+          lineHeight: '40rpx',
           color: '#333333',
         },
         ossUrl: config.ossUrl,
@@ -199,61 +199,61 @@
   .tips {
     display: flex;
     align-items: center;
-    margin: 12px 12px 0;
-    padding: 4px 8px 6px;
+    margin: 24rpx 24rpx 0;
+    padding: 8rpx 16rpx 12rpx;
     background: rgba(237, 123, 47, 0.1);
-    border-radius: 4px;
-    font-size: 14px;
-    line-height: 18px;
+    border-radius: 8rpx;
+    font-size: 28rpx;
+    line-height: 36rpx;
     color: #ed7b2f;
     .u-image {
-      margin-right: 4px;
+      margin-right: 8rpx;
     }
   }
 
   .photo-wrap {
-    margin: 12px;
+    margin: 24rpx;
     padding: 0;
     background: #fff;
-    border-radius: 8px;
+    border-radius: 16rpx;
     /deep/.u-form-item--right__content__slot {
       display: flex;
       flex-direction: column;
     }
     .h2 {
       width: 100%;
-      padding: 12px;
-      font-size: 16px;
-      line-height: 20px;
-      color: #333333;
+      padding: 24rpx;
+      font-size: 32rpx;
+      line-height: 40rpx;
+      color: $u-main-color;
     }
     .u-upload {
-      margin: 12px 0 24px;
+      margin: 24rpx 0 48rpx;
     }
     .h3 {
       width: 100%;
-      padding: 12px;
-      font-size: 14px;
-      line-height: 18px;
-      color: #999999;
+      padding: 24rpx;
+      font-size: 28rpx;
+      line-height: 36rpx;
+      color: $u-tips-color;
     }
     .ul {
       display: flex;
       justify-content: space-between;
-      padding: 0 12px 12px;
+      padding: 0 24rpx 24rpx;
       width: 100%;
-      font-size: 12px;
-      line-height: 16px;
-      color: #999999;
+      font-size: 24rpx;
+      line-height: 32rpx;
+      color: $u-tips-color;
       .li {
         display: flex;
         flex-direction: column;
         align-items: center;
-        border: 0.5px solid #dcdcdc;
+        border: 1rpx solid #dcdcdc;
       }
       .li-tips {
-        padding: 4px 0;
-        width: 48px;
+        padding: 8rpx 0;
+        width: 96rpx;
       }
     }
 
@@ -261,61 +261,61 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      margin: 0 12px 12px;
-      padding: 8px;
-      width: calc(100% - 24px);
+      margin: 0 24rpx 24rpx;
+      padding: 16rpx;
+      width: calc(100% - 48rpx);
       background: #f5f5f5;
-      border-radius: 4px;
-      font-size: 14px;
-      line-height: 18px;
-      color: #666666;
+      border-radius: 8rpx;
+      font-size: 28rpx;
+      line-height: 36rpx;
+      color: $u-content-color;
       .contact-btn {
         flex-shrink: 0;
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-left: 12px;
-        width: 100px;
-        height: 32px;
-        border-radius: 16px;
+        margin-left: 24rpx;
+        width: 200rpx;
+        height: 64rpx;
+        border-radius: 32rpx;
         background: $u-type-primary;
-        font-size: 12px;
-        line-height: 16px;
+        font-size: 24rpx;
+        line-height: 32rpx;
         color: #ffffff;
         .u-image {
-          margin-right: 4px;
+          margin-right: 8rpx;
         }
       }
     }
   }
 
   .basics-info-title {
-    padding: 12px;
-    font-size: 16px;
-    line-height: 20px;
-    color: #666666;
+    padding: 24rpx;
+    font-size: 32rpx;
+    line-height: 40rpx;
+    color: $u-content-color;
   }
   .basics-info-wrap {
-    margin: 12px 12px 60px;
-    padding: 0 12px;
+    margin: 24rpx 24rpx 120rpx;
+    padding: 0 24rpx;
     background: #fff;
-    border-radius: 8px;
+    border-radius: 16rpx;
   }
 
   .more-wrap {
     display: flex;
     justify-content: center;
-    padding: 16px;
+    padding: 32rpx;
     .more-btn {
       display: flex;
       align-items: center;
-      margin-right: 6px;
-      padding: 7px 16px;
+      margin-right: 12rpx;
+      padding: 14rpx 32rpx;
       background: #f5f5f5;
-      border-radius: 24px;
-      font-size: 14px;
-      line-height: 18px;
-      color: #999999;
+      border-radius: 48rpx;
+      font-size: 28rpx;
+      line-height: 36rpx;
+      color: $u-tips-color;
     }
   }
 
@@ -323,9 +323,9 @@
     position: fixed;
     bottom: 0;
     z-index: 999;
-    padding: 8px 12px 0;
+    padding: 16rpx 24rpx 0;
     width: 100%;
-    border-top: 0.5px solid #e0e0e0;
+    border-top: 1rpx solid #e0e0e0;
     background: #f7f7f7;
   }
 </style>

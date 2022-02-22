@@ -15,10 +15,7 @@
     {
       "path": "pages/exam/index",
       "style": {
-        "navigationBarTitleText": "考试",
-        "app-plus": {
-          "titleNView": false
-        }
+        "navigationBarTitleText": "考试"
       }
     },
     {
@@ -28,12 +25,36 @@
       }
     },
     {
+      "path": "pages/query/resultList/index",
+      "style": {
+        "navigationBarTitleText": "成绩查询"
+      }
+    },
+    {
       "path": "pages/mine/index",
       "style": {
         "navigationBarTitleText": "我的",
         "app-plus": {
           "titleNView": false
         }
+      }
+    },
+    {
+      "path": "pages/questionList/index",
+      "style": {
+        "navigationBarTitleText": "常见问题"
+      }
+    },
+    {
+      "path": "pages/info/index",
+      "style": {
+        "navigationBarTitleText": "常见问题"
+      }
+    },
+    {
+      "path": "pages/infoDetail/index",
+      "style": {
+        "navigationBarTitleText": "详情"
       }
     },
     {
