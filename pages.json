@@ -19,6 +19,15 @@
       }
     },
     {
+      "path": "pages/test/index",
+      "style": {
+        "navigationBarTitleText": "考试",
+        "app-plus": {
+          "titleNView": false
+        }
+      }
+    },
+    {
       "path": "pages/query/index",
       "style": {
         "navigationBarTitleText": "查询"

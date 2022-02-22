@@ -34,7 +34,7 @@
       </view>
     </view>
 
-    <view class="exam-card">
+    <view class="exam-card" @click="routerTest">
       <view class="card-content">
         <view class="card-content-l">
           <view class="card-content-l-t">顺序练习</view>
@@ -110,6 +110,11 @@
       },
       chooseLevel(index) {
         this.levelCurrent = index;
+      },
+      routerTest() {
+        this.$u.route({
+          url: 'pages/test/index',
+        });
       },
     },
   };

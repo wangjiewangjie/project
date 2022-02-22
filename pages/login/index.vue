@@ -5,11 +5,21 @@
       <view class="login-form">
         <u-form :model="form" ref="uForm">
           <u-form-item prop="phone">
-            <u-image class="icon" width="48rpx" height="48rpx" :src="`${ossUrl}login-phone.png`"></u-image>
+            <u-image
+              class="icon"
+              width="48rpx"
+              height="48rpx"
+              :src="`${ossUrl}login-phone.png`"
+            ></u-image>
             <u-input placeholder="请输入手机号" v-model="form.phone" type="number"></u-input>
           </u-form-item>
           <u-form-item prop="code">
-            <u-image class="icon" width="48rpx" height="48rpx" :src="`${ossUrl}login-password.png`"></u-image>
+            <u-image
+              class="icon"
+              width="48rpx"
+              height="48rpx"
+              :src="`${ossUrl}login-password.png`"
+            ></u-image>
             <u-input placeholder="请输入验证码" v-model="form.code" type="number"></u-input>
             <u-button
               class="send-btn"
@@ -17,7 +27,7 @@
               slot="right"
               :type="sendType"
               size="mini"
-              @click="getCode"
+              @click="getCode()"
               >{{ codeTips }}</u-button
             >
           </u-form-item>
@@ -67,7 +77,10 @@
 </template>
 
 <script>
+  /* eslint-disable no-console */
+  import jsencrypt from '@/components/jsencrypt/jsencrypt.vue';
   import config from '@/config/config';
+  import { getLoginCode } from '@/util/ajax/services';
   export default {
     data() {
       return {
@@ -139,23 +152,28 @@
       codeChange(text) {
         this.codeTips = text;
       },
-      getCode() {
-        if (this.$refs.uCode.canGetCode) {
-          // 模拟向后端请求验证码
-          uni.showLoading({
-            title: '正在获取验证码',
-            mask: true,
-          });
-          setTimeout(() => {
-            uni.hideLoading();
-            // 这里此提示会被this.start()方法中的提示覆盖
-            this.$u.toast('验证码已发送');
-            this.sendType = '';
-            // 通知验证码组件内部开始倒计时
-            this.$refs.uCode.start();
-          }, 2000);
+      /**
+       * 获取验证码
+       */
+      async getCode() {
+        if (!this.$refs.uCode.canGetCode) {
+          return;
+        }
+        if (!this.$u.test.mobile(this.form.phone)) {
+          this.$u.toast('请输入正确的手机号');
+          return;
+        }
+        const timestamp = Math.round(new Date().getTime());
+        const str = `phone&${this.form.phone}@sender&JFE0001@behaviour&${5}@timestamp&${timestamp}`;
+        const params = {
+          keyId: '3',
+          secret: jsencrypt.setEncrypt(config.publicKey, str),
+        };
+        const res = await getLoginCode(params);
+        if (res.rescode === 200) {
+          this.$refs.uCode.start();
         } else {
-          this.$u.toast('倒计时结束后再发送');
+          this.$u.toast(res.msg);
         }
       },
       submit() {
@@ -212,11 +230,11 @@
       line-height: 36rpx;
       color: $u-light-color;
     }
-    .icon{
+    .icon {
       margin-right: 16rpx;
     }
   }
-  
+
   .tips {
     padding: 24rpx 0 128rpx;
     font-size: 24rpx;

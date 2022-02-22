@@ -44,7 +44,7 @@ let tabbarList = [
 
 // 开发环境配置
 const DEVELOPMENT_CONFIG = {
-  apiHost: 'https://creditapi-test1.devp.bm001.com',
+  apiHost: 'https://creditapi-test1.devp.bm001.com/',
   // apiHost: 'https://auntcard.bmtest1.bm001.com/',
   // apiHost: 'http://172.19.135.92:9999/',
   wxAppId,
