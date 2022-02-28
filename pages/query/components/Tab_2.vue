@@ -24,6 +24,7 @@
             :placeholder="item.placeholder"
             :type="item.type"
             :selectList="item.selectList"
+            :value="item.value"
             @inputValueChange="inputValueChange($event, item.prop)"
           ></CertFormItem>
         </u-form>
@@ -58,9 +59,10 @@
             label: '姓名',
             prop: 'name',
             required: true,
-            placeholder: '请输入考生姓名',
+            placeholder: '请输入姓名',
             type: '',
             selectList: [],
+            value: '',
           },
           {
             label: '身份证号',
@@ -69,6 +71,7 @@
             placeholder: '请输入身份证号',
             type: '',
             selectList: [],
+            value: '',
           },
         ],
         /* 表单校验 */
@@ -126,8 +129,8 @@
       },
 
       submit() {
+        console.log(this.$refs.uForm);
         this.$refs.uForm.validate(async (valid) => {
-          console.log(this.form);
           if (valid) {
             let params = { ...this.form };
             let res = await queryExaminestudentScore(params);
@@ -136,6 +139,7 @@
                 title: '查询中',
                 type: 'success',
                 url: '/pages/query/resultList/index',
+                params: res.data,
               });
             } else {
               this.$refs.uToast.show({

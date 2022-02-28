@@ -3,14 +3,18 @@
     <view class="result-header">
       <view class="result-li">
         <u-image width="32rpx" height="32rpx" :src="`${ossUrl}result_user.png`"></u-image>
-        <view class="result-li-r">{{ name }}</view>
+        <view class="result-li-r">{{ examineStudent.name }}</view>
       </view>
       <view class="result-li">
         <u-image width="32rpx" height="32rpx" :src="`${ossUrl}result_idcard.png`"></u-image>
-        <view class="result-li-r">{{ idcard }}</view>
+        <view class="result-li-r">{{ examineStudent.idcard }}</view>
       </view>
     </view>
-    <view class="query-list" v-for="(item, index) in examineStudentVOList" :key="index">
+    <view
+      class="query-list"
+      v-for="(item, index) in examineStudent.examineStudentVOList"
+      :key="index"
+    >
       <view class="query-list-header">共有 {{ examineStudentVOList.length }} 个考试成绩</view>
       <view class="query-list-li">
         <view class="li-t">
@@ -47,10 +51,12 @@
       return {
         ossUrl: config.ossUrl,
         score: 60,
-        examineStudentVOList: [],
+        examineStudent: [],
       };
     },
-    onLoad() {},
+    onLoad(options) {
+      this.examineStudent = options;
+    },
   };
 </script>
 

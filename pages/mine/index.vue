@@ -25,12 +25,12 @@
         </view>
         <u-image width="32rpx" height="32rpx" :src="`${ossUrl}right-arrows_3.png`"></u-image>
       </view>
-      <view class="li" @click="routerQuestion">
+      <!-- <view class="li" @click="routerQuestion">
         <view class="li-l">
           <u-image width="48rpx" height="48rpx" :src="`${ossUrl}mine-list_2.png`"></u-image>常见问题
         </view>
         <u-image width="32rpx" height="32rpx" :src="`${ossUrl}right-arrows_3.png`"></u-image>
-      </view>
+      </view> -->
     </view>
 
     <view class="school-wrap" v-if="!isLogin">

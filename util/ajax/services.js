@@ -34,6 +34,9 @@ export const loginOut = (params) => {
 export const miniSilence = (params) => {
   return Http.post('/core/grant/miniSilence', params, true);
 };
+export const loginByOpenId = (params) => {
+  return Http.post('/core/grant/loginByOpenId', params, true);
+};
 //用户通过openId,appId进行APP授权
 export const miniAuthBind = (params) => {
   return Http.post('/core/grant/miniAuthBind', params, true);

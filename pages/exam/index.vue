@@ -72,6 +72,8 @@
       </view>
     </view>
 
+    <u-toast ref="uToast" />
+
     <u-tabbar
       v-model="current"
       :list="tabbarList"
@@ -129,14 +131,21 @@
         this.queryInfoByCertIdApi(params);
       },
       routerTest() {
-        let params = {
-          certId: this.certId,
-          paperType: 1,
-        };
-        this.$u.route({
-          url: '/pages/test/index',
-          params: params,
-        });
+        if (this.examInfo.practiceAllCount) {
+          let params = {
+            certId: this.certId,
+            paperType: 1,
+          };
+          this.$u.route({
+            url: '/pages/test/index',
+            params: params,
+          });
+        } else {
+          this.$refs.uToast.show({
+            title: '当前证书没有顺序练习',
+            type: 'error',
+          });
+        }
       },
       async routerMockTest() {
         let params = {

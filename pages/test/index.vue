@@ -22,7 +22,7 @@
 
     <view class="question-title">
       <text class="question-type">{{ examList[examIndex].questionTypeName }}</text>
-      {{ examList[examIndex].title | formatText }}
+      <text v-html="examList[examIndex].title"></text>
     </view>
 
     <view class="options-wrap">
@@ -33,9 +33,9 @@
         :key="index"
       >
         <!-- 不看答案 -->
-        <view v-show="!item.checked && !hideAnalysis" class="radio">{{
-          examList[examIndex].questionTypeName === 3 ? '' : item.answerNo
-        }}</view>
+        <view v-show="!item.checked && !hideAnalysis" class="radio">
+          {{ examList[examIndex].questionTypeName === 3 ? '' : item.answerNo }}
+        </view>
         <u-image
           v-show="item.checked && !hideAnalysis"
           width="64rpx"
@@ -43,9 +43,9 @@
           :src="`${ossUrl}exam-answer_success.png`"
         ></u-image>
         <!-- 看答案 -->
-        <view v-show="!item.checked && hideAnalysis && item.rightChoicesFlag == 0" class="radio">{{
-          item.answerNo
-        }}</view>
+        <view v-show="!item.checked && hideAnalysis && item.rightChoicesFlag == 0" class="radio">
+          {{ item.answerNo }}
+        </view>
         <u-image
           v-show="hideAnalysis && item.rightChoicesFlag == 1"
           width="64rpx"
@@ -72,9 +72,9 @@
         <view v-show="examList[examIndex].studentAnswerList.length && wrongMode">
           您选择
           <text class="error">
-            <block v-for="(v, index) in examList[examIndex].studentAnswerList" :key="index">
-              {{ v }}
-            </block>
+            <block v-for="(v, index) in examList[examIndex].studentAnswerList" :key="index">{{
+              v
+            }}</block>
           </text>
         </view>
       </view>
@@ -186,15 +186,14 @@
     createMockTestExaminePaper,
   } from '@/util/ajax/services';
   export default {
-    fliters: {
-      formatText(val) {
-        return val ? val.replace(/<\/?.+?\/?>/g, '') : '';
-      },
-    },
     data() {
       return {
         examinePaperObj: {},
-        examList: [],
+        examList: [
+          {
+            studentAnswerList: [],
+          },
+        ],
         examIndex: 0,
         hideAnalysis: false,
         rightChoices: '',
@@ -477,7 +476,7 @@
   }
 
   .options-wrap {
-    padding: 80rpx 32rpx 48rpx;
+    padding: 80rpx 32rpx 172rpx;
     background: #fff;
     .options {
       display: flex;
@@ -486,6 +485,7 @@
       font-size: 48rpx;
       color: #333333;
       .radio {
+        flex-shrink: 0;
         display: flex;
         justify-content: center;
         align-items: center;

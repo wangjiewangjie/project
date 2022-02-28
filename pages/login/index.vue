@@ -79,10 +79,11 @@
 </template>
 
 <script>
+  /* eslint-disable no-eq-null */
   import jsencrypt from '@/components/jsencrypt/jsencrypt.vue';
   import config from '@/config/config';
   import commonInfo from '@/util/commonInfo';
-  import { getLoginCode, phoneLogin } from '@/util/ajax/services';
+  import { getLoginCode, phoneLogin, loginByOpenId } from '@/util/ajax/services';
   export default {
     data() {
       return {
@@ -153,6 +154,20 @@
     onLoad(options) {
       this.options = options;
     },
+    onShow() {
+      const code = this.getUrlParam('code');
+      if (code !== null) {
+        uni.showLoading({
+          title: '微信登录中',
+        });
+        let params = {
+          code: code,
+          appId: config.h5wxAppId,
+          userType: 13,
+        };
+        this.loginByOpenIdApi(params);
+      }
+    },
     methods: {
       change(e) {
         this.checked = e.value;
@@ -182,6 +197,25 @@
           this.$refs.uCode.start();
         } else {
           this.$u.toast(res.msg);
+        }
+      },
+      async loginByOpenIdApi(params) {
+        let res = await loginByOpenId(params);
+        uni.hideLoading();
+        if (res.rescode === 200) {
+          commonInfo.setToken(res.data.token);
+          commonInfo.setUser(res.data.user);
+          this.$refs.uToast.show({
+            title: '登录成功',
+            type: 'success',
+            url: '/pages/index/index',
+            isTab: true,
+          });
+        } else {
+          this.$refs.uToast.show({
+            title: '微信登录失败',
+            type: 'error',
+          });
         }
       },
       submit() {
@@ -228,14 +262,35 @@
         });
       },
       wxLogin() {
+        if (!this.checked) {
+          this.$u.toast('请阅读《家协通服务协议》、《隐私协议》');
+          return;
+        }
         const AppId = config.h5wxAppId; // 公众号的AppId
         const location = window.location.href; // 获取当前的页面路径，这就是回调的地址
-        window.location.href =
-          'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' +
-          AppId +
-          '&redirect_uri=' +
-          encodeURIComponent(location) +
-          '&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect';
+        const code = this.getUrlParam('code');
+        if (code == null) {
+          window.location.href =
+            'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' +
+            AppId +
+            '&redirect_uri=' +
+            encodeURIComponent(location) +
+            '&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect';
+        } else {
+          let params = {
+            code: code,
+            appId: AppId,
+            userType: 13,
+          };
+          this.loginByOpenIdApi(params);
+        }
+      },
+      getUrlParam(name) {
+        // 获取URL指定参数
+        let reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)'); // 构造一个含有目标参数的正则表达式对象
+        let r = window.location.search.substr(1).match(reg); // 匹配目标参数
+        if (r !== null) return unescape(r[2]);
+        return null; // 返回参数值
       },
     },
     // 必须要在onReady生命周期，因为onLoad生命周期组件可能尚未创建完毕

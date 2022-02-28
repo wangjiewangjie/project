@@ -3,10 +3,10 @@
     <view class="order-wrap" v-for="item in dataList" :key="item.orderNo">
       <view class="order-header">
         <view class="order-header-l">报名编号：{{ item.orderNo }}</view>
-        <view class="order-header-r">待支付</view>
+        <view class="order-header-r">{{ item.state ? '支付成功' : '待支付' }}</view>
       </view>
       <view class="order-content-wrap">
-        <u-image width="216rpx" height="144rpx" src="/static/images/school.png"></u-image>
+        <u-image width="216rpx" height="144rpx" src="/static/images/cert.png"></u-image>
         <view class="order-content">
           <view class="order-content-t">{{ item.professionalName }}/{{ item.levelName }}</view>
           <view class="order-content-m">报名时间：{{ item.addTime | filterDay }}</view>
@@ -103,10 +103,16 @@
 </script>
 
 <style lang="scss" scoped>
+  .page {
+    overflow: scroll;
+  }
   .order-wrap {
     margin: 24rpx 24rpx 0;
     border-radius: 16rpx;
     background: #fff;
+    &:last-child {
+      margin-bottom: 24rpx;
+    }
     .order-header {
       display: flex;
       justify-content: space-between;
