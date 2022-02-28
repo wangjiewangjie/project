@@ -10,7 +10,7 @@ commonInfo.reLogin = () => {
   reLoginTime = new Date().getTime();
   commonInfo.setToken('');
   commonInfo.setUser('');
-  uni.redirectTo({ url: '/pages/login/login/login' });
+  uni.navigateTo({ url: '/pages/login/index?back=true' });
 };
 commonInfo.delLastHref = () => {
   storage.set('lastHref', '');
@@ -24,6 +24,9 @@ commonInfo.setToken = (token) => {
 commonInfo.setUser = (user) => {
   storage.set('user', user);
 };
+commonInfo.getUser = () => {
+  return storage.get('user');
+};
 commonInfo.getOpenId = () => {
   return storage.get('openId');
 };
@@ -32,5 +35,10 @@ commonInfo.setPhoneX = (boolean) => {
 };
 commonInfo.getPhoneX = () => {
   return storage.get('phoneX');
+};
+commonInfo.calcPrice = (v) => {
+  if (!v) return 0;
+  const val = v / 100;
+  return val % 1 === 0 ? val : val.toFixed(2);
 };
 export default commonInfo;

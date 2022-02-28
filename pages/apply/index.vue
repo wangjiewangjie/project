@@ -18,94 +18,19 @@
         :key="index"
         :label="item.label"
         :prop="item.prop"
-        :required="true"
+        :required="item.required"
         :placeholder="item.placeholder"
         :type="item.type"
         :selectList="item.selectList"
+        :value="item.value"
         @inputValueChange="inputValueChange($event, item.prop)"
+        @selectConfirm="selectConfirm($event, item.prop)"
       ></CertFormItem>
-      <u-form-item label="姓名" prop="name" required>
-        <u-input
-          v-model="form.name"
-          :input-align="inputAlign"
-          :placeholder-style="placeholderStyle"
-          placeholder="请输入姓名"
-        />
-      </u-form-item>
-      <u-form-item label="项目" prop="input1" required>
-        <u-input
-          v-model="form.input1"
-          :input-align="inputAlign"
-          :placeholder-style="placeholderStyle"
-          placeholder="请选择"
-          type="select"
-          :select-open="input1selectShow"
-          @click="input1selectShow = true"
-        />
-      </u-form-item>
-      <u-form-item label="等级" prop="input2" required>
-        <u-input
-          v-model="form.input2"
-          :input-align="inputAlign"
-          :placeholder-style="placeholderStyle"
-          placeholder="请选择"
-          type="select"
-          :select-open="input2selectShow"
-          @click="input2selectShow = true"
-        />
-      </u-form-item>
-      <u-form-item label="电话" prop="input3" required>
-        <u-input
-          v-model="form.input3"
-          :input-align="inputAlign"
-          :placeholder-style="placeholderStyle"
-          placeholder="很重要，用于短信通知"
-        />
-      </u-form-item>
-      <u-form-item label="身份证号" prop="input4" required>
-        <u-input
-          v-model="form.input4"
-          :input-align="inputAlign"
-          :placeholder-style="placeholderStyle"
-          placeholder="请正确输入您的身份证号码"
-        />
-      </u-form-item>
-      <u-form-item label="考试期数" prop="input5" required :border-bottom="false">
-        <u-input
-          v-model="form.input5"
-          :input-align="inputAlign"
-          :placeholder-style="placeholderStyle"
-          placeholder="请选择"
-          type="select"
-          :select-open="input5selectShow"
-          @click="input5selectShow = true"
-        />
-      </u-form-item>
     </u-form>
-    <u-select
-      mode="single-column"
-      :list="input1List"
-      v-model="input1selectShow"
-      @confirm="input1selectConfirm"
-    ></u-select>
-
-    <u-select
-      mode="single-column"
-      :list="input2List"
-      v-model="input2selectShow"
-      @confirm="input2selectConfirm"
-    ></u-select>
-
-    <u-select
-      mode="single-column"
-      :list="input5List"
-      v-model="input5selectShow"
-      @confirm="input5selectConfirm"
-    ></u-select>
 
     <view class="exam-info">
-      <view class="exam-info-li">考试时间：3月22日 20:30</view>
-      <view class="exam-info-li">考试地点：渝中区百货大楼2楼</view>
+      <view class="exam-info-li">考试时间：{{ examIneSchedule.examineTime || '-' }}</view>
+      <view class="exam-info-li">考试地点：{{ examIneSchedule.examineRoomName || '-' }}</view>
     </view>
 
     <view class="footer">
@@ -121,10 +46,14 @@
 </template>
 
 <script>
-  /* eslint-disable no-console */
   import config from '@/config/config';
   import CertFormItem from './components/CertFormItem.vue';
   import ProgressBar from './components/ProgressBar.vue';
+  import {
+    addCertificatereservation,
+    queryExamIneScheduleList,
+    queryCertTypeList,
+  } from '@/util/ajax/services';
   export default {
     components: {
       CertFormItem,
@@ -134,11 +63,11 @@
       return {
         form: {
           name: '',
-          input1: '',
-          input2: '',
-          input3: '',
-          input4: '',
-          input5: '',
+          professionalName: '',
+          level: '',
+          phone: '',
+          idcard: '',
+          scheduleId: '',
         },
         formList: [
           {
@@ -148,80 +77,58 @@
             placeholder: '请输入姓名',
             type: '',
             selectList: [],
+            value: '',
           },
           {
-            label: '文化程度',
-            prop: 'input1',
+            label: '项目',
+            prop: 'professionalName',
             required: true,
             placeholder: '请选择',
             type: 'select',
-            selectList: [
-              {
-                value: '小学',
-                label: '小学',
-              },
-              {
-                value: '初中',
-                label: '初中',
-              },
-              {
-                value: '高中',
-                label: '高中',
-              },
-              {
-                value: '大学',
-                label: '大学',
-              },
-            ],
+            selectList: [],
+            value: '',
+          },
+          {
+            label: '等级',
+            prop: 'level',
+            required: true,
+            placeholder: '请选择',
+            type: 'select',
+            selectList: [],
+            value: '',
+          },
+          {
+            label: '电话',
+            prop: 'phone',
+            required: true,
+            placeholder: '很重要，用于短信通知',
+            type: '',
+            selectList: [],
+            value: '',
+          },
+          {
+            label: '身份证号',
+            prop: 'idcard',
+            required: true,
+            placeholder: '请正确输入您的身份证号码',
+            type: '',
+            selectList: [],
+            value: '',
+          },
+          {
+            label: '考试期数',
+            prop: 'scheduleId',
+            required: true,
+            placeholder: '请选择',
+            type: 'select',
+            selectList: [],
+            value: '',
           },
         ],
-        input1selectShow: false,
-        input1List: [
-          {
-            value: '电子产品',
-            label: '电子产品',
-          },
-          {
-            value: '服装',
-            label: '服装',
-          },
-          {
-            value: '工艺品',
-            label: '工艺品',
-          },
-        ],
-        input2selectShow: false,
-        input2List: [
-          {
-            value: '电子产品',
-            label: '电子产品',
-          },
-          {
-            value: '服装',
-            label: '服装',
-          },
-          {
-            value: '工艺品',
-            label: '工艺品',
-          },
-        ],
-
-        input5selectShow: false,
-        input5List: [
-          {
-            value: '电子产品',
-            label: '电子产品',
-          },
-          {
-            value: '服装',
-            label: '服装',
-          },
-          {
-            value: '工艺品',
-            label: '工艺品',
-          },
-        ],
-
+        certTypeList: [],
+        levelList: [],
+        examIneScheduleList: [],
+        examIneSchedule: {},
         checked: false,
 
         /* 表单校验 */
@@ -244,21 +151,21 @@
               message: '姓名长度最大10个字符',
             },
           ],
-          input1: [
+          professionalName: [
             {
               required: true,
               message: '对不起，项目填写不能空，请填写相关内容。',
               trigger: 'blur,change',
             },
           ],
-          input2: [
+          level: [
             {
               required: true,
               message: '对不起，等级填写不能空，请填写相关内容。',
               trigger: 'blur,change',
             },
           ],
-          input3: [
+          phone: [
             {
               required: true,
               message: '对不起，电话填写不能空，请填写相关内容。',
@@ -269,11 +176,10 @@
                 return this.$u.test.mobile(value);
               },
               message: '对不起，电话填写格式有误，请检查并重新填写。',
-              // 触发器可以同时用blur和change，二者之间用英文逗号隔开
               trigger: ['change', 'blur'],
             },
           ],
-          input4: [
+          idcard: [
             {
               required: true,
               message: '对不起，身份证填写不能空，请填写相关内容。',
@@ -284,11 +190,10 @@
                 return this.$u.test.idCard(value);
               },
               message: '对不起，身份证填写格式有误，请检查并重新填写。',
-              // 触发器可以同时用blur和change，二者之间用英文逗号隔开
               trigger: ['change', 'blur'],
             },
           ],
-          input5: [
+          scheduleId: [
             {
               required: true,
               message: '对不起，考试期数填写不能空，请填写相关内容。',
@@ -308,42 +213,175 @@
         ossUrl: config.ossUrl,
       };
     },
-    // 必须要在onReady生命周期，因为onLoad生命周期组件可能尚未创建完毕
     onReady() {
       this.$refs.uForm.setRules(this.rules);
     },
+    onLoad(options) {
+      this.loadChangeValueFn('professionalName', options.certName);
+      this.loadChangeValueFn('level', options.certLevelName);
+      this.loadChangeValueFn('scheduleId', options.title);
+
+      this.examIneSchedule.examineTime = options.examineTime;
+      this.examIneSchedule.examineRoomName = options.examineRoomName;
+
+      this.queryCertTypeListApi(options);
+
+      if (options.certId) {
+        this.queryExamIneScheduleListApi(options.certId);
+      }
+    },
     methods: {
-      input1selectConfirm(e) {
-        this.form.input1 = '';
-        e.map((val) => {
-          this.form.input1 += this.form.input1 == '' ? val.label : '-' + val.label;
-        });
-      },
-
-      input2selectConfirm(e) {
-        this.form.input2 = '';
-        e.map((val) => {
-          this.form.input2 += this.form.input1 == '' ? val.label : '-' + val.label;
-        });
-      },
-
-      input5selectConfirm(e) {
-        this.form.input2 = '';
-        e.map((val) => {
-          this.form.input2 += this.form.input1 == '' ? val.label : '-' + val.label;
-        });
-      },
-
       change(e) {
         this.checked = e.value;
       },
+
+      inputValueChange(e, prop) {
+        this.form[prop] = e;
+      },
+
+      selectConfirm(e, prop) {
+        this.form[prop] = e[0].label;
+        this.selectChangeValueFn(prop, e);
+        if (prop === 'professionalName') {
+          this.selectCleanFn('level');
+          this.selectCleanFn('scheduleId');
+
+          let formListIndex = this.formList.findIndex((item) => {
+            return item.prop == 'level';
+          });
+
+          this.levelList = this.certTypeList[e[0].value].certInfoList;
+          this.levelList.forEach((el) => {
+            this.formList[formListIndex].selectList.push({
+              label: el.levelName,
+              value: el.id,
+            });
+          });
+        }
+
+        if (prop === 'level') {
+          this.queryExamIneScheduleListApi(e[0].value);
+          this.selectCleanFn('scheduleId');
+        }
+
+        if (prop === 'scheduleId') {
+          let index = this.examIneScheduleList.findIndex((item) => {
+            return item.value == e.value;
+          });
+          this.examIneSchedule = this.examIneScheduleList[index];
+        }
+      },
+
+      /* 改变下拉选中的值 */
+      selectChangeValueFn(prop, e) {
+        let index = this.formList.findIndex((item) => {
+          return item.prop == prop;
+        });
+        this.formList[index].value = e[0].label;
+      },
+      /* 选中联动清空下拉框 */
+      selectCleanFn(prop) {
+        let index = this.formList.findIndex((item) => {
+          return item.prop == prop;
+        });
+        this.formList[index].selectList = [];
+        this.formList[index].value = '';
+        this.form[prop] = '';
+      },
+      /* 生命周期加载获取证书信息 */
+      loadChangeValueFn(prop, value) {
+        let index = this.formList.findIndex((item) => {
+          return item.prop == prop;
+        });
+        this.formList[index].value = value;
+        this.form[prop] = value;
+      },
+
       submit() {
-        this.$refs.uForm.validate((valid) => {
+        if (!this.checked) {
+          this.$u.toast(' 请阅读协议《报名须知》');
+          return;
+        }
+        this.$refs.uForm.validate(async (valid) => {
           if (valid) {
-            console.log('成功');
-          } else {
-            console.log('验证失败');
+            let params = { ...this.form };
+            let examIneSchedule = this.examIneScheduleList.find((item) => {
+              return item.title == this.form.scheduleId;
+            });
+            params.scheduleId = examIneSchedule.id;
+            params.certificateId = examIneSchedule.certId;
+            delete params.level;
+            delete params.professionalName;
+            let res = await addCertificatereservation(params);
+            if (res.rescode === 200) {
+              this.$refs.uToast.show({
+                title: '提交成功',
+                type: 'success',
+                url: '/pages/apply/apply_2',
+                params: {
+                  id: res.data,
+                  certName: this.form.professionalName,
+                },
+              });
+            } else {
+              this.$refs.uToast.show({
+                title: res.msg,
+                type: 'error',
+              });
+            }
           }
+        });
+      },
+
+      async queryCertTypeListApi(options) {
+        let res = await queryCertTypeList();
+        this.certTypeList = res.data;
+
+        /* 查找当前prop对应的索引 */
+        let formListIndex = this.formList.findIndex((item) => {
+          return item.prop == 'professionalName';
+        });
+        /* push selectList所需要的数据 */
+        this.certTypeList.forEach((el, index) => {
+          this.formList[formListIndex].selectList.push({
+            label: el.professionalName,
+            value: index,
+          });
+        });
+
+        if (options.certId) {
+          let levelIndex = this.formList.findIndex((item) => {
+            return item.prop == 'level';
+          });
+          let certTypeIndex = this.certTypeList.findIndex((item) => {
+            return item.professionalName == options.certName;
+          });
+          this.levelList = this.certTypeList[certTypeIndex].certInfoList;
+
+          this.levelList.forEach((el) => {
+            this.formList[levelIndex].selectList.push({
+              label: el.levelName,
+              value: el.id,
+            });
+          });
+        }
+      },
+      async queryExamIneScheduleListApi(certId) {
+        let params = {
+          certId: certId,
+        };
+        let res = await queryExamIneScheduleList(params);
+        this.examIneScheduleList = res.data;
+        /* 查找当前prop对应的索引 */
+        let formListIndex = this.formList.findIndex((item) => {
+          return item.prop == 'scheduleId';
+        });
+        /* push selectList所需要的数据 */
+        this.examIneScheduleList.forEach((el) => {
+          this.formList[formListIndex].selectList.push({
+            label: el.title,
+            value: el.id,
+          });
         });
       },
     },

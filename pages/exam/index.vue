@@ -1,7 +1,7 @@
 <template>
   <view class="page">
     <u-tabs
-      :list="examList"
+      :list="certTypeList"
       :current="examCurrent"
       @change="examChange"
       inactive-color="#999"
@@ -16,21 +16,21 @@
       <view
         class="level-li"
         :class="levelCurrent === index ? 'level-selected' : ''"
-        v-for="(item, index) in levelList"
+        v-for="(item, index) in certLevelArray"
         :key="index"
         @click="chooseLevel(index)"
-        >{{ item.level }}</view
+        >{{ item.levelName }}</view
       >
     </view>
 
     <view class="exam-num-wrap">
       <view class="exam-num-item-l">
         <view class="exam-num-name">未做题</view>
-        <view class="exam-num">99</view>
+        <view class="exam-num">{{ examInfo.practiceAllCount - examInfo.practiceDoCount }}</view>
       </view>
       <view class="exam-num-item-r">
         <view class="exam-num-name">错题</view>
-        <view class="exam-num">1</view>
+        <view class="exam-num">{{ examInfo.practiceWrongCount }}</view>
       </view>
     </view>
 
@@ -43,12 +43,17 @@
         <u-image width="48rpx" height="48rpx" :src="`${ossUrl}right-arrows_4.png`"></u-image>
       </view>
       <view class="progress-wrap">
-        <u-line-progress :percent="80" height="12" active-color="#fff"></u-line-progress>
-        <view class="progress">20/200</view>
+        <u-line-progress
+          :percent="(examInfo.practiceDoCount / examInfo.practiceAllCount) * 100"
+          height="12"
+          active-color="#fff"
+          :show-percent="false"
+        ></u-line-progress>
+        <view class="progress">{{ examInfo.practiceDoCount }}/{{ examInfo.practiceAllCount }}</view>
       </view>
     </view>
 
-    <view class="exam-card card-success">
+    <view class="exam-card card-success" @click="routerMockTest">
       <view class="card-content">
         <view class="card-content-l">
           <view class="card-content-l-t">模拟考试</view>
@@ -57,8 +62,13 @@
         <u-image width="48rpx" height="48rpx" :src="`${ossUrl}right-arrows_4.png`"></u-image>
       </view>
       <view class="progress-wrap">
-        <u-line-progress :percent="70" height="12" active-color="#fff"></u-line-progress>
-        <view class="progress">20分</view>
+        <u-line-progress
+          :percent="examInfo.mockExamAvgScore"
+          height="12"
+          active-color="#fff"
+          :show-percent="false"
+        ></u-line-progress>
+        <view class="progress">{{ examInfo.mockExamAvgScore }}分</view>
       </view>
     </view>
 
@@ -74,27 +84,20 @@
 
 <script>
   import config from '@/config/config';
+  import {
+    queryCertTypeList,
+    queryInfoByCertId,
+    pullRandomMockTestPater,
+  } from '@/util/ajax/services';
   export default {
     data() {
       return {
-        examList: [
-          {
-            name: '月嫂',
-          },
-          {
-            name: '育婴师',
-          },
-          {
-            name: '催乳师',
-          },
-          {
-            name: '产后康复师',
-          },
-          {
-            name: '小儿推拿师',
-          },
-        ],
+        certTypeList: [], //顶部证书tab
+        certLevelList: [], //证书等级tab
+        certLevelArray: [], //当前选中的证书等级
+        examInfo: {}, //当前选中证书等级信息
         examCurrent: 0,
+        certId: '', //证书id
 
         levelList: [{ level: '五级' }, { level: '四级' }, { level: '三级' }],
         levelCurrent: 0,
@@ -104,17 +107,74 @@
         current: 2,
       };
     },
+    onLoad() {
+      this.queryCertTypeListApi();
+    },
     methods: {
       examChange(index) {
         this.examCurrent = index;
+        this.certLevelArray = this.certLevelList[index];
+        this.certId = this.certLevelArray[0].id;
+        let params = {
+          id: this.certId,
+        };
+        this.queryInfoByCertIdApi(params);
       },
       chooseLevel(index) {
         this.levelCurrent = index;
+
+        let params = {
+          id: this.certLevelArray[index].id,
+        };
+        this.queryInfoByCertIdApi(params);
       },
       routerTest() {
+        let params = {
+          certId: this.certId,
+          paperType: 1,
+        };
         this.$u.route({
-          url: 'pages/test/index',
+          url: '/pages/test/index',
+          params: params,
         });
+      },
+      async routerMockTest() {
+        let params = {
+          certId: this.certId,
+        };
+        let res = await pullRandomMockTestPater(params);
+        if (res.rescode === 200) {
+          let params1 = {
+            id: res.data.id,
+          };
+          this.$u.route({
+            url: '/pages/test/mocktest/index',
+            params: params1,
+          });
+        } else {
+          this.$refs.uToast.show({
+            title: res.msg,
+            type: 'error',
+          });
+        }
+      },
+      async queryCertTypeListApi() {
+        let res = await queryCertTypeList();
+
+        res.data.forEach((el) => {
+          this.certTypeList.push({ name: el.professionalName });
+          this.certLevelList.push(el.certInfoList);
+          this.certLevelArray = this.certLevelList[0];
+          this.certId = this.certLevelArray[0].id;
+        });
+        let params = {
+          id: this.certId,
+        };
+        this.queryInfoByCertIdApi(params);
+      },
+      async queryInfoByCertIdApi(params) {
+        let res = await queryInfoByCertId(params);
+        this.examInfo = res.data;
       },
     },
   };

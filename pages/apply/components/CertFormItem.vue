@@ -1,7 +1,7 @@
 <template>
   <u-form-item :label="label" :prop="prop" :required="required">
     <u-input
-      v-model="formValue"
+      :value="value"
       :input-align="inputAlign"
       :placeholder-style="placeholderStyle"
       :placeholder="placeholder"
@@ -59,26 +59,24 @@
         type: Array,
         default: () => [],
       },
+      value: {
+        type: String,
+        default: '',
+      },
     },
     data() {
       return {
         selectShow: false,
         inputAlign: 'right',
         placeholderStyle: 'fontSize:16px;lineHeight:20px;color:#ccc',
-        formValue: '',
       };
     },
     methods: {
       handleInput(value) {
-        this.formValue = value;
         this.$emit('inputValueChange', value);
       },
       selectConfirm(e) {
-        this.formValue = '';
-        e.map((val) => {
-          this.formValue += this.formValue == '' ? val.label : '-' + val.label;
-        });
-        this.$emit('inputValueChange', this.formValue);
+        this.$emit('selectConfirm', e);
       },
     },
   };

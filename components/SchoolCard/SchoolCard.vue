@@ -1,19 +1,19 @@
 <template>
   <view class="school-card">
-    <u-image width="176rpx" height="176rpx" src="/static/images/school.png"></u-image>
+    <u-image width="176rpx" height="176rpx" :src="schoolItem.schoolLogo"></u-image>
     <view class="school-card-r">
       <view class="school-card-r-header">
-        <view class="school-card-r-header-title">南京弘顶职业培训学校南京弘顶职业培训学校</view>
-        <view class="school-card-r-header-call">
+        <view class="school-card-r-header-title">{{ schoolIte.name }}</view>
+        <view class="school-card-r-header-call" @click="call(schoolItem.phone)">
           <u-image width="32rpx" height="32rpx" :src="`${ossUrl}phone.png`"></u-image>
         </view>
       </view>
-      <view class="school-card-num">培训人数 2999人</view>
+      <view class="school-card-num">培训人数 {{ schoolIte.trainNum }}人</view>
       <view class="school-card-tips">
         <text class="school-card-tips-item">养老护理员</text>
       </view>
       <view class="school-card-address">
-        <view class="school-card-location">中山东路300号长发中心A栋101</view>
+        <view class="school-card-location">{{ schoolItem.address }}</view>
         <view class="school-card-distance">&lt;100米</view>
       </view>
     </view>
@@ -33,6 +33,13 @@
       return {
         ossUrl: config.ossUrl,
       };
+    },
+    methods: {
+      call(value) {
+        uni.makePhoneCall({
+          phoneNumber: value,
+        });
+      },
     },
   };
 </script>

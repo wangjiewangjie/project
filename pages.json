@@ -28,6 +28,24 @@
       }
     },
     {
+      "path": "pages/test/mocktest/index",
+      "style": {
+        "navigationBarTitleText": "模拟考试",
+        "app-plus": {
+          "titleNView": false
+        }
+      }
+    },
+    {
+      "path": "pages/test/examResult/index",
+      "style": {
+        "navigationBarTitleText": "考试结果",
+        "app-plus": {
+          "titleNView": false
+        }
+      }
+    },
+    {
       "path": "pages/query/index",
       "style": {
         "navigationBarTitleText": "查询"

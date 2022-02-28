@@ -3,34 +3,34 @@
     <view class="result-header">
       <view class="result-li">
         <u-image width="32rpx" height="32rpx" :src="`${ossUrl}result_user.png`"></u-image>
-        <view class="result-li-r">陈奇</view>
+        <view class="result-li-r">{{ name }}</view>
       </view>
       <view class="result-li">
         <u-image width="32rpx" height="32rpx" :src="`${ossUrl}result_idcard.png`"></u-image>
-        <view class="result-li-r">360902195706072652</view>
+        <view class="result-li-r">{{ idcard }}</view>
       </view>
     </view>
-    <view class="query-list">
-      <view class="query-list-header">共有 8 个考试成绩</view>
+    <view class="query-list" v-for="(item, index) in examineStudentVOList" :key="index">
+      <view class="query-list-header">共有 {{ examineStudentVOList.length }} 个考试成绩</view>
       <view class="query-list-li">
         <view class="li-t">
-          <view class="li-t-l">高级育婴师证</view>
-          <view class="li-t-r">制作中</view>
+          <view class="li-t-l">{{ item.professionalName }}</view>
+          <view class="li-t-r" v-if="item.certificateStatus === 1">制作中</view>
         </view>
-        <view class="li-m">技能等级：三级/高级技能</view>
-        <view class="li-m">考试时间：2022-01-22</view>
+        <view class="li-m">技能等级：{{ item.levelName }}</view>
+        <view class="li-m">考试时间：{{ item.applyExamineDate }}</view>
         <view class="li-b">
-          <view class="score" :class="score >= 60 ? 'exam-success' : 'exam-error'">
+          <view class="score" :class="item.theoryScore >= 60 ? 'exam-success' : 'exam-error'">
             <view class="score-l">笔试成绩</view>
             <view class="score-r">
-              {{ score }}
+              {{ item.theoryScore }}
               <text class="score-r-text">分</text>
             </view>
           </view>
-          <view class="score" :class="score >= 60 ? 'exam-success' : 'exam-error'">
+          <view class="score" :class="item.fieldScore >= 60 ? 'exam-success' : 'exam-error'">
             <view class="score-l">实操成绩</view>
             <view class="score-r">
-              {{ score }}
+              {{ item.fieldScore }}
               <text class="score-r-text">分</text>
             </view>
           </view>
@@ -47,8 +47,10 @@
       return {
         ossUrl: config.ossUrl,
         score: 60,
+        examineStudentVOList: [],
       };
     },
+    onLoad() {},
   };
 </script>
 

@@ -33,6 +33,8 @@
         >
       </view>
     </view>
+
+    <u-toast ref="uToast" />
   </view>
 </template>
 
@@ -40,6 +42,7 @@
   /* eslint-disable no-console */
   import config from '@/config/config';
   import CertFormItem from '../../apply/components/CertFormItem.vue';
+  import { queryExaminestudentScore } from '@/util/ajax/services';
   export default {
     components: {
       CertFormItem,
@@ -48,6 +51,7 @@
       return {
         form: {
           name: '',
+          idcard: '',
         },
         formList: [
           {
@@ -60,7 +64,7 @@
           },
           {
             label: '身份证号',
-            prop: 'input1',
+            prop: 'idcard',
             required: true,
             placeholder: '请输入身份证号',
             type: '',
@@ -87,6 +91,20 @@
               message: '姓名长度最大10个字符',
             },
           ],
+          idcard: [
+            {
+              required: true,
+              message: '对不起，身份证填写不能空，请填写相关内容。',
+              trigger: 'blur,change',
+            },
+            {
+              validator: (rule, value) => {
+                return this.$u.test.idCard(value);
+              },
+              message: '对不起，身份证填写格式有误，请检查并重新填写。',
+              trigger: ['change', 'blur'],
+            },
+          ],
         },
         /* 表单样式 */
         errorType: ['toast'],
@@ -108,10 +126,23 @@
       },
 
       submit() {
-        this.$refs.uForm.validate((valid) => {
+        this.$refs.uForm.validate(async (valid) => {
           console.log(this.form);
           if (valid) {
-            console.log('成功');
+            let params = { ...this.form };
+            let res = await queryExaminestudentScore(params);
+            if (res.rescode === 200) {
+              this.$refs.uToast.show({
+                title: '查询中',
+                type: 'success',
+                url: '/pages/query/resultList/index',
+              });
+            } else {
+              this.$refs.uToast.show({
+                title: res.msg,
+                type: 'error',
+              });
+            }
           } else {
             console.log('验证失败');
           }

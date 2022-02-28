@@ -8,11 +8,20 @@
       ref="uForm"
       :error-type="errorType"
       :label-style="labelStyle"
-      label-width="192"
+      label-width="220"
     >
-      <u-form-item prop="photo" class="photo-wrap">
+      <u-form-item prop="imgUrlList" class="photo-wrap">
         <view class="h2">证件照片（1寸照片）</view>
-        <u-upload :custom-btn="true" :action="action" :file-list="fileList">
+        <!-- 设置上传二进制文件名称name="code" -->
+        <u-upload
+          :custom-btn="true"
+          :action="action"
+          :max-count="1"
+          :max-size="2 * 1024 * 1024"
+          :header="header"
+          @on-success="(file) => _success(file)"
+          name="code"
+        >
           <view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
             <u-image width="240rpx" height="336rpx" :src="`${ossUrl}apply_2-upload.png`"></u-image>
           </view>
@@ -42,11 +51,13 @@
           :key="index"
           :label="item.label"
           :prop="item.prop"
-          :required="true"
+          :required="item.required"
           :placeholder="item.placeholder"
           :type="item.type"
           :selectList="item.selectList"
+          :value="item.value"
           @inputValueChange="inputValueChange($event, item.prop)"
+          @selectConfirm="selectConfirm($event, item.prop)"
         ></CertFormItem>
         <view class="more-wrap" v-show="!more" @click="more = true">
           <view class="more-btn">
@@ -56,15 +67,17 @@
         </view>
         <view v-show="more">
           <CertFormItem
-            v-for="(item, index) in formList"
+            v-for="(item, index) in hideformList"
             :key="index"
             :label="item.label"
             :prop="item.prop"
-            :required="true"
+            :required="item.required"
             :placeholder="item.placeholder"
             :type="item.type"
             :selectList="item.selectList"
+            :value="item.value"
             @inputValueChange="inputValueChange($event, item.prop)"
+            @selectConfirm="selectConfirm($event, item.prop)"
           ></CertFormItem>
         </view>
       </view>
@@ -79,10 +92,13 @@
 </template>
 
 <script>
-  /* eslint-disable no-console */
   import config from '@/config/config';
   import CertFormItem from './components/CertFormItem.vue';
   import ProgressBar from './components/ProgressBar.vue';
+  import form from './js/form';
+  import city from './js/city.data';
+  import { updateStudentInfo } from '@/util/ajax/services';
+  import commonInfo from '@/util/commonInfo';
   export default {
     components: {
       CertFormItem,
@@ -90,8 +106,25 @@
     },
     data() {
       return {
+        options: {},
         form: {
+          imgUrlList: [],
           name: '',
+          education: '',
+          studentSource: '',
+          certificateReceive: '',
+          professional: '',
+          companyName: '',
+          province: '',
+          city: '',
+          workStartTime: '',
+          workMajor: '',
+          workingLife: '',
+          nation: '',
+          politicalLandscape: '',
+          address: '',
+          mailAddress: '',
+          permanentaddress: '',
         },
         photosampleList: [
           { photosamplePic: 'apply_2-upload_1.png', tips: '纯色背景白色最佳' },
@@ -99,46 +132,24 @@
           { photosamplePic: 'apply_2-upload_3.png', tips: '正对镜头双耳露出' },
           { photosamplePic: 'apply_2-upload_4.png', tips: '发型整洁不浓妆' },
         ],
-        formList: [
-          {
-            label: '姓名',
-            prop: 'name',
-            required: true,
-            placeholder: '请输入姓名',
-            type: '',
-            selectList: [],
-          },
-          {
-            label: '文化程度',
-            prop: 'input1',
-            required: true,
-            placeholder: '请选择',
-            type: 'select',
-            selectList: [
-              {
-                value: '小学',
-                label: '小学',
-              },
-              {
-                value: '初中',
-                label: '初中',
-              },
-              {
-                value: '高中',
-                label: '高中',
-              },
-              {
-                value: '大学',
-                label: '大学',
-              },
-            ],
-          },
-        ],
+        formList: form.formList,
+        hideformList: form.hideformList,
+        province: [],
 
         more: false,
 
         /* 表单校验 */
         rules: {
+          imgUrlList: [
+            {
+              required: true,
+              validator: () => {
+                return this.form.imgUrlList.length > 0;
+              },
+              message: '对不起，证件照不能空，请检查并重新上传。',
+              trigger: ['change', 'blur'],
+            },
+          ],
           name: [
             {
               required: true,
@@ -157,6 +168,48 @@
               message: '姓名长度最大10个字符',
             },
           ],
+          education: [
+            {
+              required: true,
+              message: '对不起，文化程度填写不能空，请填写相关内容。',
+              trigger: 'blur,change',
+            },
+          ],
+          studentSource: [
+            {
+              required: true,
+              message: '对不起，考生来源填写不能空，请填写相关内容。',
+              trigger: 'blur,change',
+            },
+          ],
+          professional: [
+            {
+              required: true,
+              message: '对不起，职业名称填写不能空，请填写相关内容。',
+              trigger: 'blur,change',
+            },
+          ],
+          companyName: [
+            {
+              required: true,
+              message: '对不起，所在单位填写不能空，请填写相关内容。',
+              trigger: 'blur,change',
+            },
+          ],
+          province: [
+            {
+              required: true,
+              message: '对不起，省份填写不能空，请填写相关内容。',
+              trigger: 'blur,change',
+            },
+          ],
+          city: [
+            {
+              required: true,
+              message: '对不起，城市填写不能空，请填写相关内容。',
+              trigger: 'blur,change',
+            },
+          ],
         },
         /* 表单样式 */
         errorType: ['toast'],
@@ -166,24 +219,106 @@
           color: '#333333',
         },
         ossUrl: config.ossUrl,
+
+        action: config.apiHost + '/core/upload/uploadPic',
+        header: {
+          Authorization: commonInfo.getToken(),
+        },
       };
     },
     // 必须要在onReady生命周期，因为onLoad生命周期组件可能尚未创建完毕
     onReady() {
       this.$refs.uForm.setRules(this.rules);
     },
+    onLoad(options) {
+      this.options = options;
+      let index = this.formList.findIndex((item) => {
+        return item.prop == 'province';
+      });
+      city.forEach((el) => {
+        this.province.push({ value: el.value, label: el.label });
+      });
+      let certNameIndex = this.hideformList.findIndex((item) => {
+        return item.prop == 'certName';
+      });
+
+      this.$set(this.hideformList[certNameIndex], 'value', options.certName);
+      this.$set(this.formList[index], 'selectList', this.province);
+    },
     methods: {
+      /* 图片上传成功 */
+      _success(res) {
+        this.form.imgUrlList.push(res.data);
+      },
       inputValueChange(e, prop) {
         this.form[prop] = e;
       },
+      selectConfirm(e, prop) {
+        this.form[prop] = e[0].label;
+        this.selectChangeValueFn(prop, e);
+
+        if (prop === 'province') {
+          this.selectCleanFn('city');
+          let provinceIndex = this.province.findIndex((item) => {
+            return item.value == e[0].value;
+          });
+          let cityIndex = this.formList.findIndex((item) => {
+            return item.prop == 'city';
+          });
+          this.$set(this.formList[cityIndex], 'selectList', city[provinceIndex].children);
+        }
+      },
+      /* 改变下拉选中的值 */
+      selectChangeValueFn(prop, e) {
+        let index = this.formList.findIndex((item) => {
+          return item.prop == prop;
+        });
+        this.formList[index].value = e[0].label;
+      },
+
+      /* 选中联动清空下拉框 */
+      selectCleanFn(prop) {
+        let index = this.formList.findIndex((item) => {
+          return item.prop == prop;
+        });
+        this.formList[index].selectList = [];
+        this.formList[index].value = '';
+        this.form[prop] = '';
+      },
 
       submit() {
-        this.$refs.uForm.validate((valid) => {
-          console.log(this.form);
+        this.$refs.uForm.validate(async (valid) => {
           if (valid) {
-            console.log('成功');
-          } else {
-            console.log('验证失败');
+            let params = { ...this.form };
+            let educationObj = form.educationList.find((item) => {
+              return item.label == this.form.education;
+            });
+
+            let studentSourceObj = form.studentSourceList.find((item) => {
+              return item.label == this.form.studentSource;
+            });
+
+            let originalLevelObj = form.originalLevel.find((item) => {
+              return item.label == this.form.originalLevel;
+            });
+            params.id = params.education = educationObj ? educationObj.value : '';
+            params.studentSource = studentSourceObj ? studentSourceObj.value : '';
+            params.originalLevel = originalLevelObj ? originalLevelObj.value : '';
+            params.id = this.options.id;
+            let res = await updateStudentInfo(params);
+            if (res.rescode === 200) {
+              this.$refs.uToast.show({
+                title: '提交成功',
+                type: 'success',
+                url: '/pages/apply/apply_3',
+                params: res.data,
+              });
+            } else {
+              this.$refs.uToast.show({
+                title: res.msg,
+                type: 'error',
+              });
+            }
           }
         });
       },

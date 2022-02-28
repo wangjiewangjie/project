@@ -20,6 +20,8 @@ request.rq = (url, data, method, needToken, shallow = false, showLoading = true)
     'Content-Type': 'application/json;charset=utf-8',
     platform: config.platform,
     systemSource: systemSource,
+    unionCode: 'U00112',
+    // unionCode: 'U00001', //dev
   };
   let params = data || {};
 

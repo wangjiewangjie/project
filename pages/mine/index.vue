@@ -1,14 +1,14 @@
 <template>
   <view class="page">
     <view class="header-wrap">
-      <view class="header">
+      <view class="header" @click="routerLogin">
         <u-image
           shape="circle"
           width="100rpx"
           height="100rpx"
-          :src="`${ossUrl}mine-avatar.png`"
+          :src="userInfo.headImgUrl || `${ossUrl}mine-avatar.png`"
         ></u-image>
-        <view class="name">{{ name }}</view>
+        <view class="name">{{ userInfo.phone || '点击登录/注册' }}</view>
         <u-image width="32rpx" height="32rpx" :src="`${ossUrl}right-arrows_2.png`"></u-image>
       </view>
     </view>
@@ -33,7 +33,7 @@
       </view>
     </view>
 
-    <view class="school-wrap">
+    <view class="school-wrap" v-if="!isLogin">
       <view class="school-wrap-title">
         <view class="school-title">推荐培训学校</view>
         <view class="more-btn">
@@ -44,7 +44,9 @@
       <SchoolCard></SchoolCard>
     </view>
 
-    <u-button class="login-out" type="primary" shape="circle" plain>退出登录</u-button>
+    <u-button v-if="isLogin" @click="onQuit" class="login-out" type="primary" shape="circle" plain
+      >退出登录</u-button
+    >
 
     <u-tabbar
       v-model="current"
@@ -59,20 +61,43 @@
 <script>
   import config from '@/config/config';
   import SchoolCard from '@/components/SchoolCard/SchoolCard';
+  import commonInfo from '@/util/commonInfo';
   export default {
     component: {
       SchoolCard,
     },
     data() {
       return {
-        name: '点击登录/注册',
+        userInfo: {},
+        isLogin: false,
 
         ossUrl: config.ossUrl,
         tabbarList: config.tabbarList,
         current: 4,
       };
     },
+    onLoad() {
+      this.userInfo = commonInfo.getUser();
+      this.isLogin = Boolean(commonInfo.getToken());
+    },
     methods: {
+      routerLogin() {
+        if (!commonInfo.getToken()) {
+          this.$u.route({
+            url: 'pages/login/index',
+            type: 'redirectTo',
+          });
+        }
+      },
+      onQuit() {
+        commonInfo.setToken('');
+        commonInfo.setUser('');
+
+        this.$u.route({
+          url: 'pages/login/index',
+          type: 'redirectTo',
+        });
+      },
       routerOrder() {
         this.$u.route({
           url: 'pages/order/index',

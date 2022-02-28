@@ -59,7 +59,7 @@
           <text>第三方账号登录</text>
           <text class="line"></text>
         </view>
-        <view class="wx-login">
+        <view class="wx-login" @click="wxLogin">
           <u-icon name="weixin-fill" color="#07C160" size="52"></u-icon>
         </view>
       </view>
@@ -73,25 +73,28 @@
         </u-checkbox>
       </view>
     </view>
+
+    <u-toast ref="uToast" />
   </view>
 </template>
 
 <script>
-  /* eslint-disable no-console */
   import jsencrypt from '@/components/jsencrypt/jsencrypt.vue';
   import config from '@/config/config';
-  import { getLoginCode } from '@/util/ajax/services';
+  import commonInfo from '@/util/commonInfo';
+  import { getLoginCode, phoneLogin } from '@/util/ajax/services';
   export default {
     data() {
       return {
         ossUrl: config.ossUrl,
 
-        name: 'xxx',
+        name: '南京',
 
         form: {
           phone: '',
           code: '',
         },
+        options: {},
 
         codeTips: '',
         sendType: 'primary',
@@ -122,7 +125,7 @@
             },
             {
               validator: (rule, value) => {
-                return this.$u.test.code(value, 4);
+                return this.$u.test.code(value, 6);
               },
               message: '验证码不正确',
               trigger: ['change', 'blur'],
@@ -134,16 +137,21 @@
     watch: {
       dateRange: {
         handler(e) {
-          this.loginDisabled = !e.checked;
+          if (this.$u.test.code(e.code, 6) && this.$u.test.mobile(e.phone)) {
+            this.loginDisabled = false;
+          }
         },
         deep: true,
       },
     },
     computed: {
       dateRange() {
-        const { checked } = this;
-        return { checked };
+        const { phone, code } = this.form;
+        return { phone, code };
       },
+    },
+    onLoad(options) {
+      this.options = options;
     },
     methods: {
       change(e) {
@@ -177,13 +185,57 @@
         }
       },
       submit() {
-        this.$refs.uForm.validate((valid) => {
+        if (!this.checked) {
+          this.$u.toast('请阅读《家协通服务协议》、《隐私协议》');
+          return;
+        }
+        this.$refs.uForm.validate(async (valid) => {
           if (valid) {
-            console.log('验证通过');
-          } else {
-            console.log('验证失败');
+            const params = {
+              companyId: 'G00001',
+              openId: '',
+              phone: this.form.phone,
+              userType: 13,
+              verifychkcode: this.form.code,
+              loginType: 2, //验证码登录
+            };
+            const res = await phoneLogin(params);
+            if (res.rescode === 200) {
+              commonInfo.setToken(res.data.token);
+              commonInfo.setUser(res.data.user);
+
+              if (this.options.back) {
+                this.$refs.uToast.show({
+                  title: '登录成功',
+                  type: 'success',
+                  back: true,
+                });
+              } else {
+                this.$refs.uToast.show({
+                  title: '登录成功',
+                  type: 'success',
+                  url: '/pages/index/index',
+                  isTab: true,
+                });
+              }
+            } else {
+              this.$refs.uToast.show({
+                title: res.msg,
+                type: 'error',
+              });
+            }
           }
         });
+      },
+      wxLogin() {
+        const AppId = config.h5wxAppId; // 公众号的AppId
+        const location = window.location.href; // 获取当前的页面路径，这就是回调的地址
+        window.location.href =
+          'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' +
+          AppId +
+          '&redirect_uri=' +
+          encodeURIComponent(location) +
+          '&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect';
       },
     },
     // 必须要在onReady生命周期，因为onLoad生命周期组件可能尚未创建完毕

@@ -111,9 +111,9 @@
                 "desc" : "用以匹配最近的服务商家"
             }
         },
-		"optimization" : {
-			"subPackages":true
-		}
+        "optimization" : {
+            "subPackages" : true
+        }
     },
     "mp-alipay" : {
         "usingComponents" : true
@@ -134,6 +134,10 @@
                     "key" : "J53BZ-4ZRE5-6T4II-QSQY3-NKX3O-X3F5J"
                 }
             }
+        },
+        "router" : {
+            "base" : "/static/association/credit-cert-h5/source/",
+            "mode" : "hash"
         }
     }
 }

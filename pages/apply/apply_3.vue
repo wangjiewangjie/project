@@ -4,39 +4,44 @@
 
     <view class="exam-info-wrap card">
       <view class="exam-info-header">
-        <view class="exam-num">报名编号：EB8332819982192</view>
-        <view class="exam-time">02-08 15:33</view>
+        <view class="exam-num">报名编号：{{ certificatereservation.orderNo }}</view>
+        <view class="exam-time">{{ certificatereservation.addTime | filterDay }}</view>
       </view>
       <view class="exam-content-wrap">
         <u-image width="216rpx" height="144rpx" src="/static/images/wx-code.png"></u-image>
         <view class="exam-content">
-          <view class="exam-name">育婴师 初级/五级</view>
-          <view class="exam-price">¥260.00</view>
+          <view class="exam-name">
+            {{ certificatereservation.professionalName }}
+            {{ certificatereservation.levelName }}
+          </view>
+          <view class="exam-price">¥{{ certificatereservation.supervisorCost | calcPrice }}</view>
         </view>
       </view>
       <view class="exam-li">
         <view class="exam-li-l">考试期数</view>
-        <view class="exam-li-r">¥260.00</view>
+        <view class="exam-li-r">{{ certificatereservation.examineScheduleVO.title }}</view>
       </view>
       <view class="exam-li">
         <view class="exam-li-l">考试时间</view>
-        <view class="exam-li-r">¥260.00</view>
+        <view class="exam-li-r">{{ certificatereservation.examineScheduleVO.examineTime }}</view>
       </view>
       <view class="exam-li">
         <view class="exam-li-l">考试场地</view>
-        <view class="exam-li-r">¥260.00</view>
+        <view class="exam-li-r">{{
+          certificatereservation.examineScheduleVO.examineRoomName
+        }}</view>
       </view>
     </view>
-    <view class="exam-ul card">
+    <!-- <view class="exam-ul card">
       <view class="exam-li">
         <view class="exam-li-l">优惠</view>
-        <view class="exam-li-r">¥260.00</view>
+        <view class="exam-li-r">{{ certificatereservation.supervisorCost }}</view>
       </view>
       <view class="exam-li">
         <view class="exam-li-l">总计</view>
-        <view class="exam-li-r">¥260.00</view>
+        <view class="exam-li-r">{{ certificatereservation.supervisorCost }}</view>
       </view>
-    </view>
+    </view>-->
     <view class="exam-ul card">
       <view class="exam-ul-title">报名须知</view>
       <view class="exam-ol">1.请确认考试信息和考试时间无误,购买成功后将不予退换</view>
@@ -52,7 +57,10 @@
     <view class="footer">
       <view class="price-wrap">
         实付金额：
-        <view class="price"> <text class="price-rmb">¥</text>260.00 </view>
+        <view class="price">
+          <text class="price-rmb">¥</text>
+          {{ certificatereservation.supervisorCost | calcPrice }}
+        </view>
       </view>
       <u-button class="pay" type="error" shape="circle" @click="submit">去支付</u-button>
     </view>
@@ -63,15 +71,82 @@
   import config from '@/config/config';
   import ProgressBar from './components/ProgressBar.vue';
   import Contact from './components/Contact.vue';
+  import { queryCertificatereservation } from '@/util/ajax/services';
+  import dayjs from 'dayjs';
+  import polyPay from '@/util/pay';
+  import $platform from '@/util/platform';
+  import commonInfo from '@/util/commonInfo';
   export default {
+    filters: {
+      filterDay(val) {
+        return dayjs(Number(val)).format('YYYY/MM/DD HH:mm:ss');
+      },
+      calcPrice(val) {
+        return commonInfo.calcPrice(val);
+      },
+    },
     components: {
       ProgressBar,
       Contact,
     },
     data() {
       return {
+        certificatereservation: {},
         ossUrl: config.ossUrl,
+        options: {},
       };
+    },
+    onLoad(options) {
+      this.options = options;
+      let params = {
+        id: options.id,
+      };
+      this.queryCertificatereservationApi(params);
+    },
+    methods: {
+      async queryCertificatereservationApi(params) {
+        let res = await queryCertificatereservation(params);
+        this.certificatereservation = res.data;
+      },
+      async submit() {
+        this.paying = true;
+        const [err, res] = await polyPay('wechat', {
+          orderId: this.options.orderNo,
+          wayId: 5,
+          sceneType: this.getEnvScene(),
+          appId: config.miniAppId,
+          openId: JSON.parse(uni.getStorageSync('wechatGrantInfo')).openid,
+        });
+        this.paying = false;
+        if (err) {
+          // 取消支付
+        }
+        if (res) {
+          // this.$Router.push({
+          //   path: '/pages/order/payway/payResult/index',
+          //   query: {
+          //     payState: 'success',
+          //     orderId: this.orderId,
+          //   },
+          // });
+          // return;
+        }
+      },
+      /**
+       * 小程序平台场景 临时写1
+       * - 1：c端 H5
+       * - 2：C端小程序
+       * - 3：s端小程序
+       */
+      getEnvScene() {
+        if ($platform.get() === 'wxMiniProgram') {
+          return 2;
+        }
+        if ($platform.get() === 'H5') {
+          return 1;
+        }
+        return;
+      },
     },
   };
 </script>

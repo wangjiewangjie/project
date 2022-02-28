@@ -9,12 +9,12 @@
     </view>
     <view class="order-wrap">
       <view class="order-header">
-        <view class="order-header-l">报名编号：202109929299291</view>
+        <view class="order-header-l">报名编号：{{ cartDetail }}</view>
       </view>
       <view class="order-content-wrap">
-        <u-image width="216rpx" height="144rpx" src="/static/images/wx-code.png"></u-image>
+        <u-image width="216rpx" height="144rpx" :src="cartDetail.imgUrl"></u-image>
         <view class="order-content">
-          <view class="order-content-t">育婴师 五级/初级证书</view>
+          <view class="order-content-t">{{ cartDetail.professionalName }} 五级/初级证书</view>
           <view class="order-content-m">报名时间：2019年10月1日</view>
           <view class="order-content-m">支付方式：微信支付</view>
           <view class="order-content-b">
@@ -50,11 +50,32 @@
 
 <script>
   import config from '@/config/config';
+  import dayjs from 'dayjs';
+  import commonInfo from '@/util/commonInfo';
+  import { queryCertificate } from '@/util/ajax/services';
   export default {
+    filters: {
+      filterDay(val) {
+        return dayjs(Number(val)).format('YYYY年MM月DD日');
+      },
+      calcPrice(val) {
+        return commonInfo.calcPrice(val);
+      },
+    },
     data() {
       return {
         ossUrl: config.ossUrl,
+        cartDetail: {},
       };
+    },
+    onLoad(options) {
+      this.queryCertificateApi(options);
+    },
+    methods: {
+      async queryCertificateApi(params) {
+        let res = queryCertificate(params);
+        this.cartDetail = res.data;
+      },
     },
   };
 </script>

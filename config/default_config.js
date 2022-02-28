@@ -44,8 +44,8 @@ let tabbarList = [
 
 // 开发环境配置
 const DEVELOPMENT_CONFIG = {
+  // apiHost: 'http://172.19.132.22:8080/',
   apiHost: 'https://creditapi-test1.devp.bm001.com/',
-  // apiHost: 'https://auntcard.bmtest1.bm001.com/',
   // apiHost: 'http://172.19.135.92:9999/',
   wxAppId,
   jwtjson: '',
@@ -56,8 +56,7 @@ const DEVELOPMENT_CONFIG = {
 
 // 生产环境配置
 const PRODUCTION_CONFIG = {
-  // apiHost: 'https://auntcard.bmtest1.bm001.com/',
-  apiHost: 'https://auntcard.bm001.com/',
+  apiHost: 'https://creditapi-test1.devp.bm001.com/',
   wxAppId,
   jwtjson: '',
   h5CodeUrl: 'https://oss.bm001.com/jfe/servicecard/prodh5/index.html#/pages/aunt/resume/resume',
@@ -104,7 +103,7 @@ export default {
   tabBarColor: 'rgba(0,0,0,.6)',
   tabSelectBarColor: '#F75959',
   // 发送验证码-公钥
-  publishKey:
+  publicKey:
     'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCETvRMnCvMCY80tvQIXZNqzmFQarh1KgmUt9k+GYbun55oFO2JbuxgcTo1DcggP4nbtEdxXJpmhUXCf8YYBl4DuuqPOGC2BgBDP7VS5OBBjyrWdeO5K9++PmJXPfFvYJg+EobX3MjfaTyK1ZsFZvnuRz31s6OnjU/8Ze7SuLfi4QIDAQAB',
   //配置
   apiHost,
@@ -119,4 +118,5 @@ export default {
   coordinate,
   ossUrl,
   tabbarList,
+  h5wxAppId: 'wxc28e7f7f0bfd60d0',
 };

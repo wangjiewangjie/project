@@ -38,3 +38,104 @@ export const miniSilence = (params) => {
 export const miniAuthBind = (params) => {
   return Http.post('/core/grant/miniAuthBind', params, true);
 };
+
+export const queryExamIneScheduleList = (params) => {
+  return Http.post('/s/examineschedule/queryList', params, true);
+};
+
+/* apply-1 */
+export const addCertificatereservation = (params) => {
+  return Http.post('/s/certificatereservation/add', params, true);
+};
+/* apply-2 */
+export const updateStudentInfo = (params) => {
+  return Http.post('/s/certificatereservation/updateStudentInfo', params, true);
+};
+/* apply-3 */
+export const queryCertificatereservation = (params) => {
+  return Http.post('/s/certificatereservation/query', params, true);
+};
+
+export const queryCertTypeList = (params) => {
+  return Http.post('/s/certificate/queryCertTypeList', params, true);
+};
+
+export const queryDistancePageList = (params) => {
+  return Http.post('/s/school/queryDistancePageList', params, true);
+};
+
+export const queryCertificateList = (params) => {
+  return Http.post('/s/certificate/queryList', params, true);
+};
+
+export const queryExaminestudentScore = (params) => {
+  return Http.post('/s/examinestudent/queryScore', params, true);
+}; //查询证书成绩
+
+export const queryAdvertisingList = (params) => {
+  return Http.post('/s/advertising/queryPageList', params, true);
+}; //广告
+
+export const queryInfoByCertId = (params) => {
+  return Http.post('/s/examinecertpaper/queryInfoByCertId', params, true);
+}; //查询考试信息
+
+export const loadExaminePaper = (params) => {
+  return Http.post('/s/examinecertpaper/loadExaminePaper', params, true);
+}; //加载考试试卷
+
+export const submitSingleQuestion = (params) => {
+  return Http.post('/s/examinecertpaper/submitSingleQuestion', params, true);
+}; //提交单个考题
+
+export const submitPaper = (params) => {
+  return Http.post('/s/examinecertpaper/submitPaper', params, true);
+}; //提交试卷
+
+export const queryExaminecertpaper = (params) => {
+  return Http.post('/s/examinecertpaper/query', params, true);
+}; //查询正确错误
+
+export const queryCertmocktestpaper = (params) => {
+  return Http.post('/s/certmocktestpaper/query', params, true);
+}; //查询证书模拟试卷
+
+export const pullRandomMockTestPater = (params) => {
+  return Http.post('/s/certmocktestpaper/pullRandomMockTestPater', params, true);
+}; //查询证书模拟试卷
+
+export const startExamine = (params) => {
+  return Http.post('/s/examinecertpaper/startExamine', params, true);
+}; //查询证书模拟试卷
+
+export const createMockTestExaminePaper = (params) => {
+  return Http.post('/s/examinecertpaper/createMockTestExaminePaper', params, true);
+}; //查询证书模拟试卷
+
+export const columnContactUs = (params) => {
+  return Http.post('/s/column/contactUs', params, true);
+}; //查询栏目列表
+
+export const queryColumn = (params) => {
+  return Http.post('/s/column/query', params, true);
+}; //查询栏目列表
+
+export const queryColumnNode = (params) => {
+  return Http.post('/s/column/queryNode', params, true);
+}; //查询栏目列表
+
+export const queryColumnPageList = (params) => {
+  return Http.post('/s/column/queryPageList', params, true);
+}; //查询栏目列表列表(带分页)
+
+export const buildOrder = (params) => {
+  return Http.post('/core/pay/buildOrder', params, true);
+}; //查询栏目列表列表(带分页)
+
+export const queryCertificatereservationPageList = (params) => {
+  return Http.post('/s/certificatereservation/queryPageList', params, true);
+}; //查询证书预约表列表(带分页)
+
+export const queryCertificate = (params) => {
+  return Http.post('/s/certificate/query', params, true);
+}; //查询证书预约

@@ -36,14 +36,14 @@
     data() {
       return {
         queryList: [
-          {
-            name: '成绩查询',
-          },
+          // {
+          //   name: '成绩查询',
+          // },
           {
             name: '证书查询',
           },
         ],
-        queryCurrent: 0,
+        queryCurrent: 1,
 
         ossUrl: config.ossUrl,
         tabbarList: config.tabbarList,
@@ -51,9 +51,9 @@
       };
     },
     methods: {
-      queryChange(index) {
-        this.queryCurrent = index;
-      },
+      // queryChange(index) {
+      //   this.queryCurrent = index;
+      // },
     },
   };
 </script>

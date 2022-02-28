@@ -1,7 +1,12 @@
 <template>
   <view class="page">
     <view class="swiper-wrap">
-      <u-swiper height="226" :indicatorStyle="indicatorStyle" :list="list"></u-swiper>
+      <u-swiper
+        height="226"
+        :indicatorStyle="indicatorStyle"
+        :list="AdvertisingList"
+        name="picUrl"
+      ></u-swiper>
     </view>
 
     <view class="menu-wrap">
@@ -22,9 +27,9 @@
           :list="noticeList"
         ></u-notice-bar>
       </view>
-      <view class="notice-wrap-bottom">
-        <text>第2022期&nbsp;&nbsp;1月14日报名截止</text>
-        <u-button class="notice-btn" type="primary" shape="circle" @click="apply"
+      <view class="notice-wrap-bottom" v-for="(item, index) in examineschedule" :key="index">
+        <text>{{ item.title }}&nbsp;&nbsp;{{ item.applyStopTime }}报名截止</text>
+        <u-button class="notice-btn" type="primary" shape="circle" @click="apply(item)"
           >立即报名</u-button
         >
       </view>
@@ -39,9 +44,10 @@
         </view>
       </view>
       <u-tabs
-        :list="examList"
+        :list="certTypeList"
         :current="examCurrent"
         @change="examChange"
+        name="professionalName"
         inactive-color="#999"
         active-color="#0052D9"
         font-size="28"
@@ -52,18 +58,18 @@
       ></u-tabs>
       <view class="exam-card">
         <view class="exam-card-header">
-          <view class="exam-course">育婴师</view>
-          <view class="exam-price">8000~22000元</view>
+          <view class="exam-course">{{ certificateList.professionalName }}</view>
+          <view class="exam-price">{{ certificateList.supervisorCost }}元</view>
         </view>
-        <view class="exam-num">10000人关注</view>
-        <view class="exam-des"
-          >育婴师是用现代教育观念和科学方法对0-3岁婴儿进行生活照料、护理和教育的专业人员。主要从事婴儿的照料、护理和教育工作。现在每个家庭对孩子都是极度关注，因此育婴师正在成为一个炙手可热的热门行业。</view
+        <view class="exam-num">10000人关注中</view>
+        <view class="exam-des">{{ certificateList.supervisorIntro }}</view>
+        <u-button @click="apply('')" class="exam-btn" type="primary" shape="circle"
+          >立即报考</u-button
         >
-        <u-button class="exam-btn" type="primary" shape="circle">立即报考</u-button>
       </view>
     </view>
 
-    <view class="school-wrap">
+    <view class="school-wrap" v-if="distanceList.length">
       <view class="school-wrap-title">
         <view class="school-title">推荐培训学校</view>
         <view class="more-btn">
@@ -71,7 +77,9 @@
           <u-image width="24rpx" height="24rpx" :src="`${ossUrl}right-arrows.png`"></u-image>
         </view>
       </view>
-      <SchoolCard></SchoolCard>
+      <block v-for="(item, index) in distanceList" :key="index">
+        <SchoolCard :schoolItem="item"></SchoolCard>
+      </block>
     </view>
 
     <PageFooter></PageFooter>
@@ -88,8 +96,19 @@
 
 <script>
   import config from '@/config/config';
+  import commonInfo from '@/util/commonInfo';
   import SchoolCard from '@/components/SchoolCard/SchoolCard';
   import PageFooter from '@/components/PageFooter/PageFooter';
+  import {
+    queryExamIneScheduleList,
+    queryDistancePageList,
+    queryCertificateList,
+    queryCertTypeList,
+    queryAdvertisingList,
+    // columnContactUs,
+    // queryColumn,
+    // queryColumnNode,
+  } from '@/util/ajax/services';
   export default {
     component: {
       SchoolCard,
@@ -97,16 +116,17 @@
     },
     data() {
       return {
+        userInfo: {},
         ossUrl: config.ossUrl,
 
         indicatorStyle: {
           indicatorStyle: 'dot',
         },
-        list: [
-          'https://cdn.uviewui.com/uview/swiper/swiper1.png',
-          'https://cdn.uviewui.com/uview/swiper/swiper2.png',
-          'https://cdn.uviewui.com/uview/swiper/swiper3.png',
-        ],
+
+        examineschedule: [],
+        distanceList: [],
+        certificateList: {},
+        AdvertisingList: [],
 
         menuList: [
           {
@@ -138,23 +158,7 @@
           '李*已报名  保育员师级/二级',
         ],
 
-        examList: [
-          {
-            name: '月嫂',
-          },
-          {
-            name: '育婴师',
-          },
-          {
-            name: '催乳师',
-          },
-          {
-            name: '产后康复师',
-          },
-          {
-            name: '小儿推拿师',
-          },
-        ],
+        certTypeList: [],
         examCurrent: 0,
 
         tabbarList: config.tabbarList,
@@ -164,10 +168,16 @@
     methods: {
       examChange(index) {
         this.examCurrent = index;
+
+        let params = { id: this.certTypeList[index].id };
+
+        this.queryExamIneScheduleListApi(params);
       },
-      apply() {
+      apply(item) {
+        let params = item ? item : this.examineschedule[0];
         this.$u.route({
           url: 'pages/apply/index',
+          params: params,
         });
       },
       routerInfo() {
@@ -175,6 +185,62 @@
           url: 'pages/info/index',
         });
       },
+      async queryExamIneScheduleListApi(params) {
+        let res = await queryExamIneScheduleList(params);
+        this.examineschedule = res.data;
+      },
+      queryDistancePageListApi() {
+        uni.getLocation({
+          type: 'gcj02',
+          success: async (res) => {
+            let params = {
+              longitude: res.longitude,
+              latitude: res.latitude,
+            };
+            let result = await queryDistancePageList(params);
+            this.distanceList = result.data;
+          },
+        });
+      },
+
+      async queryCertTypeListApi() {
+        let res = await queryCertTypeList();
+
+        res.data.forEach((el) => {
+          this.certTypeList.push(el.certInfoList);
+        });
+        this.certTypeList = this.certTypeList.flat();
+        let params = { id: this.certTypeList[0].id };
+        this.queryCertificateListApi(params);
+        this.queryExamIneScheduleListApi(params);
+      },
+      async queryCertificateListApi(params) {
+        let res = await queryCertificateList(params);
+        this.certificateList = res.data;
+      },
+      async queryAdvertisingListApi() {
+        let res = await queryAdvertisingList();
+        this.AdvertisingList = res.data.dataList;
+      },
+      // async columnContactUsApi() {
+      //   let res = await columnContactUs();
+      // },
+      // async queryColumn() {
+      //   let res = await queryColumn();
+      // },
+      // async queryColumnNode() {
+      //   let res = await queryColumnNode();
+      // },
+    },
+    onLoad() {
+      this.userInfo = commonInfo.getUser();
+      this.queryExamIneScheduleListApi();
+      this.queryDistancePageListApi();
+      this.queryCertTypeListApi();
+      this.queryAdvertisingListApi();
+      // this.columnContactUsApi();
+      // this.queryColumn();
+      // this.queryColumnNode();
     },
   };
 </script>
