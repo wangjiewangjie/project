@@ -10,7 +10,12 @@
     </view>
 
     <view class="menu-wrap">
-      <view class="menu-item" v-for="(item, index) in menuList" :key="index" @click="routerInfo">
+      <view
+        class="menu-item"
+        v-for="(item, index) in menuList"
+        :key="index"
+        @click="routerInfo(item)"
+      >
         <u-image width="96rpx" height="96rpx" :src="`${ossUrl}${item.icon}`"></u-image>
         <view class="menu-name">{{ item.name }}</view>
       </view>
@@ -105,9 +110,7 @@
     queryCertificateList,
     queryCertTypeList,
     queryAdvertisingList,
-    // columnContactUs,
-    // queryColumn,
-    // queryColumnNode,
+    queryConfiguration,
   } from '@/util/ajax/services';
   export default {
     component: {
@@ -132,22 +135,22 @@
           {
             icon: 'index-menu_1.png',
             name: '考试流程',
-            path: '',
+            columnId: '',
           },
           {
             icon: 'index-menu_2.png',
             name: '重要通知',
-            path: '',
+            columnId: '',
           },
           {
             icon: 'index-menu_3.png',
             name: '相关政策',
-            path: '',
+            columnId: '',
           },
           {
             icon: 'index-menu_4.png',
             name: '关于我们',
-            path: '',
+            columnId: '',
           },
         ],
 
@@ -180,9 +183,13 @@
           params: params,
         });
       },
-      routerInfo() {
+      routerInfo(item) {
         this.$u.route({
           url: 'pages/info/index',
+          params: {
+            columnId: item.columnId,
+            name: item.name,
+          },
         });
       },
       routerCert() {
@@ -232,15 +239,17 @@
         let res = await queryAdvertisingList();
         this.AdvertisingList = res.data.dataList;
       },
-      // async columnContactUsApi() {
-      //   let res = await columnContactUs();
-      // },
-      // async queryColumn() {
-      //   let res = await queryColumn();
-      // },
-      // async queryColumnNode() {
-      //   let res = await queryColumnNode();
-      // },
+
+      async queryConfigurationApi() {
+        let res = await queryConfiguration();
+        res.data.forEach((e) => {
+          this.menuList.forEach((v) => {
+            if (e.name === v.name) {
+              v.columnId = e.columnId;
+            }
+          });
+        });
+      },
     },
     onLoad() {
       this.userInfo = commonInfo.getUser();
@@ -248,9 +257,7 @@
       this.queryDistancePageListApi();
       this.queryCertTypeListApi();
       this.queryAdvertisingListApi();
-      // this.columnContactUsApi();
-      // this.queryColumn();
-      // this.queryColumnNode();
+      this.queryConfigurationApi();
     },
   };
 </script>

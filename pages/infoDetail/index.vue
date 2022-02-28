@@ -1,22 +1,29 @@
 <template>
   <view class="page">
-    <view class="title">为什么我的考试费不能退费？</view>
+    <view class="title">{{ options.title }}</view>
     <view class="basic-info">
       <view class="basic-info-l">官方发布</view>
-      <view class="basic-info-r">发布时间: 2021-10-30 20:03</view>
+      <view class="basic-info-r">发布时间: {{ options.addTime | filterDay }}</view>
     </view>
+    <view class="content" v-html="options.content"></view>
     <PageFooter></PageFooter>
   </view>
 </template>
 
 <script>
   import PageFooter from '@/components/PageFooter/PageFooter';
+  import dayjs from 'dayjs';
   export default {
     component: {
       PageFooter,
     },
-    data() {
-      return {};
+    filters: {
+      filterDay(val) {
+        return val ? dayjs(Number(val)).format('YYYY-MM-DD HH:MM:ss') : '-';
+      },
+    },
+    onLoad(options) {
+      this.options = options;
     },
   };
 </script>
@@ -48,6 +55,9 @@
         line-height: 32rpx;
         color: $u-tips-color;
       }
+    }
+    .content {
+      padding: 24rpx;
     }
   }
 </style>

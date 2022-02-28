@@ -1,5 +1,5 @@
 <template>
-  <view>
+  <view class="page-footer">
     <view class="follow-wrap">
       <u-image width="224rpx" height="224rpx" src="/static/images/wx-code.png"></u-image>
       <view class="follow-wrap-r">
@@ -8,11 +8,14 @@
         <view class="follow-wx">阜城市家庭服务业协会认定中心</view>
       </view>
     </view>
-    <view class="page-footer">- 绝影天行科技公司技术支持 -</view>
+    <view class="footer">- 绝影天行科技公司技术支持 -</view>
   </view>
 </template>
 
 <style lang="scss" scoped>
+  .page-footer {
+    width: 100%;
+  }
   .follow-wrap {
     display: flex;
     justify-content: space-between;
@@ -38,7 +41,7 @@
     }
   }
 
-  .page-footer {
+  .footer {
     padding: 24rpx 0;
     font-size: 24rpx;
     line-height: 28rpx;

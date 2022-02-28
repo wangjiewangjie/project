@@ -112,25 +112,16 @@ export const createMockTestExaminePaper = (params) => {
   return Http.post('/s/examinecertpaper/createMockTestExaminePaper', params, true);
 }; //查询证书模拟试卷
 
-export const columnContactUs = (params) => {
-  return Http.post('/s/column/contactUs', params, true);
-}; //查询栏目列表
-
-export const queryColumn = (params) => {
-  return Http.post('/s/column/query', params, true);
-}; //查询栏目列表
-
-export const queryColumnNode = (params) => {
-  return Http.post('/s/column/queryNode', params, true);
-}; //查询栏目列表
-
-export const queryColumnPageList = (params) => {
-  return Http.post('/s/column/queryPageList', params, true);
+export const queryConfiguration = (params) => {
+  return Http.post('/s/configuration/queryHomePageList', params, true);
+}; //查询小程序自定义展示配置
+export const queryInformationPageList = (params) => {
+  return Http.post('/s/information/queryPageList', params, true);
 }; //查询栏目列表列表(带分页)
 
 export const buildOrder = (params) => {
   return Http.post('/core/pay/buildOrder', params, true);
-}; //查询栏目列表列表(带分页)
+}; //创建订单
 
 export const queryCertificatereservationPageList = (params) => {
   return Http.post('/s/certificatereservation/queryPageList', params, true);
