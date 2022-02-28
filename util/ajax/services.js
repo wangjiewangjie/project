@@ -139,3 +139,7 @@ export const queryCertificatereservationPageList = (params) => {
 export const queryCertificate = (params) => {
   return Http.post('/s/certificate/query', params, true);
 }; //查询证书预约
+
+export const queryCertificatePageList = (params) => {
+  return Http.post('/s/certificate/queryPageList', params, true);
+}; //查询证书预约

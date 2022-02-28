@@ -38,7 +38,7 @@
     <view class="exam-wrap">
       <view class="exam-wrap-title">
         <view class="exam-title">相关认定项目</view>
-        <view class="more-btn">
+        <view class="more-btn" @click="routerCert">
           更多
           <u-image width="24rpx" height="24rpx" :src="`${ossUrl}right-arrows.png`"></u-image>
         </view>
@@ -72,7 +72,7 @@
     <view class="school-wrap" v-if="distanceList.length">
       <view class="school-wrap-title">
         <view class="school-title">推荐培训学校</view>
-        <view class="more-btn">
+        <view class="more-btn" @click="routerSchool">
           更多
           <u-image width="24rpx" height="24rpx" :src="`${ossUrl}right-arrows.png`"></u-image>
         </view>
@@ -183,6 +183,16 @@
       routerInfo() {
         this.$u.route({
           url: 'pages/info/index',
+        });
+      },
+      routerCert() {
+        this.$u.route({
+          url: 'pages/certList/index',
+        });
+      },
+      routerSchool() {
+        this.$u.route({
+          url: 'pages/schoolList/index',
         });
       },
       async queryExamIneScheduleListApi(params) {

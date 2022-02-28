@@ -118,5 +118,5 @@ export default {
   coordinate,
   ossUrl,
   tabbarList,
-  h5wxAppId: 'wxc28e7f7f0bfd60d0',
+  h5wxAppId: 'wx5fc24184e7fb2015',
 };

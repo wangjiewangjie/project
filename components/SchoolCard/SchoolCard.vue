@@ -49,6 +49,8 @@
     display: flex;
     justify-content: space-between;
     padding: 24rpx;
+    background: #fff;
+    border-radius: 16rpx;
     .school-card-r {
       flex: 1;
       margin-left: 24rpx;

@@ -128,6 +128,18 @@
       "style": {
         "navigationBarTitleText": "报名详情"
       }
+    },
+    {
+      "path": "pages/certList/index",
+      "style": {
+        "navigationBarTitleText": "职业证书"
+      }
+    },
+    {
+      "path": "pages/schoolList/index",
+      "style": {
+        "navigationBarTitleText": "推荐学校"
+      }
     }
   ],
   "globalStyle": {
