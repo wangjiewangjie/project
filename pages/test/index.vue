@@ -5,13 +5,13 @@
       <view class="navbar-right" slot="right">
         <view
           class="right-item"
-          :class="hideAnalysis ? '' : 'right-item-success'"
+          :class="!hideAnalysis ? '' : 'right-item-success'"
           @click="onHideAnalysis"
         >
           <u-image
             width="40rpx"
             height="40rpx"
-            :src="hideAnalysis ? `${ossUrl}exam-answer_1.png` : `${ossUrl}exam-answer_2.png`"
+            :src="!hideAnalysis ? `${ossUrl}exam-answer_1.png` : `${ossUrl}exam-answer_2.png`"
           ></u-image>
           <view class="right-item-r">看答案</view>
         </view>
@@ -85,7 +85,7 @@
         ></u-image>
         <view class="options-content">{{ item.content }}</view>
       </view>
-      <view class="answer-wrap" v-show="hideAnalysis">
+      <view class="answer-wrap" v-show="hideAnalysis || hideAnswerAnalysis">
         <view>
           答案:
           <text class="right">{{ rightChoices }}</text>
@@ -106,7 +106,7 @@
     </view>
 
     <!-- 解析 -->
-    <view class="analysis-wrap" v-show="hideAnalysis">
+    <view class="analysis-wrap" v-show="hideAnalysis || hideAnswerAnalysis">
       <view class="analysis-title">官方解析</view>
       <view class="analysis-content">{{ examList[examIndex].parse || '暂无官方解析' }}</view>
     </view>
@@ -218,7 +218,6 @@
     submitSingleQuestion,
     submitPaper,
     queryExaminecertpaper,
-    createMockTestExaminePaper,
   } from '@/util/ajax/services';
   export default {
     data() {
@@ -227,10 +226,12 @@
         examList: [
           {
             studentAnswerList: [],
+            questionTypeName: '',
           },
         ],
         examIndex: 0,
         hideAnalysis: false,
+        hideAnswerAnalysis: false,
         rightChoices: '',
         userChooseOptions: '',
         showExamResult: false,
@@ -301,7 +302,7 @@
         if (questionIndexObj.answerVOList[val].rightChoicesFlag === 1) {
           this.onChangeQuestion('next');
         } else {
-          this.hideAnalysis = true;
+          this.hideAnswerAnalysis = true;
         }
       },
 
@@ -330,6 +331,7 @@
           this.submitSingleQuestionApi(params);
         }
 
+        this.hideAnswerAnalysis = false;
         if (e === 'next') {
           this.examIndex++;
         } else {
@@ -418,6 +420,7 @@
         this.examIndex = this.examList.findIndex((item) => {
           return item.state == 0;
         });
+        this.examIndex = this.examIndex == -1 ? 0 : this.examIndex;
         this.getAnalysis(0);
       },
 
@@ -544,6 +547,9 @@
         border-radius: 100%;
         box-shadow: 0rpx 0rpx 16rpx rgba(42, 45, 56, 0.15);
         font-size: 32rpx;
+      }
+      .u-image {
+        flex-shrink: 0;
       }
       .options-content {
         margin-left: 32rpx;

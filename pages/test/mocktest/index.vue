@@ -53,7 +53,12 @@
 <script>
   import config from '@/config/config';
   import commonInfo from '@/util/commonInfo';
-  import { queryCertmocktestpaper, loadExaminePaper, startExamine } from '@/util/ajax/services';
+  import {
+    queryCertmocktestpaper,
+    loadExaminePaper,
+    startExamine,
+    createMockTestExaminePaper,
+  } from '@/util/ajax/services';
   export default {
     filters: {
       filterPhone(val) {
@@ -105,20 +110,25 @@
       async routerTest(val) {
         this.showPopup = false;
         if (val === 'continue') {
-          let res = await startExamine({ id: this.continueExamObj.id });
-          if (res.rescode === 200) {
-            let params = {
-              examineCertPaperId: this.continueExamObj.id,
-              mockTestPaperId: this.continueExamObj.mockPaperId,
-              continue: true, //根据这个参数判断是否为继续考试
+          let params1 = {
+            examineCertPaperId: this.continueExamObj.id,
+            mockTestPaperId: this.continueExamObj.mockPaperId,
+          };
+          let res1 = await createMockTestExaminePaper(params1);
+          let res2 = await startExamine({ id: res1.data.id });
+
+          if (res2.rescode === 200) {
+            let params2 = {
+              mockTestPaperId: res1.data.mockPaperId,
+              paperType: 2,
             };
             this.$u.route({
               url: '/pages/test/index',
-              params: params,
+              params: params2,
             });
           } else {
             this.$refs.uToast.show({
-              title: res.msg,
+              title: res2.msg,
               type: 'error',
             });
           }

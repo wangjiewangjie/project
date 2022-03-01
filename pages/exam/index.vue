@@ -109,7 +109,8 @@
         current: 2,
       };
     },
-    onLoad() {
+    onShow() {
+      this.examCurrent = 0;
       this.queryCertTypeListApi();
     },
     methods: {
