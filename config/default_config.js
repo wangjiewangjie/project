@@ -6,7 +6,7 @@ let platform = 'bm';
 let apiHost, jwtjson, h5CodeUrl, shareH5BaseUrl, shareAuntH5BaseUrl;
 let wxAppId = 'wx98055987618aa2df'; //斑马公众号appid （wx98055987618aa2df）
 let coordinate = null; // 用于固定定位；
-let ossUrl = 'http://oss.bm001.com/static/association/credit-cert-h5/images/';
+let ossUrl = 'https://oss.bm001.com/static/association/credit-cert-h5/images/';
 let tabbarList = [
   {
     iconPath: '/static/images/tab/tabbar-baoming.png',
@@ -46,7 +46,7 @@ let tabbarList = [
 const DEVELOPMENT_CONFIG = {
   // apiHost: 'http://172.19.132.22:8080/',
   apiHost: 'https://creditapi-test1.devp.bm001.com/',
-  // apiHost: 'http://172.19.135.92:9999/',
+  // apiHost: 'http://172.19.134.25:8080/',
   wxAppId,
   jwtjson: '',
   h5CodeUrl: 'https://oss.bm001.com/jfe/servicecard/h5/index.html#/pages/aunt/resume/resume',

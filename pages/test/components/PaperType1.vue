@@ -99,9 +99,7 @@
         };
         this.$u.route({
           url: '/pages/test/index',
-          params: {
-            ...params,
-          },
+          params: params,
         });
       },
     },

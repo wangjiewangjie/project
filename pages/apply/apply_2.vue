@@ -97,7 +97,7 @@
   import ProgressBar from './components/ProgressBar.vue';
   import form from './js/form';
   import city from './js/city.data';
-  import { updateStudentInfo } from '@/util/ajax/services';
+  import { updateStudentInfo, queryCertificatereservation } from '@/util/ajax/services';
   import commonInfo from '@/util/commonInfo';
   export default {
     components: {
@@ -107,6 +107,7 @@
     data() {
       return {
         options: {},
+        cartDetail: {},
         form: {
           imgUrlList: [],
           name: '',
@@ -232,20 +233,31 @@
     },
     onLoad(options) {
       this.options = options;
+      /* 省份下拉框添加值 */
       let index = this.formList.findIndex((item) => {
         return item.prop == 'province';
       });
       city.forEach((el) => {
         this.province.push({ value: el.value, label: el.label });
       });
-      let certNameIndex = this.hideformList.findIndex((item) => {
-        return item.prop == 'certName';
-      });
-
-      this.$set(this.hideformList[certNameIndex], 'value', options.certName);
       this.$set(this.formList[index], 'selectList', this.province);
+
+      /* 工种回显 */
+      this.setValue(this.hideformList, 'certName', options.certName);
+      if (options.edit) {
+        let params = {
+          id: options.id,
+        };
+        this.queryCertificatereservationApi(params);
+      }
     },
     methods: {
+      setValue(array, key, value) {
+        let index = array.findIndex((item) => {
+          return item.prop == key;
+        });
+        this.$set(array[index], 'value', value);
+      },
       /* 图片上传成功 */
       _success(res) {
         this.form.imgUrlList.push(res.data);
@@ -320,6 +332,20 @@
               });
             }
           }
+        });
+      },
+
+      async queryCertificatereservationApi(params) {
+        let res = await queryCertificatereservation(params);
+        this.cartDetail = res.data;
+        let editObj = { ...this.cartDetail, ...this.cartDetail.examineScheduleVO };
+        /* 数据回显循环 */
+        this.formList.forEach((el) => {
+          this.setValue(this.formList, el.prop, editObj[el.prop]);
+        });
+        /* 隐藏部分数据回显 */
+        this.hideformList.forEach((el) => {
+          this.setValue(this.hideformList, el.prop, editObj[el.prop]);
         });
       },
     },

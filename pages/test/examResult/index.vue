@@ -1,6 +1,6 @@
 <template>
   <view class="page">
-    <u-navbar :is-back="false" :title="userInfo.phone | filterPhone"></u-navbar>
+    <u-navbar :title="userInfo.phone | filterPhone"></u-navbar>
     <PaperType1 v-if="examResult.paperType == 1" :examResult="examResult"></PaperType1>
     <PaperType2 v-if="examResult.paperType == 2" :examResult="examResult"></PaperType2>
   </view>

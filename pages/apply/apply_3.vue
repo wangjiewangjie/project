@@ -8,7 +8,7 @@
         <view class="exam-time">{{ certificatereservation.addTime | filterDay }}</view>
       </view>
       <view class="exam-content-wrap">
-        <u-image width="216rpx" height="144rpx" src="/static/images/wx-code.png"></u-image>
+        <u-image width="216rpx" height="144rpx" src="/static/images/cert.png"></u-image>
         <view class="exam-content">
           <view class="exam-name">
             {{ certificatereservation.professionalName }}
@@ -111,7 +111,7 @@
       async submit() {
         this.paying = true;
         const [err, res] = await polyPay('wechat', {
-          orderId: this.options.orderNo,
+          orderId: this.certificatereservation.orderNo,
           wayId: 5,
           sceneType: this.getEnvScene(),
           appId: config.miniAppId,

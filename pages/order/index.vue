@@ -17,7 +17,9 @@
         </view>
       </view>
       <view class="order-btn">
-        <u-button class="pay" plain type="info" shape="circle" @click="submit">取消订单</u-button>
+        <u-button class="pay" plain type="info" shape="circle" @click="onShowDelete(item.id)"
+          >取消订单</u-button
+        >
         <u-button
           class="pay"
           plain
@@ -26,16 +28,30 @@
           @click="routerOrderDetail(item.id)"
           >查看详情</u-button
         >
-        <u-button class="pay" plain type="primary" shape="circle" @click="submit"
+        <u-button
+          v-show="item.state == 0"
+          class="pay"
+          plain
+          type="primary"
+          shape="circle"
+          @click="routerApply3(item.id)"
           >立即支付</u-button
         >
       </view>
     </view>
+    <u-modal
+      v-model="showDelete"
+      content="确定删除订单?"
+      :show-cancel-button="true"
+      @confirm="onConfirmDelete"
+    ></u-modal>
+
+    <u-toast ref="uToast" />
   </view>
 </template>
 
 <script>
-  import { queryCertificatereservationPageList } from '@/util/ajax/services';
+  import { queryCertificatereservationPageList, deleteCert } from '@/util/ajax/services';
   import commonInfo from '@/util/commonInfo';
   import dayjs from 'dayjs';
   let hasMoreData = true;
@@ -52,6 +68,8 @@
       return {
         pageNum: 0,
         dataList: [],
+        showDelete: false,
+        itemId: '',
       };
     },
     onShow() {
@@ -67,9 +85,39 @@
       }
     },
     methods: {
+      onShowDelete(id) {
+        this.showDelete = true;
+        this.itemId = id;
+      },
+      async onConfirmDelete() {
+        let params = {
+          id: this.itemId,
+        };
+        let res = await deleteCert(params);
+        if (res.rescode === 200) {
+          this.$refs.uToast.show({
+            title: '删除订单成功',
+            type: 'success',
+          });
+          this.queryCertificatereservationPageListApi({});
+        } else {
+          this.$refs.uToast.show({
+            title: res.msg,
+            type: 'error',
+          });
+        }
+      },
       routerOrderDetail(id) {
         this.$u.route({
           url: 'pages/order/orderDetail/orderDetail',
+          params: {
+            id: id,
+          },
+        });
+      },
+      routerApply3(id) {
+        this.$u.route({
+          url: '/pages/apply/apply_3',
           params: {
             id: id,
           },

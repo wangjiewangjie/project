@@ -3,18 +3,18 @@
     <u-image width="176rpx" height="176rpx" :src="schoolItem.schoolLogo"></u-image>
     <view class="school-card-r">
       <view class="school-card-r-header">
-        <view class="school-card-r-header-title">{{ schoolIte.name }}</view>
+        <view class="school-card-r-header-title">{{ schoolItem.name }}</view>
         <view class="school-card-r-header-call" @click="call(schoolItem.phone)">
           <u-image width="32rpx" height="32rpx" :src="`${ossUrl}phone.png`"></u-image>
         </view>
       </view>
-      <view class="school-card-num">培训人数 {{ schoolIte.trainNum }}人</view>
+      <view class="school-card-num">培训人数 {{ schoolItem.trainNum }}人</view>
       <view class="school-card-tips">
         <text class="school-card-tips-item">养老护理员</text>
       </view>
       <view class="school-card-address">
         <view class="school-card-location">{{ schoolItem.address }}</view>
-        <view class="school-card-distance">&lt;100米</view>
+        <view class="school-card-distance">{{ schoolItem.distance | filterDistance }}</view>
       </view>
     </view>
   </view>
@@ -27,6 +27,16 @@
       schoolItem: {
         type: Object,
         default: () => {},
+      },
+    },
+    filters: {
+      filterDistance(val) {
+        let distance = parseInt(val);
+        if (distance < 100) {
+          return `<100m`;
+        } else if (distance > 1000) {
+          return `${parseInt(val / 1000)}km`;
+        }
       },
     },
     data() {

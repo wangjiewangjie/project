@@ -1,7 +1,7 @@
 <template>
   <view class="page">
     <!-- 顺序练习模式 -->
-    <u-navbar title="顺序练习" v-if="!wrongMode">
+    <u-navbar title="顺序练习" v-if="options.paperType == 1">
       <view class="navbar-right" slot="right">
         <view
           class="right-item"
@@ -18,13 +18,38 @@
       </view>
     </u-navbar>
     <!-- 错题模式 -->
-    <u-navbar :title="rightWrongType == 0 ? '只看错题' : '查看试卷'" v-if="wrongMode"></u-navbar>
-
+    <u-navbar
+      :title="rightWrongType == 0 ? '只看错题' : '查看试卷'"
+      v-else-if="wrongMode"
+    ></u-navbar>
+    <!-- 模拟考试 -->
+    <u-navbar v-else>
+      <view class="slot-wrap">
+        <u-image width="40rpx" height="40rpx" :src="`${ossUrl}exam-count-down.png`"></u-image>
+        <u-count-down :timestamp="timestamp" :show-days="false" :show-hours="false"></u-count-down>
+      </view>
+      <view class="navbar-right" slot="right">
+        <view
+          class="right-item"
+          :class="hideAnalysis ? '' : 'right-item-success'"
+          @click="onHideAnalysis"
+        >
+          <u-image
+            width="40rpx"
+            height="40rpx"
+            :src="hideAnalysis ? `${ossUrl}exam-answer_1.png` : `${ossUrl}exam-answer_2.png`"
+          ></u-image>
+          <view class="right-item-r">看答案</view>
+        </view>
+      </view>
+    </u-navbar>
+    <!-- 题干 -->
     <view class="question-title">
       <text class="question-type">{{ examList[examIndex].questionTypeName }}</text>
       <text v-html="examList[examIndex].title"></text>
     </view>
 
+    <!-- 选项 -->
     <view class="options-wrap">
       <view
         class="options"
@@ -34,7 +59,7 @@
       >
         <!-- 不看答案 -->
         <view v-show="!item.checked && !hideAnalysis" class="radio">
-          {{ examList[examIndex].questionTypeName === 3 ? '' : item.answerNo }}
+          {{ examList[examIndex].questionType === 3 ? '' : item.answerNo }}
         </view>
         <u-image
           v-show="item.checked && !hideAnalysis"
@@ -44,7 +69,7 @@
         ></u-image>
         <!-- 看答案 -->
         <view v-show="!item.checked && hideAnalysis && item.rightChoicesFlag == 0" class="radio">
-          {{ item.answerNo }}
+          {{ examList[examIndex].questionType === 3 ? '' : item.answerNo }}
         </view>
         <u-image
           v-show="hideAnalysis && item.rightChoicesFlag == 1"
@@ -80,10 +105,13 @@
       </view>
     </view>
 
+    <!-- 解析 -->
     <view class="analysis-wrap" v-show="hideAnalysis">
       <view class="analysis-title">官方解析</view>
       <view class="analysis-content">{{ examList[examIndex].parse || '暂无官方解析' }}</view>
     </view>
+
+    <!-- 切换题目 -->
     <view class="change-question-btn">
       <u-button
         v-show="examIndex !== 0"
@@ -101,6 +129,8 @@
         >下一题</u-button
       >
     </view>
+
+    <!-- 底部题目对错统计 -->
     <view class="question-stat-wrap">
       <view class="question-stat">
         <view class="right-stat">
@@ -116,11 +146,16 @@
           {{ examinePaperObj.answerCount }}/{{ examinePaperObj.allQuestionCount }}
         </view>
       </view>
-      <view v-if="!wrongMode" class="paper-btn" @click="onSubmitExamResult">
+      <view
+        v-if="!wrongMode && options.paperType == 2"
+        class="paper-btn"
+        @click="onSubmitExamResult"
+      >
         <u-image width="40rpx" height="40rpx" :src="`${ossUrl}exam-submit.png`"></u-image>交卷
       </view>
     </view>
 
+    <!-- 弹窗 -->
     <u-popup v-model="showExamResult" mode="center" width="664" height="790" border-radius="16">
       <view class="exam-result-wrap">
         <view
@@ -205,6 +240,8 @@
         rightWrongType: null,
 
         ossUrl: config.ossUrl,
+
+        timestamp: '',
       };
     },
     onLoad(options) {
@@ -259,6 +296,13 @@
 
         /* 更新数组 */
         this.$set(this.examList, this.examIndex, this.examList[this.examIndex]);
+
+        /* 判断选中题目是否正确 */
+        if (questionIndexObj.answerVOList[val].rightChoicesFlag === 1) {
+          this.onChangeQuestion('next');
+        } else {
+          this.hideAnalysis = true;
+        }
       },
 
       /* 查看答案 */
@@ -367,6 +411,12 @@
           el.answerVOList.forEach((v) => {
             v.checked = false;
           });
+        });
+        this.timestamp =
+          (Date.parse(new Date(this.examinePaperObj.endTime)) - Date.parse(new Date())) / 1000;
+
+        this.examIndex = this.examList.findIndex((item) => {
+          return item.state == 0;
         });
         this.getAnalysis(0);
       },
@@ -575,7 +625,6 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    background: #fff;
     padding: 0 82rpx;
     .u-btn {
       margin: 0;
@@ -663,6 +712,15 @@
       .u-btn--primary--plain {
         background: #fff !important;
       }
+    }
+  }
+
+  .slot-wrap {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    .u-image {
+      margin-right: 8rpx;
     }
   }
 </style>

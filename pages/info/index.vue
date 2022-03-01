@@ -102,6 +102,7 @@
       padding: 24rpx;
       background: #ffffff;
       border-radius: 16rpx;
+      margin-bottom: 24rpx;
     }
     .li-t {
       margin-bottom: 24rpx;

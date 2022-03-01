@@ -24,11 +24,11 @@
     </view>
 
     <view class="exam-num-wrap">
-      <view class="exam-num-item-l">
+      <view class="exam-num-item-l" @click="routerTest">
         <view class="exam-num-name">未做题</view>
         <view class="exam-num">{{ examInfo.practiceAllCount - examInfo.practiceDoCount }}</view>
       </view>
-      <view class="exam-num-item-r">
+      <view class="exam-num-item-r" @click="routerQuestion">
         <view class="exam-num-name">错题</view>
         <view class="exam-num">{{ examInfo.practiceWrongCount }}</view>
       </view>
@@ -113,6 +113,18 @@
       this.queryCertTypeListApi();
     },
     methods: {
+      routerQuestion() {
+        if (this.examInfo.practiceWrongCount) {
+          let params = {
+            id: this.certId,
+            rightWrongType: 0,
+          };
+          this.$u.route({
+            url: '/pages/test/index',
+            params: params,
+          });
+        }
+      },
       examChange(index) {
         this.examCurrent = index;
         this.certLevelArray = this.certLevelList[index];

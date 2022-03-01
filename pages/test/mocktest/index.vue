@@ -39,10 +39,10 @@
       <view class="exam-result-wrap">
         <view class="title">有未做完的题⽬，是否继续</view>
         <view class="btn-wrap">
-          <u-button plain type="primary" shape="circle" @click="routerTest('continue')"
-            >继续考试</u-button
+          <u-button plain type="primary" shape="circle" @click="routerTest">继续考试</u-button>
+          <u-button type="primary" shape="circle" @click="routerTest('continue')"
+            >重新考试</u-button
           >
-          <u-button type="primary" shape="circle" @click="routerTest">重新考试</u-button>
         </view>
       </view>
     </u-popup>

@@ -52,7 +52,6 @@
         this.nameLike = '';
       },
       async queryDistancePageListApi(value) {
-        let data;
         uni.getLocation({
           type: 'gcj02',
           success: async (res) => {
@@ -63,26 +62,25 @@
               nameLike: this.nameLike,
               ...value,
             };
-            data = await queryDistancePageList(params);
+            let data = await queryDistancePageList(params);
+            if (data) {
+              uni.stopPullDownRefresh();
+              let dataList = data.data.dataList || [];
+              if (this.pageNum == 0) {
+                this.dataList = dataList;
+              } else {
+                this.dataList = this.dataList.concat(dataList);
+              }
+
+              if (this.dataList.length < data.totalCount) {
+                hasMoreData = true;
+                this.pageNum++;
+              } else {
+                hasMoreData = false;
+              }
+            }
           },
         });
-
-        if (data) {
-          uni.stopPullDownRefresh();
-          let dataList = data.data.dataList || [];
-          if (this.pageNum == 0) {
-            this.dataList = dataList;
-          } else {
-            this.dataList = this.dataList.concat(dataList);
-          }
-
-          if (this.dataList.length < data.totalCount) {
-            hasMoreData = true;
-            this.pageNum++;
-          } else {
-            hasMoreData = false;
-          }
-        }
       },
     },
   };
@@ -118,6 +116,13 @@
       font-size: 15px;
       line-height: 20px;
       color: #333333;
+    }
+  }
+
+  .school-card {
+    margin: 24rpx 24rpx 0;
+    &:last-child {
+      margin-bottom: 24rpx;
     }
   }
 </style>

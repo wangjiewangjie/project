@@ -1,6 +1,6 @@
 <template>
   <view class="page">
-    <view class="cert-card" v-for="item in dataList" :key="item.id">
+    <view class="cert-card" v-for="item in dataList" :key="item.id" @click="apply(item)">
       <view class="card-hd">
         <u-image
           width="240rpx"
@@ -18,7 +18,7 @@
       <view class="card-ft">
         <view class="card-ft-li">
           <view class="card-ft-li-l">考试时间：</view>
-          <view class="card-ft-li-r">{{ item.examineTime | filterDay }}</view>
+          <view class="card-ft-li-r">{{ item.examineMonth | filterDay }}</view>
         </view>
         <view class="card-ft-li">
           <view class="card-ft-li-l">考试地点：</view>
@@ -63,6 +63,15 @@
       }
     },
     methods: {
+      apply(item) {
+        let params = {
+          certId: item.id,
+        };
+        this.$u.route({
+          url: 'pages/apply/index',
+          params: params,
+        });
+      },
       async queryCertificatePageListApi(params) {
         let { pageNum = 0, pageSize = 10 } = params;
 

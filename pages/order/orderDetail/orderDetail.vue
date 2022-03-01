@@ -19,7 +19,7 @@
           <view class="order-content-t"
             >{{ cartDetail.professionalName }}/{{ cartDetail.levelName }}</view
           >
-          <view class="order-content-m">报名时间：{{ cartDetail.payStopTime | filterDay }}</view>
+          <view class="order-content-m">报名时间：{{ cartDetail.addTime | filterDay }}</view>
           <view class="order-content-m">支付方式：微信支付</view>
           <view class="order-content-b">
             <text class="order-content-b-l">实付金额：</text>
@@ -159,13 +159,26 @@
     data() {
       return {
         ossUrl: config.ossUrl,
-        cartDetail: {},
+        cartDetail: {
+          examineScheduleVO: {},
+        },
       };
     },
     onLoad(options) {
       this.queryCertificatereservationApi(options);
     },
     methods: {
+      routerApply() {
+        let params = {
+          id: this.cartDetail.id,
+          certName: this.cartDetail.professionalName,
+          edit: true,
+        };
+        this.$u.route({
+          url: '/pages/apply/apply_2',
+          params: params,
+        });
+      },
       async queryCertificatereservationApi(params) {
         let res = await queryCertificatereservation(params);
         this.cartDetail = res.data;

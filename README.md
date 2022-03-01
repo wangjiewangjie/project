@@ -5,3 +5,7 @@
 ## 插件
     1, uni-simple-router https://hhyang.cn/v2/
     2, uview-ui https://www.uviewui.com/
+
+## 图片地址配置
+    1.js config文件
+    2.css common->sass->uview.theme    

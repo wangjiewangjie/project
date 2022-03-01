@@ -61,20 +61,24 @@
         bar-height="4"
         gutter="24"
       ></u-tabs>
-      <view class="exam-card">
-        <view class="exam-card-header">
-          <view class="exam-course">{{ certificateList.professionalName }}</view>
-          <view class="exam-price">{{ certificateList.supervisorCost }}元</view>
-        </view>
-        <view class="exam-num">10000人关注中</view>
-        <view class="exam-des">{{ certificateList.supervisorIntro }}</view>
-        <u-button @click="apply('')" class="exam-btn" type="primary" shape="circle"
-          >立即报考</u-button
-        >
-      </view>
+      <swiper class="swiper">
+        <swiper-item v-for="(item, index) in certInfoList" :key="index">
+          <view class="exam-card">
+            <view class="exam-card-header">
+              <view class="exam-course">{{ item.professionalName }}</view>
+              <view class="exam-price">{{ item.supervisorCost || 0 }}元</view>
+            </view>
+            <view class="exam-num">10000人关注中</view>
+            <view class="exam-des">{{ item.supervisorIntro }}</view>
+            <u-button @click="apply('')" class="exam-btn" type="primary" shape="circle"
+              >立即报考</u-button
+            >
+          </view>
+        </swiper-item>
+      </swiper>
     </view>
 
-    <view class="school-wrap" v-if="distanceList.length">
+    <view class="school-wrap" v-if="schoolList.length">
       <view class="school-wrap-title">
         <view class="school-title">推荐培训学校</view>
         <view class="more-btn" @click="routerSchool">
@@ -82,7 +86,7 @@
           <u-image width="24rpx" height="24rpx" :src="`${ossUrl}right-arrows.png`"></u-image>
         </view>
       </view>
-      <block v-for="(item, index) in distanceList" :key="index">
+      <block v-for="(item, index) in schoolList" :key="index">
         <SchoolCard :schoolItem="item"></SchoolCard>
       </block>
     </view>
@@ -107,7 +111,6 @@
   import {
     queryExamIneScheduleList,
     queryDistancePageList,
-    queryCertificateList,
     queryCertTypeList,
     queryAdvertisingList,
     queryConfiguration,
@@ -127,9 +130,10 @@
         },
 
         examineschedule: [],
-        distanceList: [],
+        schoolList: [],
         certificateList: {},
         AdvertisingList: [],
+        certInfoList: [],
 
         menuList: [
           {
@@ -172,9 +176,7 @@
       examChange(index) {
         this.examCurrent = index;
 
-        let params = { id: this.certTypeList[index].id };
-
-        this.queryExamIneScheduleListApi(params);
+        this.certInfoList = this.certTypeList[index].certInfoList;
       },
       apply(item) {
         let params = item ? item : this.examineschedule[0];
@@ -215,25 +217,16 @@
               latitude: res.latitude,
             };
             let result = await queryDistancePageList(params);
-            this.distanceList = result.data;
+            this.schoolList = result.data.dataList;
           },
         });
       },
 
       async queryCertTypeListApi() {
         let res = await queryCertTypeList();
-
-        res.data.forEach((el) => {
-          this.certTypeList.push(el.certInfoList);
-        });
-        this.certTypeList = this.certTypeList.flat();
-        let params = { id: this.certTypeList[0].id };
-        this.queryCertificateListApi(params);
-        this.queryExamIneScheduleListApi(params);
-      },
-      async queryCertificateListApi(params) {
-        let res = await queryCertificateList(params);
-        this.certificateList = res.data;
+        this.certTypeList = res.data;
+        this.examCurrent = 0;
+        this.certInfoList = this.certTypeList[0].certInfoList;
       },
       async queryAdvertisingListApi() {
         let res = await queryAdvertisingList();
@@ -251,7 +244,7 @@
         });
       },
     },
-    onLoad() {
+    onShow() {
       this.userInfo = commonInfo.getUser();
       this.queryExamIneScheduleListApi();
       this.queryDistancePageListApi();

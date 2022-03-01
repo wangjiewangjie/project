@@ -41,7 +41,9 @@
           <u-image width="24rpx" height="24rpx" :src="`${ossUrl}right-arrows.png`"></u-image>
         </view>
       </view>
-      <SchoolCard></SchoolCard>
+      <block v-for="(item, index) in schoolList" :key="index">
+        <SchoolCard :schoolItem="item"></SchoolCard>
+      </block>
     </view>
 
     <u-button v-if="isLogin" @click="onQuit" class="login-out" type="primary" shape="circle" plain
@@ -62,6 +64,7 @@
   import config from '@/config/config';
   import SchoolCard from '@/components/SchoolCard/SchoolCard';
   import commonInfo from '@/util/commonInfo';
+  import { queryDistancePageList } from '@/util/ajax/services';
   export default {
     component: {
       SchoolCard,
@@ -69,6 +72,7 @@
     data() {
       return {
         userInfo: {},
+        schoolList: [],
         isLogin: false,
 
         ossUrl: config.ossUrl,
@@ -79,6 +83,7 @@
     onLoad() {
       this.userInfo = commonInfo.getUser();
       this.isLogin = Boolean(commonInfo.getToken());
+      this.queryDistancePageListApi();
     },
     methods: {
       routerLogin() {
@@ -106,6 +111,20 @@
       routerQuestion() {
         this.$u.route({
           url: 'pages/questionList/index',
+        });
+      },
+
+      queryDistancePageListApi() {
+        uni.getLocation({
+          type: 'gcj02',
+          success: async (res) => {
+            let params = {
+              longitude: res.longitude,
+              latitude: res.latitude,
+            };
+            let result = await queryDistancePageList(params);
+            this.schoolList = result.data.dataList;
+          },
         });
       },
     },

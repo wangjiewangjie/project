@@ -27,6 +27,9 @@ commonInfo.setUser = (user) => {
 commonInfo.getUser = () => {
   return storage.get('user');
 };
+commonInfo.setOpenId = (openId) => {
+  return storage.set('openId', openId);
+};
 commonInfo.getOpenId = () => {
   return storage.get('openId');
 };

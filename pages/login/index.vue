@@ -205,12 +205,8 @@
         if (res.rescode === 200) {
           commonInfo.setToken(res.data.token);
           commonInfo.setUser(res.data.user);
-          this.$refs.uToast.show({
-            title: '登录成功',
-            type: 'success',
-            url: '/pages/index/index',
-            isTab: true,
-          });
+          commonInfo.setOpenId(res.data.openid);
+          this.routerLogin();
         } else {
           this.$refs.uToast.show({
             title: '微信登录失败',
@@ -238,20 +234,7 @@
               commonInfo.setToken(res.data.token);
               commonInfo.setUser(res.data.user);
 
-              if (this.options.back) {
-                this.$refs.uToast.show({
-                  title: '登录成功',
-                  type: 'success',
-                  back: true,
-                });
-              } else {
-                this.$refs.uToast.show({
-                  title: '登录成功',
-                  type: 'success',
-                  url: '/pages/index/index',
-                  isTab: true,
-                });
-              }
+              this.routerLogin();
             } else {
               this.$refs.uToast.show({
                 title: res.msg,
@@ -261,6 +244,7 @@
           }
         });
       },
+
       wxLogin() {
         if (!this.checked) {
           this.$u.toast('请阅读《家协通服务协议》、《隐私协议》');
@@ -283,6 +267,22 @@
             userType: 13,
           };
           this.loginByOpenIdApi(params);
+        }
+      },
+      routerLogin() {
+        if (this.options.back) {
+          this.$refs.uToast.show({
+            title: '登录成功',
+            type: 'success',
+            back: true,
+          });
+        } else {
+          this.$refs.uToast.show({
+            title: '登录成功',
+            type: 'success',
+            url: '/pages/index/index',
+            isTab: true,
+          });
         }
       },
       getUrlParam(name) {
