@@ -71,11 +71,10 @@
   import config from '@/config/config';
   import ProgressBar from './components/ProgressBar.vue';
   import Contact from './components/Contact.vue';
-  import { queryCertificatereservation } from '@/util/ajax/services';
+  import { queryCertificatereservation, buildOrder } from '@/util/ajax/services';
   import dayjs from 'dayjs';
-  import polyPay from '@/util/pay';
-  import $platform from '@/util/platform';
   import commonInfo from '@/util/commonInfo';
+  const jweixin = require('jweixin-module');
   export default {
     filters: {
       filterDay(val) {
@@ -109,43 +108,60 @@
         this.certificatereservation = res.data;
       },
       async submit() {
-        this.paying = true;
-        const [err, res] = await polyPay('wechat', {
+        let params = {
+          appId: config.h5wxAppId,
+          openId: 'oRGnWw8_abKRh6ZHBahFJ64Qm4NE',
+          paySource: 2, // 支付来源: 1、上岗卡；2、证书；3、订单
+          payWayId: 6, // 支付方式编号：4、微信app支付；5、微信公众号支付；6、微信小程序支付；7、微信扫码支付；
           orderId: this.certificatereservation.orderNo,
-          wayId: 5,
-          sceneType: this.getEnvScene(),
-          appId: config.miniAppId,
-          openId: JSON.parse(uni.getStorageSync('wechatGrantInfo')).openid,
-        });
-        this.paying = false;
-        if (err) {
-          // 取消支付
+        };
+        let res = await buildOrder(params);
+        if (res.rescode === 200) {
+          let payResult = res.data.payResult;
+          jweixin.config({
+            debug: true,
+            appId: payResult.appid, // 必填，公众号的唯一标识
+            timestamp: payResult.timestamp, // 必填，生成签名的时间戳
+            nonceStr: payResult.noncestr, // 必填，生成签名的随机串
+            signature: payResult.sign, // 必填，签名，见附录1
+            jsApiList: ['getBrandWCPayRequest'], // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+          });
+          jweixin.ready(() => {
+            jweixin.checkJsApi({
+              jsApiList: ['getBrandWCPayRequest'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
+              success: () => {
+                // console.log('checkjsapi Success=====', data);
+              },
+              fail: () => {
+                // console.log('fail========', data);
+              },
+            });
+
+            jweixin.chooseWXPay({
+              timestamp: payResult.timestamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
+              nonceStr: payResult.noncestr, // 支付签名随机串，不长于 32 位
+              package: payResult.packageName, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=***）
+              signType: 'MD5', // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+              paySign: payResult.sign, // 支付签名
+              success: () => {
+                this.$refs.uToast.show({
+                  title: '支付成功',
+                  type: 'success',
+                  url: '/pages/apply/apply_4',
+                  params: {
+                    id: this.options.id,
+                  },
+                });
+              },
+              cancel: () => {
+                // console.log('cancel=====', r);
+              },
+              fail: () => {
+                // console.log('payfail=====', err);
+              },
+            });
+          });
         }
-        if (res) {
-          // this.$Router.push({
-          //   path: '/pages/order/payway/payResult/index',
-          //   query: {
-          //     payState: 'success',
-          //     orderId: this.orderId,
-          //   },
-          // });
-          // return;
-        }
-      },
-      /**
-       * 小程序平台场景 临时写1
-       * - 1：c端 H5
-       * - 2：C端小程序
-       * - 3：s端小程序
-       */
-      getEnvScene() {
-        if ($platform.get() === 'wxMiniProgram') {
-          return 2;
-        }
-        if ($platform.get() === 'H5') {
-          return 1;
-        }
-        return;
       },
     },
   };

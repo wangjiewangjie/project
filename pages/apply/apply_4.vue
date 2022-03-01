@@ -8,10 +8,10 @@
         :src="`${ossUrl}apply_4-submit_success.png`"
       ></u-image>
       <view class="success-tips">恭喜，报名成功！</view>
-      <view class="success-time">您于2022年1月13日提交的报名支付成功</view>
+      <view class="success-time">您于{{ new Date() | filterDay }}提交的报名支付成功</view>
       <view class="success-btn">
-        <u-button plain type="primary" shape="circle" @click="submit">返回首页</u-button>
-        <u-button type="primary" shape="circle" @click="submit">立即查看</u-button>
+        <u-button plain type="primary" shape="circle" @click="routerIndex">返回首页</u-button>
+        <u-button type="primary" shape="circle" @click="routerOrderDetail">立即查看</u-button>
       </view>
     </view>
 
@@ -23,7 +23,9 @@
           <u-image width="24rpx" height="24rpx" :src="`${ossUrl}right-arrows.png`"></u-image>
         </view>
       </view>
-      <SchoolCard></SchoolCard>
+      <block v-for="(item, index) in schoolList" :key="index">
+        <SchoolCard :schoolItem="item"></SchoolCard>
+      </block>
     </view>
 
     <Contact></Contact>
@@ -34,15 +36,50 @@
   import config from '@/config/config';
   import ProgressBar from './components/ProgressBar.vue';
   import Contact from './components/Contact.vue';
+  import dayjs from 'dayjs';
+  import commonInfo from '@/util/commonInfo';
+  import { queryDistancePageList } from '@/util/ajax/services';
   export default {
     components: {
       ProgressBar,
       Contact,
     },
+    filters: {
+      filterDay(val) {
+        return dayjs(Number(val)).format('YYYY年MM月DD日');
+      },
+    },
     data() {
       return {
+        options: {},
+        schoolList: [],
         ossUrl: config.ossUrl,
       };
+    },
+    onLoad(options) {
+      this.options = options;
+      this.queryDistancePageListApi();
+    },
+    methods: {
+      routerIndex() {
+        this.$u.route({
+          url: 'pages/index/index',
+          type: 'switchTab',
+        });
+      },
+      routerOrderDetail() {
+        this.$u.route({
+          url: 'pages/order/orderDetail/orderDetail',
+          params: {
+            id: this.options.id,
+          },
+        });
+      },
+      async queryDistancePageListApi() {
+        let params = { ...commonInfo.getLocaiton() };
+        let result = await queryDistancePageList(params);
+        this.schoolList = result.data.dataList;
+      },
     },
   };
 </script>
@@ -50,6 +87,7 @@
 <style lang="scss" scoped>
   .page {
     height: 100%;
+    overflow: scroll;
   }
 
   .card {
@@ -116,6 +154,7 @@
   }
 
   .school-card {
+    margin-bottom: 24rpx;
     background: #fff;
     border-radius: 16rpx;
   }

@@ -103,22 +103,14 @@
         }
       },
       async routerTest(val) {
+        this.showPopup = false;
         if (val === 'continue') {
-          let params = {
-            examineCertPaperId: this.continueExamObj.id,
-            mockTestPaperId: this.continueExamObj.mockPaperId,
-            continue: true, //根据这个参数判断是否为继续考试
-          };
-          this.$u.route({
-            url: '/pages/test/index',
-            params: params,
-          });
-        } else {
           let res = await startExamine({ id: this.continueExamObj.id });
           if (res.rescode === 200) {
             let params = {
-              mockTestPaperId: this.mockTest.id,
-              paperType: 2,
+              examineCertPaperId: this.continueExamObj.id,
+              mockTestPaperId: this.continueExamObj.mockPaperId,
+              continue: true, //根据这个参数判断是否为继续考试
             };
             this.$u.route({
               url: '/pages/test/index',
@@ -130,6 +122,15 @@
               type: 'error',
             });
           }
+        } else {
+          let params = {
+            mockTestPaperId: this.mockTest.id,
+            paperType: 2,
+          };
+          this.$u.route({
+            url: '/pages/test/index',
+            params: params,
+          });
         }
       },
       startTest() {
