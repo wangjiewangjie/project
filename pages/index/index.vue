@@ -208,18 +208,10 @@
         let res = await queryExamIneScheduleList(params);
         this.examineschedule = res.data;
       },
-      queryDistancePageListApi() {
-        uni.getLocation({
-          type: 'gcj02',
-          success: async (res) => {
-            let params = {
-              longitude: res.longitude,
-              latitude: res.latitude,
-            };
-            let result = await queryDistancePageList(params);
-            this.schoolList = result.data.dataList;
-          },
-        });
+      async queryDistancePageListApi() {
+        let params = { ...commonInfo.getLocaiton(), recommendState: 1 };
+        let result = await queryDistancePageList(params);
+        this.schoolList = result.data.dataList;
       },
 
       async queryCertTypeListApi() {

@@ -21,6 +21,7 @@
 <script>
   import config from '@/config/config';
   import { queryDistancePageList } from '@/util/ajax/services';
+  import commonInfo from '@/util/commonInfo';
   let hasMoreData = true;
   export default {
     data() {
@@ -52,35 +53,29 @@
         this.nameLike = '';
       },
       async queryDistancePageListApi(value) {
-        uni.getLocation({
-          type: 'gcj02',
-          success: async (res) => {
-            let params = {
-              longitude: res.longitude,
-              latitude: res.latitude,
-              pageSize: 10,
-              nameLike: this.nameLike,
-              ...value,
-            };
-            let data = await queryDistancePageList(params);
-            if (data) {
-              uni.stopPullDownRefresh();
-              let dataList = data.data.dataList || [];
-              if (this.pageNum == 0) {
-                this.dataList = dataList;
-              } else {
-                this.dataList = this.dataList.concat(dataList);
-              }
+        let params = {
+          ...commonInfo.getLocaiton(),
+          pageSize: 10,
+          nameLike: this.nameLike,
+          ...value,
+        };
+        let data = await queryDistancePageList(params);
+        if (data) {
+          uni.stopPullDownRefresh();
+          let dataList = data.data.dataList || [];
+          if (this.pageNum == 0) {
+            this.dataList = dataList;
+          } else {
+            this.dataList = this.dataList.concat(dataList);
+          }
 
-              if (this.dataList.length < data.totalCount) {
-                hasMoreData = true;
-                this.pageNum++;
-              } else {
-                hasMoreData = false;
-              }
-            }
-          },
-        });
+          if (this.dataList.length < data.totalCount) {
+            hasMoreData = true;
+            this.pageNum++;
+          } else {
+            hasMoreData = false;
+          }
+        }
       },
     },
   };

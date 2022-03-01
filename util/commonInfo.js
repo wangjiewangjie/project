@@ -39,6 +39,12 @@ commonInfo.setPhoneX = (boolean) => {
 commonInfo.getPhoneX = () => {
   return storage.get('phoneX');
 };
+commonInfo.setLocaiton = (location) => {
+  return storage.set('location', location);
+};
+commonInfo.getLocaiton = () => {
+  return storage.get('location');
+};
 commonInfo.calcPrice = (v) => {
   if (!v) return 0;
   const val = v / 100;

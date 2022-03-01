@@ -16,6 +16,16 @@
           }
         },
       });
+      uni.getLocation({
+        type: 'gcj02',
+        success: (res) => {
+          let location = {
+            latitude: res.latitude,
+            longitude: res.longitude,
+          };
+          commonInfo.setLocaiton(location);
+        },
+      });
     },
     onShow: function () {},
     onHide: function () {},
