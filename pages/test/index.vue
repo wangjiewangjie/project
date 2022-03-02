@@ -119,8 +119,8 @@
         type="primary"
         shape="circle"
         @click="onChangeQuestion('last')"
-        >上一题</u-button
-      >
+        >上一题
+      </u-button>
       <u-button
         v-show="examIndex !== examList.length - 1"
         type="primary"
@@ -218,6 +218,7 @@
     submitSingleQuestion,
     submitPaper,
     queryExaminecertpaper,
+    queryPracticeQuestion,
   } from '@/util/ajax/services';
   export default {
     data() {
@@ -247,20 +248,22 @@
     },
     onLoad(options) {
       if (options.rightWrongType) {
-        let params = {
-          id: Number(options.id),
-          rightWrongType: options.rightWrongType == 0 ? Number(options.rightWrongType) : '',
-        };
-        this.queryExaminecertpaperApi(params);
-        this.hideAnalysis = true;
-        this.wrongMode = true;
-        this.rightWrongType = options.rightWrongType;
-      } else if (options.continue) {
-        let params = {
-          examineCertPaperId: options.examineCertPaperId,
-          mockTestPaperId: options.mockTestPaperId,
-        };
-        this.createMockTestExaminePaperApi(params);
+        if (options.certWrong) {
+          let params = options;
+          this.queryPracticeQuestionApi(params);
+          this.hideAnalysis = true;
+          this.wrongMode = true;
+          this.rightWrongType = options.rightWrongType;
+        } else {
+          let params = {
+            id: Number(options.id),
+            rightWrongType: options.rightWrongType == 0 ? Number(options.rightWrongType) : '',
+          };
+          this.queryExaminecertpaperApi(params);
+          this.hideAnalysis = true;
+          this.wrongMode = true;
+          this.rightWrongType = options.rightWrongType;
+        }
       } else {
         this.loadExaminePaperApi(options);
       }
@@ -299,7 +302,10 @@
         this.$set(this.examList, this.examIndex, this.examList[this.examIndex]);
 
         /* 判断选中题目是否正确 */
-        if (questionIndexObj.answerVOList[val].rightChoicesFlag === 1) {
+        if (
+          questionIndexObj.answerVOList[val].rightChoicesFlag === 1 &&
+          this.examIndex !== this.examList.length - 1
+        ) {
           this.onChangeQuestion('next');
         } else {
           this.hideAnswerAnalysis = true;
@@ -415,7 +421,9 @@
           });
         });
         this.timestamp =
-          (Date.parse(new Date(this.examinePaperObj.endTime)) - Date.parse(new Date())) / 1000;
+          (Date.parse(new Date(this.examinePaperObj.endTime.replace(/-/g, '/'))) -
+            Date.parse(new Date())) /
+          1000;
 
         this.examIndex = this.examList.findIndex((item) => {
           return item.state == 0;
@@ -424,25 +432,12 @@
         this.getAnalysis(0);
       },
 
-      /* 继续模拟考试 */
-      async createMockTestExaminePaperApi(params) {
-        let res = await createMockTestExaminePaper(params);
-        this.examinePaperObj = res.data;
-
-        this.examName = `${this.examinePaperObj.certName}${this.examinePaperObj.certLevelName}`;
-        this.examList = this.examinePaperObj.examineCertPaperRelDetailList;
-        this.examList.forEach((el) => {
-          el.answerVOList.forEach((v) => {
-            v.checked = false;
-          });
-        });
-        this.getAnalysis(0);
-      },
-
       /* 单个提交 */
       async submitSingleQuestionApi(params) {
         let res = await submitSingleQuestion(params);
-        this.examinePaperObj = { ...res.data };
+        this.examinePaperObj = {
+          ...res.data,
+        };
       },
       async submitPaperApi(params) {
         let res = await submitPaper(params);
@@ -450,7 +445,7 @@
           let examResult = res.data;
           examResult.paperType = this.options.paperType;
           examResult.examName = this.examName;
-
+          examResult.mockTestPaperId = this.options.mockTestPaperId;
           this.$u.route({
             url: '/pages/test/examResult/index',
             type: 'redirectTo',
@@ -464,11 +459,29 @@
         }
       },
 
-      /* 错题 */
+      /* 试卷错题 */
       async queryExaminecertpaperApi(params) {
         let res = await queryExaminecertpaper(params);
         this.examinePaperObj = res.data;
-        /* TODO 多选错题回显没做 */
+
+        this.examName = `${this.examinePaperObj.certName}${this.examinePaperObj.certLevelName}`;
+        this.examList = this.examinePaperObj.examineCertPaperRelDetailList;
+        this.examList.forEach((el) => {
+          el.answerVOList.forEach((v) => {
+            if (this.examList[this.examIndex].studentAnswerList.indexOf(v.answerNo)) {
+              v.checked = false;
+            } else {
+              v.checked = true;
+            }
+          });
+        });
+        this.getAnalysis(0);
+      },
+
+      async queryPracticeQuestionApi(params) {
+        let res = await queryPracticeQuestion(params);
+        this.examinePaperObj = res.data;
+
         this.examName = `${this.examinePaperObj.certName}${this.examinePaperObj.certLevelName}`;
         this.examList = this.examinePaperObj.examineCertPaperRelDetailList;
         this.examList.forEach((el) => {
@@ -492,6 +505,7 @@
     overflow: scroll;
     background: #fff;
   }
+
   .right-item {
     display: flex;
     justify-content: center;
@@ -503,10 +517,12 @@
     border-radius: 52rpx;
     font-size: 32rpx;
     color: #999999;
+
     .right-item-r {
       margin-left: 4rpx;
     }
   }
+
   .right-item-success {
     background: $u-type-success;
     color: #fff;
@@ -518,6 +534,7 @@
     line-height: 68rpx;
     color: #333333;
     background: #fff;
+
     .question-type {
       padding: 4rpx 12rpx;
       height: 48rpx;
@@ -531,12 +548,14 @@
   .options-wrap {
     padding: 80rpx 32rpx 172rpx;
     background: #fff;
+
     .options {
       display: flex;
       align-items: center;
       margin-bottom: 48rpx;
       font-size: 48rpx;
       color: #333333;
+
       .radio {
         flex-shrink: 0;
         display: flex;
@@ -548,9 +567,11 @@
         box-shadow: 0rpx 0rpx 16rpx rgba(42, 45, 56, 0.15);
         font-size: 32rpx;
       }
+
       .u-image {
         flex-shrink: 0;
       }
+
       .options-content {
         margin-left: 32rpx;
       }
@@ -566,24 +587,28 @@
     font-size: 40rpx;
     line-height: 56rpx;
     color: #666666;
+
     .right,
     .error {
       margin: 0 48rpx 0 16rpx;
       font-weight: 500;
       font-size: 40rpx;
     }
+
     .right {
       color: #00a870;
     }
+
     .error {
       color: #e34d59;
     }
   }
 
   .analysis-wrap {
-    margin-top: 10rpx;
+    margin: 10rpx 0 208rpx;
     padding: 24rpx;
     background: #fff;
+
     .analysis-title {
       margin-bottom: 32rpx;
       font-weight: 500;
@@ -591,6 +616,7 @@
       line-height: 40rpx;
       color: #333333;
     }
+
     .analysis-content {
       font-size: 48rpx;
       line-height: 68rpx;
@@ -607,6 +633,7 @@
     padding: 36rpx 24rpx 24rpx;
     background: #fff;
   }
+
   .question-stat {
     display: flex;
     align-items: center;
@@ -618,6 +645,7 @@
       margin-right: 32rpx;
       font-size: 40rpx;
       color: #666666;
+
       .u-image {
         margin-right: 8rpx;
       }
@@ -632,14 +660,17 @@
     justify-content: center;
     width: 100%;
     padding: 0 82rpx;
+
     .u-btn {
       margin: 0;
       width: 268rpx;
       height: 96rpx;
+
       & + .u-btn {
         margin-left: 24rpx;
       }
     }
+
     .u-btn--primary--plain {
       background: #fff !important;
     }
@@ -655,6 +686,7 @@
     color: #ffffff;
     background: #0052d9;
     border-radius: 52rpx;
+
     .u-image {
       margin-right: 8rpx;
     }
@@ -666,6 +698,7 @@
     justify-content: center;
     align-items: center;
     padding: 48rpx;
+
     .title {
       font-weight: 500;
       font-size: 52rpx;
@@ -673,48 +706,58 @@
 
       color: #e34d59;
     }
+
     .exam-pass {
       color: #00a870;
     }
+
     .u-image {
       margin: 48rpx 0;
     }
+
     .exam-result-content {
       display: flex;
       justify-content: space-around;
       align-items: center;
       width: 100%;
     }
+
     .exam-result-num {
       display: flex;
       align-items: flex-end;
+
       .exam-result-num-l {
         font-weight: bold;
         font-size: 48rpx;
         color: #121212;
       }
+
       .exam-result-num-r {
         margin-left: 4rpx;
         font-size: 22rpx;
         color: #999999;
       }
     }
+
     .exam-result-title {
       margin-top: 12rpx;
       font-size: 22rpx;
       color: #999999;
     }
+
     .btn-wrap {
       display: flex;
       align-items: center;
       justify-content: space-between;
       width: 100%;
       margin-top: 48rpx;
+
       .u-btn {
         margin: 0;
         width: 268rpx;
         height: 96rpx;
       }
+
       .u-btn--primary--plain {
         background: #fff !important;
       }
@@ -725,6 +768,7 @@
     width: 100%;
     display: flex;
     justify-content: center;
+
     .u-image {
       margin-right: 8rpx;
     }

@@ -57,7 +57,7 @@
           :selectList="item.selectList"
           :value="item.value"
           @inputValueChange="inputValueChange($event, item.prop)"
-          @selectConfirm="selectConfirm($event, item.prop)"
+          @selectConfirm="selectConfirm($event, item.prop, formList)"
         ></CertFormItem>
         <view class="more-wrap" v-show="!more" @click="more = true">
           <view class="more-btn">
@@ -77,7 +77,7 @@
             :selectList="item.selectList"
             :value="item.value"
             @inputValueChange="inputValueChange($event, item.prop)"
-            @selectConfirm="selectConfirm($event, item.prop)"
+            @selectConfirm="selectConfirm($event, item.prop, hideformList)"
           ></CertFormItem>
         </view>
       </view>
@@ -265,9 +265,9 @@
       inputValueChange(e, prop) {
         this.form[prop] = e;
       },
-      selectConfirm(e, prop) {
+      selectConfirm(e, prop, array) {
         this.form[prop] = e[0].label;
-        this.selectChangeValueFn(prop, e);
+        this.selectChangeValueFn(prop, e, array);
 
         if (prop === 'province') {
           this.selectCleanFn('city');
@@ -281,11 +281,11 @@
         }
       },
       /* 改变下拉选中的值 */
-      selectChangeValueFn(prop, e) {
-        let index = this.formList.findIndex((item) => {
+      selectChangeValueFn(prop, e, array) {
+        let index = array.findIndex((item) => {
           return item.prop == prop;
         });
-        this.formList[index].value = e[0].label;
+        array[index].value = e[0].label;
       },
 
       /* 选中联动清空下拉框 */

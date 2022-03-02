@@ -6,9 +6,11 @@
   "dependencies": {
     "dayjs": "^1.10.6",
     "eslint-define-config": "^1.0.9",
+    "html2canvas": "^1.4.1",
     "jweixin-module": "^1.6.0",
     "lodash": "^4.17.21",
     "number-precision": "^1.5.0",
+    "qrcodejs2": "0.0.2",
     "uni-read-pages": "^1.0.5",
     "uni-simple-router": "^2.0.1",
     "uview-ui": "^1.8.4",

@@ -378,4 +378,8 @@
       color: $u-content-color;
     }
   }
+
+  .swiper {
+    min-height: 460rpx;
+  }
 </style>

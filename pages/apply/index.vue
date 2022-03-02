@@ -242,33 +242,36 @@
       selectConfirm(e, prop) {
         this.form[prop] = e[0].label;
         this.selectChangeValueFn(prop, e);
-        if (prop === 'professionalName') {
-          this.selectCleanFn('level');
-          this.selectCleanFn('scheduleId');
 
-          let formListIndex = this.formList.findIndex((item) => {
-            return item.prop == 'level';
-          });
+        if (e[0].label !== null) {
+          if (prop === 'professionalName') {
+            this.selectCleanFn('level');
+            this.selectCleanFn('scheduleId');
 
-          this.levelList = this.certTypeList[e[0].value].certInfoList;
-          this.levelList.forEach((el) => {
-            this.formList[formListIndex].selectList.push({
-              label: el.levelName,
-              value: el.id,
+            let formListIndex = this.formList.findIndex((item) => {
+              return item.prop == 'level';
             });
-          });
-        }
 
-        if (prop === 'level') {
-          this.queryExamIneScheduleListApi(e[0].value);
-          this.selectCleanFn('scheduleId');
-        }
+            this.levelList = this.certTypeList[e[0].value].certInfoList;
+            this.levelList.forEach((el) => {
+              this.formList[formListIndex].selectList.push({
+                label: el.levelName,
+                value: el.id,
+              });
+            });
+          }
 
-        if (prop === 'scheduleId') {
-          let index = this.examIneScheduleList.findIndex((item) => {
-            return item.value == e.value;
-          });
-          this.examIneSchedule = this.examIneScheduleList[index];
+          if (prop === 'level') {
+            this.queryExamIneScheduleListApi(e[0].value);
+            this.selectCleanFn('scheduleId');
+          }
+
+          if (prop === 'scheduleId') {
+            let index = this.examIneScheduleList.findIndex((item) => {
+              return item.value == e.value;
+            });
+            this.examIneSchedule = this.examIneScheduleList[index];
+          }
         }
       },
 

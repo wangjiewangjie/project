@@ -1,7 +1,7 @@
 <template>
   <view class="page">
     <view class="page-top">
-      <view class="title">欢迎登录{{ name }}认定中心</view>
+      <view class="title">{{ bindWX ? '验证/绑定手机号' : `欢迎登录${name}认定中心` }}</view>
       <view class="login-form">
         <u-form :model="form" ref="uForm">
           <u-form-item prop="phone">
@@ -53,7 +53,7 @@
 
     <view class="page-bottom">
       <!-- 第三方登录 -->
-      <view class="other-login">
+      <view class="other-login" v-if="!bindWX">
         <view class="other-login-header">
           <text class="line"></text>
           <text>第三方账号登录</text>
@@ -102,6 +102,8 @@
 
         loginDisabled: true,
         checked: false,
+
+        bindWX: false,
 
         rules: {
           phone: [
@@ -203,10 +205,14 @@
         let res = await loginByOpenId(params);
         uni.hideLoading();
         if (res.rescode === 200) {
-          commonInfo.setToken(res.data.token);
-          commonInfo.setUser(res.data.user);
           commonInfo.setOpenId(res.data.openid);
-          this.routerLogin();
+          if (res.data.actType === 3) {
+            commonInfo.setToken(res.data.token);
+            commonInfo.setUser(res.data.user);
+            this.routerLogin();
+          } else {
+            this.bindWX = true;
+          }
         } else {
           this.$refs.uToast.show({
             title: '微信登录失败',
@@ -219,15 +225,15 @@
           this.$u.toast('请阅读《家协通服务协议》、《隐私协议》');
           return;
         }
+
         this.$refs.uForm.validate(async (valid) => {
           if (valid) {
             const params = {
-              companyId: 'G00001',
-              openId: '',
+              openId: commonInfo.getOpenId(),
               phone: this.form.phone,
               userType: 13,
               verifychkcode: this.form.code,
-              loginType: 2, //验证码登录
+              unionCode: 'U00112',
             };
             const res = await phoneLogin(params);
             if (res.rescode === 200) {

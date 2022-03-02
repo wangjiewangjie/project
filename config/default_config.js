@@ -49,9 +49,8 @@ const DEVELOPMENT_CONFIG = {
   // apiHost: 'http://172.19.134.25:8080/',
   wxAppId,
   jwtjson: '',
-  h5CodeUrl: 'https://oss.bm001.com/jfe/servicecard/h5/index.html#/pages/aunt/resume/resume',
-  shareH5BaseUrl: 'https://oss.bm001.com/jfe/servicecard/h5/index.html',
-  shareAuntH5BaseUrl: 'https://oss.bm001.com/jfe/servicecard/auntH5/index.html',
+  shareH5BaseUrl:
+    'https://oss.bm001.com/static/association/credit-cert-h5/source/index.html#/pages/login/index',
 };
 
 // 生产环境配置
@@ -59,10 +58,8 @@ const PRODUCTION_CONFIG = {
   apiHost: 'https://creditapi-test1.devp.bm001.com/',
   wxAppId,
   jwtjson: '',
-  h5CodeUrl: 'https://oss.bm001.com/jfe/servicecard/prodh5/index.html#/pages/aunt/resume/resume',
-  shareH5BaseUrl: 'https://oss.bm001.com/jfe/servicecard/prodh5/index.html',
-  // shareH5BaseUrl: "https://oss.bm001.com/jfe/servicecard/h5/index.html"
-  shareAuntH5BaseUrl: 'https://oss.bm001.com/jfe/servicecard/auntH5/index.html',
+  shareH5BaseUrl:
+    'https://oss.bm001.com/static/association/credit-cert-h5/source/index.html#/pages/login/index',
 };
 
 if (DEVELOPER_TYPE === 'development') {

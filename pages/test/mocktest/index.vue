@@ -98,6 +98,7 @@
           if (res.data.isNewExaminePaper == 0) {
             this.showPopup = true;
           } else {
+            await startExamine({ id: res.data.id });
             this.routerTest();
           }
         } else {

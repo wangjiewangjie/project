@@ -141,3 +141,7 @@ export const queryCertificatePageList = (params) => {
 export const deleteCert = (params) => {
   return Http.post('/s/certificatereservation/delete', params, true);
 }; //删除证书预约表
+
+export const queryPracticeQuestion = (params) => {
+  return Http.post('/s/examinecertpaperrel/queryPracticeQuestion', params, true);
+}; //查询错题

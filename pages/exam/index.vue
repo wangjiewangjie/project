@@ -117,8 +117,9 @@
       routerQuestion() {
         if (this.examInfo.practiceWrongCount) {
           let params = {
-            id: this.certId,
+            certId: this.certId,
             rightWrongType: 0,
+            certWrong: true,
           };
           this.$u.route({
             url: '/pages/test/index',
