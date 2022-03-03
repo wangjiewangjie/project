@@ -5,6 +5,7 @@
         height="226"
         :indicatorStyle="indicatorStyle"
         :list="AdvertisingList"
+        :border-radius="16"
         name="picUrl"
       ></u-swiper>
     </view>
@@ -305,6 +306,8 @@
         margin: 0;
         width: 160rpx;
         height: 64rpx;
+        font-weight: 500;
+        font-size: 24rpx;
       }
     }
   }
@@ -373,9 +376,13 @@
     }
     .exam-des {
       margin-bottom: 48rpx;
+      min-height: 180rpx;
       font-size: 28rpx;
       line-height: 36rpx;
       color: $u-content-color;
+    }
+    .u-btn--primary {
+      background: linear-gradient(113deg, #4787f0 1.71%, #0052d9 70.21%);
     }
   }
 

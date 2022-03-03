@@ -13,7 +13,7 @@
       </view>
       <view
         class="progressbar-line"
-        :class="current >= index + 1 ? '' : 'progressbar-line-fill'"
+        :class="current - 1 >= index + 1 ? '' : 'progressbar-line-fill'"
         v-if="index !== 3"
       ></view>
     </block>
@@ -102,6 +102,7 @@
     }
 
     .progressbar-line-fill {
+      height: 2rpx;
       background: $fillColor;
     }
   }

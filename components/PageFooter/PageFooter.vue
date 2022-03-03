@@ -1,3 +1,11 @@
+<!--
+ * @Author: your name
+ * @Date: 2022-02-22 17:18:09
+ * @LastEditTime: 2022-03-03 14:19:12
+ * @LastEditors: Please set LastEditors
+ * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @FilePath: \credit-cert-h5\components\PageFooter\PageFooter.vue
+-->
 <template>
   <view class="page-footer">
     <view class="follow-wrap">
@@ -35,6 +43,7 @@
       color: $u-main-color;
     }
     .follow-wx {
+      margin-top: 16rpx;
       font-size: 28rpx;
       line-height: 36rpx;
       color: $u-tips-color;
@@ -43,9 +52,10 @@
 
   .footer {
     padding: 24rpx 0;
+    border-top: 1rpx solid #eaeaea;
     font-size: 24rpx;
     line-height: 28rpx;
-    color: $u-tips-color;
+    color: $u-light-color;
     text-align: center;
   }
 </style>

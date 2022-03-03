@@ -5,7 +5,7 @@
     <view class="query-title"></view>
     <view class="query-form-wrap">
       <view class="query-form-title">
-        <view class="query-form-name">search information</view>
+        <view class="query-form-name">{{ `search information`.toUpperCase() }}</view>
       </view>
       <view class="query-form">
         <u-form
@@ -43,7 +43,6 @@
   /* eslint-disable no-console */
   import config from '@/config/config';
   import CertFormItem from '../../apply/components/CertFormItem.vue';
-  import { queryExaminestudentScore } from '@/util/ajax/services';
   export default {
     components: {
       CertFormItem,
@@ -133,20 +132,11 @@
         this.$refs.uForm.validate(async (valid) => {
           if (valid) {
             let params = { ...this.form };
-            let res = await queryExaminestudentScore(params);
-            if (res.rescode === 200) {
-              this.$refs.uToast.show({
-                title: '查询中',
-                type: 'success',
-                url: '/pages/query/resultList/index',
-                params: res.data,
-              });
-            } else {
-              this.$refs.uToast.show({
-                title: res.msg,
-                type: 'error',
-              });
-            }
+
+            this.$u.route({
+              url: '/pages/query/resultList/index',
+              params: params,
+            });
           } else {
             console.log('验证失败');
           }
@@ -168,7 +158,7 @@
       width: 750rpx;
       height: 100%;
       background: url($ossUrl + 'query-bg2.png') no-repeat;
-      background-size: contain;
+      background-size: 100%;
     }
 
     .query-form-wrap {

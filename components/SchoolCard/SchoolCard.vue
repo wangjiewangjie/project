@@ -84,11 +84,14 @@
         height: 40rpx;
         background: #ecf2fe;
         border-radius: 20rpx;
+        .u-image {
+          margin-bottom: 2rpx;
+        }
       }
     }
     .school-card-num {
       margin-bottom: 14rpx;
-      font-size: 28rpx;
+      font-size: 26rpx;
       line-height: 36rpx;
       color: $u-main-color;
     }

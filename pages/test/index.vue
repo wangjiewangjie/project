@@ -25,7 +25,7 @@
     <!-- 模拟考试 -->
     <u-navbar v-else>
       <view class="slot-wrap">
-        <u-image width="40rpx" height="40rpx" :src="`${ossUrl}exam-count-down.png`"></u-image>
+        剩余时间
         <u-count-down :timestamp="timestamp" :show-days="false" :show-hours="false"></u-count-down>
       </view>
       <view class="navbar-right" slot="right">
@@ -46,7 +46,7 @@
     <!-- 题干 -->
     <view class="question-title">
       <text class="question-type">{{ examList[examIndex].questionTypeName }}</text>
-      <text v-html="examList[examIndex].title"></text>
+      <text class="question-content" v-html="examList[examIndex].title"></text>
     </view>
 
     <!-- 选项 -->
@@ -106,6 +106,7 @@
     </view>
 
     <!-- 解析 -->
+    <view class="line" v-show="hideAnalysis || hideAnswerAnalysis"></view>
     <view class="analysis-wrap" v-show="hideAnalysis || hideAnswerAnalysis">
       <view class="analysis-title">官方解析</view>
       <view class="analysis-content">{{ examList[examIndex].parse || '暂无官方解析' }}</view>
@@ -119,8 +120,8 @@
         type="primary"
         shape="circle"
         @click="onChangeQuestion('last')"
-        >上一题
-      </u-button>
+        >上一题</u-button
+      >
       <u-button
         v-show="examIndex !== examList.length - 1"
         type="primary"
@@ -157,54 +158,10 @@
 
     <!-- 弹窗 -->
     <u-popup v-model="showExamResult" mode="center" width="664" height="790" border-radius="16">
-      <view class="exam-result-wrap">
-        <view
-          class="title"
-          :class="
-            examinePaperObj.passScore > examinePaperObj.studentScore ||
-            examinePaperObj.studentScore === 0
-              ? ''
-              : 'exam-pass'
-          "
-        >
-          {{
-            examinePaperObj.passScore > examinePaperObj.studentScore ||
-            examinePaperObj.studentScore === 0
-              ? '成绩不合格'
-              : '成绩合格'
-          }}
-        </view>
-        <u-image width="340rpx" height="282rpx" :src="`${ossUrl}exam-default.png`"></u-image>
-        <view class="exam-result-content">
-          <view class="exam-result-li">
-            <view class="exam-result-num">
-              <view class="exam-result-num-l">{{ examinePaperObj.unAnswerCount || '0' }}</view>
-              <view class="exam-result-num-r">题</view>
-            </view>
-            <view class="exam-result-title">未答题数</view>
-          </view>
-          <view class="exam-result-li">
-            <view class="exam-result-num">
-              <view class="exam-result-num-l">{{ examinePaperObj.wrongAnswerCount || '0' }}</view>
-              <view class="exam-result-num-r">题</view>
-            </view>
-            <view class="exam-result-title">答错题数</view>
-          </view>
-          <view class="exam-result-li">
-            <view class="exam-result-num">
-              <view class="exam-result-num-l">{{ examinePaperObj.studentScore || '0' }}</view>
-              <view class="exam-result-num-r">分</view>
-            </view>
-            <view class="exam-result-title">考试得分</view>
-          </view>
-        </view>
-        <view class="btn-wrap">
-          <u-button plain type="primary" shape="circle" @click="showExamResult = false"
-            >继续考试</u-button
-          >
-          <u-button type="primary" shape="circle" @click="onSubmitPaper">现在交卷</u-button>
-        </view>
-      </view>
+      <ExamResultPopup
+        :examinePaperObj="examinePaperObj"
+        @onSubmitPaper="onSubmitPaper"
+      ></ExamResultPopup>
     </u-popup>
 
     <u-toast ref="uToast" />
@@ -220,7 +177,11 @@
     queryExaminecertpaper,
     queryPracticeQuestion,
   } from '@/util/ajax/services';
+  import ExamResultPopup from './components/examResultPopup.vue';
   export default {
+    components: {
+      ExamResultPopup,
+    },
     data() {
       return {
         examinePaperObj: {},
@@ -348,11 +309,15 @@
         this.getUserChooseOptions();
       },
 
-      onSubmitPaper() {
-        let params = {
-          id: this.examinePaperObj.id,
-        };
-        this.submitPaperApi(params);
+      onSubmitPaper(e) {
+        if (e) {
+          let params = {
+            id: this.examinePaperObj.id,
+          };
+          this.submitPaperApi(params);
+        } else {
+          this.showExamResult = false;
+        }
       },
       /* 交卷提交当前题目 */
       onSubmitExamResult() {
@@ -531,22 +496,27 @@
   .question-title {
     padding: 48rpx 24rpx 0;
     font-size: 48rpx;
-    line-height: 68rpx;
     color: #333333;
     background: #fff;
-
     .question-type {
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 12rpx;
       padding: 4rpx 12rpx;
+      width: 88rpx;
       height: 48rpx;
       background: linear-gradient(113deg, #4787f0 1.71%, #266fe8 70.21%);
       border-radius: 4rpx 24rpx 24rpx 4rpx;
       font-size: 32rpx;
       color: #ffffff;
     }
+    .question-content {
+      vertical-align: middle;
+    }
   }
 
   .options-wrap {
-    padding: 80rpx 32rpx 172rpx;
+    padding: 80rpx 32rpx 48rpx;
     background: #fff;
 
     .options {
@@ -604,6 +574,11 @@
     }
   }
 
+  .line {
+    height: 8rpx;
+    background: #f7f7f7;
+  }
+
   .analysis-wrap {
     margin: 10rpx 0 208rpx;
     padding: 24rpx;
@@ -630,6 +605,7 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
+    height: 112rpx;
     padding: 36rpx 24rpx 24rpx;
     background: #fff;
   }
@@ -654,12 +630,13 @@
 
   .change-question-btn {
     position: fixed;
-    bottom: 192rpx;
+    bottom: 112rpx;
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
     padding: 0 82rpx;
+    background: #fff;
 
     .u-btn {
       margin: 0;
@@ -692,7 +669,26 @@
     }
   }
 
-  .exam-result-wrap {
+  .slot-wrap {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    font-size: 32rpx;
+    line-height: 40rpx;
+    color: #333333;
+
+    .u-image {
+      margin-right: 8rpx;
+    }
+
+    .u-countdown-time {
+      font-size: 32rpx !important;
+      line-height: 40rpx !important;
+      color: #333333 !important;
+    }
+  }
+
+  /deep/ .exam-result-wrap {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -725,10 +721,10 @@
     .exam-result-num {
       display: flex;
       align-items: flex-end;
-
       .exam-result-num-l {
         font-weight: bold;
         font-size: 48rpx;
+        line-height: 48rpx;
         color: #121212;
       }
 
@@ -756,21 +752,12 @@
         margin: 0;
         width: 268rpx;
         height: 96rpx;
+        font-size: 36rpx;
       }
 
       .u-btn--primary--plain {
         background: #fff !important;
       }
-    }
-  }
-
-  .slot-wrap {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-
-    .u-image {
-      margin-right: 8rpx;
     }
   }
 </style>

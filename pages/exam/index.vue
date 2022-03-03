@@ -284,6 +284,7 @@
       line-height: 60rpx;
     }
     .card-content-l-b {
+      font-weight: normal !important;
       font-size: 36rpx;
       line-height: 48rpx;
     }

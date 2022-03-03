@@ -25,12 +25,12 @@
         </view>
         <u-image width="32rpx" height="32rpx" :src="`${ossUrl}right-arrows_3.png`"></u-image>
       </view>
-      <!-- <view class="li" @click="routerQuestion">
+      <view class="li" @click="routerQuestion">
         <view class="li-l">
-          <u-image width="48rpx" height="48rpx" :src="`${ossUrl}mine-list_2.png`"></u-image>常见问题
+          <u-image width="48rpx" height="48rpx" :src="`${ossUrl}mine-list_3.png`"></u-image>常见问题
         </view>
         <u-image width="32rpx" height="32rpx" :src="`${ossUrl}right-arrows_3.png`"></u-image>
-      </view> -->
+      </view>
     </view>
 
     <view class="school-wrap" v-if="!isLogin">
@@ -129,13 +129,13 @@
   $borderRadius: 16rpx;
   .header-wrap {
     width: 750rpx;
-    height: 400rpx;
+    height: 288rpx;
     background: url($ossUrl + 'mine-bg.png') no-repeat;
     background-size: 750rpx 400rpx;
     .header {
       display: flex;
       align-items: center;
-      padding: 192rpx 0 0 48rpx;
+      padding: 64rpx 48rpx;
     }
     .name {
       margin-left: 24rpx;

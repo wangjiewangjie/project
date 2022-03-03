@@ -1,17 +1,19 @@
 <template>
   <view class="page">
-    <view class="title">{{ options.title }}</view>
-    <view class="basic-info">
-      <view class="basic-info-l">官方发布</view>
-      <view class="basic-info-r">发布时间: {{ options.addTime | filterDay }}</view>
-    </view>
-    <view class="content" v-html="options.content"></view>
-    <view class="share">
-      <view class="share-btn" @click="onWXShare">
-        <u-image width="48rpx" height="48rpx" :src="`${ossUrl}wx-share_1.png`"></u-image>
+    <view>
+      <view class="title">{{ options.title }}</view>
+      <view class="basic-info">
+        <view class="basic-info-l">官方发布</view>
+        <view class="basic-info-r">发布时间: {{ options.addTime | filterDay }}</view>
       </view>
-      <view class="share-btn" @click="onWXShare(1)">
-        <u-image width="48rpx" height="48rpx" :src="`${ossUrl}wx-share_2.png`"></u-image>
+      <view class="content" v-html="options.content"></view>
+      <view class="share">
+        <view class="share-btn" @click="onWXShare">
+          <u-image width="48rpx" height="48rpx" :src="`${ossUrl}wx-share_1.png`"></u-image>
+        </view>
+        <view class="share-btn" @click="onWXShare(1)">
+          <u-image width="48rpx" height="48rpx" :src="`${ossUrl}wx-share_2.png`"></u-image>
+        </view>
       </view>
     </view>
     <PageFooter></PageFooter>
@@ -57,6 +59,9 @@
 
 <style lang="scss" scoped>
   .page {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     height: 100%;
     .title {
       margin: 24rpx 24rpx 16rpx;

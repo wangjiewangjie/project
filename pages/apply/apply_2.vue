@@ -34,7 +34,9 @@
               height="218rpx"
               :src="`${ossUrl}${item.photosamplePic}`"
             ></u-image>
-            <view class="li-tips">{{ item.tips }}</view>
+            <view class="li-tips-wrap">
+              <view class="li-tips" v-for="(v, index) in item.tips" :key="index">{{ v }}</view>
+            </view>
           </view>
         </view>
         <view class="contact">
@@ -128,10 +130,10 @@
           permanentaddress: '',
         },
         photosampleList: [
-          { photosamplePic: 'apply_2-upload_1.png', tips: '纯色背景白色最佳' },
-          { photosamplePic: 'apply_2-upload_2.png', tips: '光线均匀' },
-          { photosamplePic: 'apply_2-upload_3.png', tips: '正对镜头双耳露出' },
-          { photosamplePic: 'apply_2-upload_4.png', tips: '发型整洁不浓妆' },
+          { photosamplePic: 'apply_2-upload_1.png', tips: ['纯色背景', '白色最佳'] },
+          { photosamplePic: 'apply_2-upload_2.png', tips: ['光线均匀'] },
+          { photosamplePic: 'apply_2-upload_3.png', tips: ['正对镜头', '双耳露出'] },
+          { photosamplePic: 'apply_2-upload_4.png', tips: ['发型整洁', '不浓妆'] },
         ],
         formList: form.formList,
         hideformList: form.hideformList,
@@ -381,6 +383,10 @@
       display: flex;
       flex-direction: column;
     }
+    /deep/.u-preview-wrap {
+      width: 240rpx !important;
+      height: 336rpx !important;
+    }
     .h2 {
       width: 100%;
       padding: 24rpx;
@@ -390,6 +396,8 @@
     }
     .u-upload {
       margin: 24rpx 0 48rpx;
+      width: 240rpx;
+      height: 336rpx;
     }
     .h3 {
       width: 100%;
@@ -412,9 +420,13 @@
         align-items: center;
         border: 1rpx solid #dcdcdc;
       }
-      .li-tips {
+      .li-tips-wrap {
         padding: 8rpx 0;
+      }
+      .li-tips {
+        text-align: center;
         width: 96rpx;
+        white-space: nowrap;
       }
     }
 

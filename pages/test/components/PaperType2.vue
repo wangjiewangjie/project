@@ -1,7 +1,7 @@
 <template>
   <div class="paper-type2">
     <u-circle-progress
-      active-color="#00a870"
+      active-color="#5CC7A4"
       inactive-color="#E6F6F1"
       width="308"
       border-width="16"
@@ -75,7 +75,10 @@
           <view class="qrcode-wrap">
             <view class="qrcode-wrap-l">
               <view class="qrcode-name">{{ examResult.examName }}认定中心</view>
-              <view class="qrcode-tips">长按识别二维码<br />领取专属学习秘籍</view>
+              <view class="qrcode-tips">
+                长按识别二维码
+                <br />领取专属学习秘籍
+              </view>
             </view>
             <div ref="QRCode"></div>
           </view>

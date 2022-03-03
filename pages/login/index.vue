@@ -196,6 +196,7 @@
         };
         const res = await getLoginCode(params);
         if (res.rescode === 200) {
+          this.sendType = 'info';
           this.$refs.uCode.start();
         } else {
           this.$u.toast(res.msg);
