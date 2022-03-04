@@ -151,7 +151,7 @@
   .tabs-2 {
     position: relative;
     width: 100%;
-    height: calc(100% - 96px);
+    height: calc(100% - 50px);
     background: #262c57;
     .tabs-2_bg {
       position: absolute;

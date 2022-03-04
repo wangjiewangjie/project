@@ -171,7 +171,7 @@
   .tabs-1 {
     position: relative;
     width: 100%;
-    height: calc(100% - 96px);
+    height: calc(100% - 50px);
     border-radius: 0 0 160rpx 0;
     background: linear-gradient(180deg, #2460f5 0%, #0412bf 100%);
     .tabs-1_bg1 {

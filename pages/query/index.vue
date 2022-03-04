@@ -1,6 +1,14 @@
+<!--
+ * @Author: your name
+ * @Date: 2022-02-22 17:18:09
+ * @LastEditTime: 2022-03-03 17:45:18
+ * @LastEditors: your name
+ * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @FilePath: \credit-cert-h5\pages\query\index.vue
+-->
 <template>
   <view class="page">
-    <u-tabs
+    <!-- <u-tabs
       :list="queryList"
       :current="queryCurrent"
       @change="queryChange"
@@ -11,7 +19,7 @@
       height="84"
       bar-width="32"
       bar-height="4"
-    ></u-tabs>
+    ></u-tabs> -->
     <Tab1 v-if="queryCurrent === 0"></Tab1>
     <Tab2 v-if="queryCurrent === 1"></Tab2>
     <u-tabbar

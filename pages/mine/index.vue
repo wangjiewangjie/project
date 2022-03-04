@@ -207,6 +207,7 @@
   }
 
   .school-card {
+    margin-bottom: 24rpx;
     background: #fff;
     border-radius: $borderRadius;
   }

@@ -6,14 +6,14 @@
           <u-image width="48rpx" height="48rpx" :src="`${ossUrl}progressbar_success.png`"></u-image>
         </view>
         <view class="progressbar-num" v-if="current === index + 1">{{ index + 1 }}</view>
-        <view class="progressbar-num progressbar-num-fill" v-if="current < index + 1">
-          {{ index + 1 }}
-        </view>
+        <view class="progressbar-num progressbar-num-fill" v-if="current < index + 1">{{
+          index + 1
+        }}</view>
         <view class="progressbar-title">{{ item.title }}</view>
       </view>
       <view
         class="progressbar-line"
-        :class="current - 1 >= index + 1 ? '' : 'progressbar-line-fill'"
+        :class="current >= index + 1 && index < 1 ? '' : 'progressbar-line-fill'"
         v-if="index !== 3"
       ></view>
     </block>
@@ -84,7 +84,8 @@
         color: #ffffff;
       }
       .progressbar-num-fill {
-        background: $fillColor;
+        background: #f5f5f5;
+        color: #999;
       }
 
       .progressbar-title {

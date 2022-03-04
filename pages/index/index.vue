@@ -6,6 +6,7 @@
         :indicatorStyle="indicatorStyle"
         :list="AdvertisingList"
         :border-radius="16"
+        mode="dot"
         name="picUrl"
       ></u-swiper>
     </view>
@@ -304,6 +305,8 @@
       color: $u-main-color;
       .notice-btn {
         margin: 0;
+        margin-left: 16rpx;
+        margin-top: 4rpx;
         width: 160rpx;
         height: 64rpx;
         font-weight: 500;

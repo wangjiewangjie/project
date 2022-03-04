@@ -383,6 +383,9 @@
       display: flex;
       flex-direction: column;
     }
+    /deep/.u-list-item {
+      border-radius: 0;
+    }
     /deep/.u-preview-wrap {
       width: 240rpx !important;
       height: 336rpx !important;

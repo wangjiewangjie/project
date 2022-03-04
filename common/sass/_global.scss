@@ -35,3 +35,14 @@ page {
   font-size: 12px !important;
   line-height: 16px !important;
 }
+
+/* 输入框select icon更换成箭头 */
+.uicon-arrow-down-fill:before {
+  content: '\e605' !important;
+}
+
+/* swiper dot指示器样式修改 */
+.u-indicator-item-dot {
+  height: 12rpx;
+  width: 12rpx;
+}
