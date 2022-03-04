@@ -15,7 +15,10 @@
     {
       "path": "pages/exam/index",
       "style": {
-        "navigationBarTitleText": "考试"
+        "navigationBarTitleText": "考试",
+        "app-plus": {
+          "titleNView": false
+        }
       }
     },
     {
@@ -48,7 +51,10 @@
     {
       "path": "pages/query/index",
       "style": {
-        "navigationBarTitleText": "查询"
+        "navigationBarTitleText": "查询",
+        "app-plus": {
+          "titleNView": false
+        }
       }
     },
     {

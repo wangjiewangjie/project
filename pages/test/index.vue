@@ -58,38 +58,45 @@
         :key="index"
       >
         <!-- 不看答案 -->
-        <view v-show="!item.checked && !hideAnalysis" class="radio">
-          {{ examList[examIndex].questionType === 3 ? '' : item.answerNo }}
-        </view>
-        <u-image
-          v-show="item.checked && !hideAnalysis"
-          width="64rpx"
-          height="64rpx"
-          :src="`${ossUrl}exam-answer_success.png`"
-        ></u-image>
+        <block v-if="!hideAnalysis && !hideAnswerAnalysis">
+          <view v-show="!item.checked" class="radio">
+            <!-- 判断题类型不显示answerNo -->
+            {{ examList[examIndex].questionType === 3 ? '' : item.answerNo }}
+          </view>
+          <u-image
+            v-show="item.checked"
+            width="64rpx"
+            height="64rpx"
+            :src="`${ossUrl}exam-answer_success.png`"
+          ></u-image>
+        </block>
         <!-- 看答案 -->
-        <view v-show="!item.checked && hideAnalysis && item.rightChoicesFlag == 0" class="radio">
-          {{ examList[examIndex].questionType === 3 ? '' : item.answerNo }}
-        </view>
-        <u-image
-          v-show="hideAnalysis && item.rightChoicesFlag == 1"
-          width="64rpx"
-          height="64rpx"
-          :src="`${ossUrl}exam-answer_success.png`"
-        ></u-image>
-        <u-image
-          v-show="item.checked && hideAnalysis && item.rightChoicesFlag == 0"
-          width="64rpx"
-          height="64rpx"
-          :src="`${ossUrl}exam-answer_error.png`"
-        ></u-image>
+        <block v-if="hideAnalysis || hideAnswerAnalysis">
+          <view v-show="item.rightChoicesFlag == 0 && !item.checked" class="radio">
+            <!-- 判断题类型不显示answerNo -->
+            {{ examList[examIndex].questionType === 3 ? '' : item.answerNo }}
+          </view>
+          <u-image
+            v-show="item.rightChoicesFlag == 0 && item.checked"
+            width="64rpx"
+            height="64rpx"
+            :src="`${ossUrl}exam-answer_error.png`"
+          ></u-image>
+          <u-image
+            v-show="item.rightChoicesFlag == 1"
+            width="64rpx"
+            height="64rpx"
+            :src="`${ossUrl}exam-answer_success.png`"
+          ></u-image>
+        </block>
+
         <view class="options-content">{{ item.content }}</view>
       </view>
       <!-- 答案 -->
       <view class="answer-wrap" v-show="hideAnalysis || hideAnswerAnalysis">
         <view>
           答案:
-          <text class="right">{{ rightChoices }}</text>
+          <text class="right">{{ examList[examIndex].rightChoicesList.toString() }}</text>
         </view>
         <view v-show="userChooseOptions.length && !wrongMode">
           您选择
@@ -133,29 +140,17 @@
     </view>
 
     <!-- 底部题目对错统计 -->
-    <view class="question-stat-wrap">
-      <view class="question-stat">
-        <view class="right-stat">
-          <u-image width="52rpx" height="52rpx" :src="`${ossUrl}exam-answer_success.png`"></u-image>
-          {{ examinePaperObj.rightAnswerCount }}
-        </view>
-        <view class="error-stat">
-          <u-image width="52rpx" height="52rpx" :src="`${ossUrl}exam-answer_error.png`"></u-image>
-          {{ examinePaperObj.wrongAnswerCount }}
-        </view>
-        <view class="total-stat">
-          <u-image width="52rpx" height="52rpx" :src="`${ossUrl}exam-num.png`"></u-image>
-          {{ examinePaperObj.answerCount }}/{{ examinePaperObj.allQuestionCount }}
-        </view>
-      </view>
-      <view
-        v-if="!wrongMode && options.paperType == 2"
-        class="paper-btn"
-        @click="onSubmitExamResult"
-      >
-        <u-image width="40rpx" height="40rpx" :src="`${ossUrl}exam-submit.png`"></u-image>交卷
-      </view>
-    </view>
+    <QuestionStatWrap
+      v-if="!wrongMode"
+      :examinePaperObj="examinePaperObj"
+      :options="options"
+      @onSubmitExamResult="onSubmitExamResult"
+    ></QuestionStatWrap>
+    <WrongStatWrap
+      v-if="wrongMode"
+      :examinePaperObj="examinePaperObj"
+      :examIndex="examIndex"
+    ></WrongStatWrap>
 
     <!-- 弹窗 -->
     <u-popup v-model="showExamResult" mode="center" width="664" height="790" border-radius="16">
@@ -178,18 +173,25 @@
     queryExaminecertpaper,
     queryPracticeQuestion,
   } from '@/util/ajax/services';
-  import ExamResultPopup from './components/examResultPopup.vue';
+  import ExamResultPopup from './components/ExamResultPopup.vue';
+  import QuestionStatWrap from './components/QuestionStatWrap.vue';
+  import WrongStatWrap from './components/WrongStatWrap.vue';
   export default {
     components: {
       ExamResultPopup,
+      QuestionStatWrap,
+      WrongStatWrap,
     },
     data() {
       return {
-        examinePaperObj: {},
+        examinePaperObj: {
+          endTime: '',
+        },
         examList: [
           {
             studentAnswerList: [],
             questionTypeName: '',
+            rightChoicesList: [],
           },
         ],
         examIndex: 0,
@@ -306,7 +308,6 @@
           this.examIndex--;
         }
 
-        this.getAnalysis(this.examIndex);
         this.getUserChooseOptions();
       },
 
@@ -341,21 +342,8 @@
           this.submitSingleQuestionApi(params);
         }
 
-        this.getAnalysis(this.examIndex);
         this.getUserChooseOptions();
         this.showExamResult = true;
-      },
-
-      /* 解析试题答案 */
-      getAnalysis(index) {
-        this.rightChoices = '';
-        this.examList[index].answerVOList.forEach((el) => {
-          if (el.rightChoicesFlag === 1) {
-            this.rightChoices += `${el.answerNo},`;
-          }
-        });
-
-        this.rightChoices = this.rightChoices.slice(0, this.rightChoices.lastIndexOf(','));
       },
 
       /* 解析用户选择试题答案 */
@@ -386,16 +374,18 @@
             v.checked = false;
           });
         });
-        this.timestamp =
-          (Date.parse(new Date(this.examinePaperObj.endTime.replace(/-/g, '/'))) -
-            Date.parse(new Date())) /
-          1000;
+
+        if (this.examinePaperObj.endTime) {
+          this.timestamp =
+            (Date.parse(new Date(this.examinePaperObj.endTime.replace(/-/g, '/'))) -
+              Date.parse(new Date())) /
+            1000;
+        }
 
         this.examIndex = this.examList.findIndex((item) => {
           return item.state == 0;
         });
         this.examIndex = this.examIndex == -1 ? 0 : this.examIndex;
-        this.getAnalysis(0);
       },
 
       /* 单个提交 */
@@ -442,7 +432,6 @@
             }
           });
         });
-        this.getAnalysis(0);
       },
 
       async queryPracticeQuestionApi(params) {
@@ -460,7 +449,6 @@
             }
           });
         });
-        this.getAnalysis(0);
       },
     },
   };
