@@ -1,3 +1,11 @@
+<!--
+ * @Author: your name
+ * @Date: 2022-02-22 17:18:09
+ * @LastEditTime: 2022-03-04 11:18:57
+ * @LastEditors: your name
+ * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @FilePath: \credit-cert-h5\pages\apply\apply_4.vue
+-->
 <template>
   <view class="page">
     <ProgressBar :current="4"></ProgressBar>
@@ -76,7 +84,9 @@
         });
       },
       async queryDistancePageListApi() {
-        let params = { ...commonInfo.getLocaiton() };
+        let params = {
+          ...commonInfo.getLocaiton(),
+        };
         let result = await queryDistancePageList(params);
         this.schoolList = result.data.dataList;
       },
@@ -85,77 +95,5 @@
 </script>
 
 <style lang="scss" scoped>
-  .page {
-    height: 100%;
-    overflow: scroll;
-  }
-
-  .card {
-    margin: 24rpx 24rpx 0;
-    border-radius: 16rpx;
-    background: #fff;
-  }
-  .success-wrap {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 24rpx;
-    .u-image {
-      margin-top: 96rpx;
-    }
-    .success-tips {
-      font-weight: 500;
-      font-size: 40rpx;
-      line-height: 56rpx;
-      color: $u-type-primary;
-    }
-    .success-time {
-      margin: 16rpx 0 80rpx;
-      font-size: 28rpx;
-      line-height: 36rpx;
-      color: $u-tips-color;
-    }
-    .success-btn {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-      .u-btn {
-        margin: 0;
-        width: 310rpx;
-        height: 80rpx;
-      }
-    }
-  }
-
-  .school-wrap {
-    margin: 48rpx 24rpx 0;
-  }
-
-  .school-wrap-title {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 24rpx;
-    font-weight: 600;
-    font-size: 36rpx;
-    line-height: 48rpx;
-    color: $u-main-color;
-  }
-
-  .more-btn {
-    display: flex;
-    align-items: center;
-    font-weight: normal;
-    font-size: 24rpx;
-    line-height: 32rpx;
-    color: $u-tips-color;
-  }
-
-  .school-card {
-    margin-bottom: 24rpx;
-    background: #fff;
-    border-radius: 16rpx;
-  }
+  @import './css/apply_4.scss';
 </style>

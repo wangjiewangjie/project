@@ -26,8 +26,8 @@
           type="primary"
           shape="circle"
           @click="routerOrderDetail(item.id)"
-          >查看详情</u-button
-        >
+          >查看详情
+        </u-button>
         <u-button
           v-show="item.state == 0"
           class="pay"
@@ -77,11 +77,15 @@
     },
     onPullDownRefresh() {
       this.dataList = [];
-      this.queryCertificatereservationPageListApi({ pageNum: 0 });
+      this.queryCertificatereservationPageListApi({
+        pageNum: 0,
+      });
     },
     onReachBottom() {
       if (hasMoreData) {
-        this.queryCertificatereservationPageListApi({ pageNum: this.pageNum });
+        this.queryCertificatereservationPageListApi({
+          pageNum: this.pageNum,
+        });
       }
     },
     methods: {
@@ -127,7 +131,10 @@
       async queryCertificatereservationPageListApi(params) {
         let { pageNum = 0, pageSize = 10 } = params;
 
-        const data = await queryCertificatereservationPageList({ pageNum, pageSize });
+        const data = await queryCertificatereservationPageList({
+          pageNum,
+          pageSize,
+        });
 
         if (data) {
           uni.stopPullDownRefresh();
@@ -151,87 +158,5 @@
 </script>
 
 <style lang="scss" scoped>
-  .page {
-    overflow: scroll;
-  }
-  .order-wrap {
-    margin: 24rpx 24rpx 0;
-    border-radius: 16rpx;
-    background: #fff;
-    &:last-child {
-      margin-bottom: 24rpx;
-    }
-    .order-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 24rpx;
-      border-bottom: 1rpx solid $u-form-item-border-color;
-      font-size: 24rpx;
-      line-height: 32rpx;
-      .order-header-l {
-        color: $u-content-color;
-      }
-      .order-header-r {
-        color: $u-type-error;
-      }
-    }
-    .order-content-wrap {
-      display: flex;
-      padding: 24rpx;
-      .u-image {
-        border-radius: 8rpx;
-      }
-    }
-    .order-content {
-      margin-left: 24rpx;
-      .order-content-t {
-        margin-bottom: 8rpx;
-        font-weight: 500;
-        font-size: 32rpx;
-        line-height: 44rpx;
-        color: $u-main-color;
-      }
-      .order-content-m {
-        margin-bottom: 8rpx;
-        font-size: 24rpx;
-        line-height: 32rpx;
-        color: $u-content-color;
-      }
-      .order-content-b {
-        line-height: 36rpx;
-        color: $u-main-color;
-      }
-      .order-content-b-l {
-        font-weight: 500;
-        font-size: 24rpx;
-      }
-      .order-content-b-r {
-        font-size: 28rpx;
-      }
-    }
-  }
-
-  .order-btn {
-    display: flex;
-    justify-content: flex-end;
-    padding: 0 24rpx 24rpx;
-    .u-btn {
-      margin: 0;
-      width: 160rpx;
-      height: 64rpx;
-      font-size: 24rpx;
-      & + .u-btn {
-        margin-left: 24rpx;
-      }
-    }
-    .u-btn--info--plain {
-      color: $u-tips-color !important;
-      border-color: $u-tips-color !important;
-    }
-    .u-btn--info--plain,
-    .u-btn--primary--plain {
-      background: #fff !important;
-    }
-  }
+  @import './index.scss';
 </style>

@@ -19,8 +19,8 @@
         v-for="(item, index) in certLevelArray"
         :key="index"
         @click="chooseLevel(index)"
-        >{{ item.levelName }}</view
-      >
+        >{{ item.levelName }}
+      </view>
     </view>
 
     <view class="exam-num-wrap">
@@ -80,7 +80,8 @@
       :icon-size="54"
       active-color="#0052d9"
       inactive-color="#666"
-    ></u-tabbar>
+    >
+    </u-tabbar>
   </view>
 </template>
 
@@ -101,7 +102,17 @@
         examCurrent: 0,
         certId: '', //证书id
 
-        levelList: [{ level: '五级' }, { level: '四级' }, { level: '三级' }],
+        levelList: [
+          {
+            level: '五级',
+          },
+          {
+            level: '四级',
+          },
+          {
+            level: '三级',
+          },
+        ],
         levelCurrent: 0,
 
         ossUrl: config.ossUrl,
@@ -185,7 +196,9 @@
         let res = await queryCertTypeList();
 
         res.data.forEach((el) => {
-          this.certTypeList.push({ name: el.professionalName });
+          this.certTypeList.push({
+            name: el.professionalName,
+          });
           this.certLevelList.push(el.certInfoList);
           this.certLevelArray = this.certLevelList[0];
           this.certId = this.certLevelArray[0].id;
@@ -204,109 +217,5 @@
 </script>
 
 <style lang="scss" scoped>
-  .level {
-    display: flex;
-    margin: 24rpx;
-    .level-li {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 218rpx;
-      height: 96rpx;
-      background: #fff;
-      border-radius: 16rpx;
-      font-size: 36rpx;
-      color: $u-main-color;
-      & + .level-li {
-        margin-left: 24rpx;
-      }
-    }
-    .level-selected {
-      background: $u-type-primary;
-      color: #fff;
-    }
-  }
-
-  .exam-num-wrap {
-    display: flex;
-    justify-content: space-between;
-    margin: 0 24rpx;
-    .exam-num-item-l,
-    .exam-num-item-r {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      width: 340rpx;
-      height: 200rpx;
-      border-radius: 16rpx;
-      font-weight: 600;
-      font-size: 36rpx;
-      line-height: 48rpx;
-      color: #333333;
-      .exam-num {
-        margin-top: 32rpx;
-        font-weight: bold;
-        font-size: 80rpx;
-        line-height: 80rpx;
-      }
-    }
-    .exam-num-item-l {
-      background: rgba(0, 82, 217, 0.05);
-      .exam-num {
-        color: $u-type-primary;
-      }
-    }
-    .exam-num-item-r {
-      background: rgba(227, 77, 89, 0.05);
-      .exam-num {
-        color: $u-type-error;
-      }
-    }
-  }
-
-  .exam-card {
-    margin: 24rpx 24rpx 0;
-    padding: 32rpx 24rpx;
-    background: linear-gradient(113deg, #4787f0 1.71%, #266fe8 70.21%);
-    border-radius: 16rpx;
-    color: #fff;
-    .card-content {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 8rpx;
-    }
-    .card-content-l-t {
-      margin-bottom: 32rpx;
-      font-weight: 500;
-      font-size: 52rpx;
-      line-height: 60rpx;
-    }
-    .card-content-l-b {
-      font-weight: normal !important;
-      font-size: 36rpx;
-      line-height: 48rpx;
-    }
-    .progress-wrap {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      .u-progress {
-        width: 482rpx;
-        background: rgba(#fff, 0.2) !important;
-        .u-active {
-          background: rgba(#fff, 0.6) !important;
-        }
-      }
-      .progress {
-        flex-shrink: 0;
-        font-size: 40rpx;
-        line-height: 56rpx;
-      }
-    }
-  }
-  .card-success {
-    background: linear-gradient(113deg, #48c79c 1.71%, #00a870 70.21%);
-  }
+  @import './index.scss';
 </style>

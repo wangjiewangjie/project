@@ -66,9 +66,11 @@
       align-items: center;
       justify-content: center;
       width: 96rpx;
+
       .progressbar-success {
         margin-bottom: 24rpx;
       }
+
       .progressbar-num {
         display: flex;
         justify-content: center;
@@ -83,6 +85,7 @@
         line-height: 32rpx;
         color: #ffffff;
       }
+
       .progressbar-num-fill {
         background: #f5f5f5;
         color: #999;

@@ -14,12 +14,8 @@
             <u-input placeholder="请输入手机号" v-model="form.phone" type="number"></u-input>
           </u-form-item>
           <u-form-item prop="code">
-            <u-image
-              class="icon"
-              width="48rpx"
-              height="48rpx"
-              :src="`${ossUrl}login-password.png`"
-            ></u-image>
+            <u-image class="icon" width="48rpx" height="48rpx" :src="`${ossUrl}login-password.png`">
+            </u-image>
             <u-input placeholder="请输入验证码" v-model="form.code" type="number"></u-input>
             <u-button
               class="send-btn"
@@ -28,7 +24,8 @@
               :type="sendType"
               size="mini"
               @click="getCode()"
-              >{{ codeTips }}</u-button
+            >
+              {{ codeTips }}</u-button
             >
           </u-form-item>
         </u-form>
@@ -39,8 +36,8 @@
           type="primary"
           shape="circle"
           @click="submit"
-          >登录</u-button
-        >
+          >登录
+        </u-button>
       </view>
       <u-verification-code
         startText="发送验证码"
@@ -48,7 +45,8 @@
         seconds="60"
         ref="uCode"
         @change="codeChange"
-      ></u-verification-code>
+      >
+      </u-verification-code>
     </view>
 
     <view class="page-bottom">
@@ -150,7 +148,10 @@
     computed: {
       dateRange() {
         const { phone, code } = this.form;
-        return { phone, code };
+        return {
+          phone,
+          code,
+        };
       },
     },
     onLoad(options) {
@@ -308,92 +309,5 @@
 </script>
 
 <style lang="scss" scoped>
-  $paddingY: 48rpx;
-
-  .page {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
-    width: 100%;
-    background: #fff;
-  }
-
-  .page-top,
-  .page-bottom {
-    width: 100%;
-  }
-
-  .title {
-    padding: 128rpx $paddingY 92rpx;
-    font-weight: 500;
-    font-size: 48rpx;
-    line-height: 68rpx;
-    color: $u-main-color;
-  }
-
-  .login-form {
-    padding: 0 $paddingY;
-    width: 100%;
-    .send-btn {
-      width: 204rpx;
-      height: 64rpx;
-      background: #fff !important;
-      font-weight: 500;
-      font-size: 28rpx;
-      line-height: 36rpx;
-      color: $u-light-color;
-    }
-    .icon {
-      margin-right: 16rpx;
-    }
-  }
-
-  .tips {
-    padding: 24rpx 0 128rpx;
-    font-size: 24rpx;
-    line-height: 32rpx;
-    color: $u-tips-color;
-  }
-
-  .other-login-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 24rpx;
-    line-height: 32rpx;
-    color: $u-tips-color;
-    .line {
-      display: inline-block;
-      width: 266rpx;
-      height: 1rpx;
-      background: $u-border-color;
-    }
-  }
-
-  .wx-login {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 48rpx auto;
-    width: 96rpx;
-    height: 96rpx;
-    background: #f5f5f5;
-    border-radius: 100%;
-  }
-
-  /deep/.agreement {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-bottom: 36rpx;
-    .u-checkbox__label {
-      font-size: 24rpx;
-      line-height: 32rpx;
-      color: $u-content-color;
-    }
-    .a {
-      color: $u-type-primary;
-    }
-  }
+  @import './index.scss';
 </style>

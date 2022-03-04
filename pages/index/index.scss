@@ -1,0 +1,154 @@
+$margin: 24rpx 24rpx 0rpx;
+$background: #fff;
+$borderRadius: 16rpx;
+
+.swiper-wrap {
+  margin: $margin;
+}
+
+.menu-wrap {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: $margin;
+  padding: 24rpx 0;
+  background: $background;
+  border-radius: $borderRadius;
+  font-weight: 500;
+  font-size: 24rpx;
+  line-height: 32rpx;
+  color: $u-content-color;
+
+  .menu-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .menu-name {
+      margin-top: 16rpx;
+    }
+  }
+}
+
+.notice-wrap {
+  margin: $margin;
+  background: $background;
+  border-radius: $borderRadius;
+  overflow: hidden;
+
+  .notice-wrap-top {
+    display: flex;
+    align-items: center;
+    padding: 16rpx 24rpx;
+    border-bottom: 1rpx solid $u-border-color;
+
+    .u-notice-bar-wrap {
+      flex: 1;
+    }
+  }
+
+  .notice-wrap-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20rpx 24rpx;
+    font-size: 28rpx;
+    line-height: 36rpx;
+    color: $u-main-color;
+
+    .notice-btn {
+      margin: 0;
+      margin-left: 16rpx;
+      margin-top: 4rpx;
+      width: 160rpx;
+      height: 64rpx;
+      font-weight: 500;
+      font-size: 24rpx;
+    }
+  }
+}
+
+.exam-wrap,
+.school-wrap {
+  margin: $margin;
+  background: $background;
+  border-radius: $borderRadius;
+  overflow: hidden;
+
+  .u-tabs {
+    margin: 24rpx 0 16rpx;
+  }
+}
+
+.exam-wrap-title,
+.school-wrap-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24rpx;
+  font-weight: 600;
+  font-size: 36rpx;
+  line-height: 48rpx;
+  color: $u-main-color;
+}
+
+.more-btn {
+  display: flex;
+  align-items: center;
+  font-weight: normal;
+  font-size: 24rpx;
+  line-height: 32rpx;
+  color: $u-tips-color;
+}
+
+.exam-card {
+  margin: 0 24rpx 24rpx;
+  padding: 28rpx 24rpx 24rpx;
+  background: linear-gradient(180deg, #ecf2fe 0%, rgba(236, 242, 254, 0) 100%);
+  border-radius: 16rpx;
+
+  .exam-card-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4rpx;
+
+    .exam-course {
+      font-weight: 500;
+      font-size: 32rpx;
+      line-height: 40rpx;
+      color: $u-main-color;
+    }
+
+    .exam-price {
+      font-weight: 500;
+      font-size: 36rpx;
+      line-height: 48rpx;
+      text-align: right;
+      color: $u-type-primary;
+    }
+  }
+
+  .exam-num {
+    margin-bottom: 24rpx;
+    font-size: 24rpx;
+    line-height: 32rpx;
+    color: $u-tips-color;
+  }
+
+  .exam-des {
+    margin-bottom: 48rpx;
+    min-height: 180rpx;
+    font-size: 28rpx;
+    line-height: 36rpx;
+    color: $u-content-color;
+  }
+
+  .u-btn--primary {
+    background: linear-gradient(113deg, #4787f0 1.71%, #0052d9 70.21%);
+  }
+}
+
+.swiper {
+  min-height: 460rpx;
+}

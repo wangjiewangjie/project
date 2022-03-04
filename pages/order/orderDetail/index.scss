@@ -1,0 +1,143 @@
+.page {
+  overflow: scroll;
+}
+
+.order-state-wrap {
+  display: flex;
+  justify-content: space-between;
+  height: 224rpx;
+  background: linear-gradient(95.08deg, #0052d9 0%, #bbd3fb 100%);
+
+  .order-state {
+    padding: 56rpx 32rpx;
+    color: #ffffff;
+
+    .order-state-t {
+      font-weight: 600;
+      font-size: 36rpx;
+      line-height: 50rpx;
+    }
+
+    .order-state-b {
+      font-size: 24rpx;
+      line-height: 34rpx;
+      letter-spacing: 1rpx;
+    }
+  }
+
+  .u-image {
+    margin: 24rpx 64rpx;
+  }
+}
+
+.order-wrap {
+  position: relative;
+  top: -40rpx;
+  margin: 0 24rpx;
+  border-radius: 16rpx;
+  background: #fff;
+
+  .order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24rpx;
+    border-bottom: 1rpx solid $u-form-item-border-color;
+    font-size: 24rpx;
+    line-height: 32rpx;
+
+    .order-header-l {
+      color: $u-content-color;
+    }
+  }
+
+  .order-content-wrap {
+    display: flex;
+    padding: 24rpx;
+
+    .u-image {
+      flex-direction: 0;
+      border-radius: 8rpx;
+    }
+  }
+
+  .order-content {
+    margin-left: 24rpx;
+
+    .order-content-t {
+      margin-bottom: 8rpx;
+      font-weight: 500;
+      font-size: 32rpx;
+      line-height: 44rpx;
+      color: $u-main-color;
+    }
+
+    .order-content-m {
+      margin-bottom: 8rpx;
+      font-size: 24rpx;
+      line-height: 32rpx;
+      color: $u-content-color;
+    }
+
+    .order-content-b {
+      line-height: 36rpx;
+      color: $u-main-color;
+    }
+
+    .order-content-b-l {
+      font-weight: 500;
+      font-size: 24rpx;
+    }
+
+    .order-content-b-r {
+      font-size: 28rpx;
+    }
+  }
+}
+
+.order-info-wrap {
+  margin: 8rpx 24rpx 24rpx;
+
+  .order-info-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 32rpx;
+    line-height: 40rpx;
+    color: $u-content-color;
+
+    .order-info-editor {
+      margin: 0;
+      width: 192rpx;
+      height: 48rpx;
+      border-radius: 40rpx;
+      font-size: 24rpx;
+      background: #f7f7f7 !important;
+    }
+  }
+
+  .order-info {
+    margin: 32rpx 0;
+    padding: 24rpx;
+    border-radius: 16rpx;
+    background: #fff;
+  }
+
+  .order-info-li {
+    display: flex;
+    justify-content: space-between;
+    font-size: 28rpx;
+    line-height: 36rpx;
+    color: $u-main-color;
+
+    .order-info-li-r {
+      width: 320rpx;
+      word-wrap: break-word;
+      text-align: right;
+    }
+
+    & + .order-info-li {
+      margin-top: 24rpx;
+    }
+  }
+}

@@ -1,0 +1,93 @@
+$paddingY: 48rpx;
+
+.page {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  width: 100%;
+  background: #fff;
+}
+
+.page-top,
+.page-bottom {
+  width: 100%;
+}
+
+.title {
+  padding: 128rpx $paddingY 92rpx;
+  font-weight: 500;
+  font-size: 48rpx;
+  line-height: 68rpx;
+  color: $u-main-color;
+}
+
+.login-form {
+  padding: 0 $paddingY;
+  width: 100%;
+
+  .send-btn {
+    width: 204rpx;
+    height: 64rpx;
+    background: #fff !important;
+    font-weight: 500;
+    font-size: 28rpx;
+    line-height: 36rpx;
+    color: $u-light-color;
+  }
+
+  .icon {
+    margin-right: 16rpx;
+  }
+}
+
+.tips {
+  padding: 24rpx 0 128rpx;
+  font-size: 24rpx;
+  line-height: 32rpx;
+  color: $u-tips-color;
+}
+
+.other-login-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 24rpx;
+  line-height: 32rpx;
+  color: $u-tips-color;
+
+  .line {
+    display: inline-block;
+    width: 266rpx;
+    height: 1rpx;
+    background: $u-border-color;
+  }
+}
+
+.wx-login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 48rpx auto;
+  width: 96rpx;
+  height: 96rpx;
+  background: #f5f5f5;
+  border-radius: 100%;
+}
+
+/deep/.agreement {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 36rpx;
+
+  .u-checkbox__label {
+    font-size: 24rpx;
+    line-height: 32rpx;
+    color: $u-content-color;
+  }
+
+  .a {
+    color: $u-type-primary;
+  }
+}

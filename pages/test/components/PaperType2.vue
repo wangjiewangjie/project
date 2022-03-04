@@ -344,6 +344,7 @@
           color: #666666;
         }
       }
+
       .qrcode {
         width: 104rpx;
         height: 104rpx;

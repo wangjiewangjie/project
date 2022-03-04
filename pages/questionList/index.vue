@@ -36,15 +36,18 @@
 <style lang="scss" scoped>
   .ul {
     margin: 24rpx;
+
     .li {
       padding: 24rpx;
       background: #ffffff;
       border-radius: 16rpx;
     }
+
     .li-t {
       display: flex;
       align-items: center;
       margin-bottom: 24rpx;
+
       .li-t-r {
         margin-left: 16rpx;
         font-weight: 500;
@@ -53,11 +56,13 @@
         color: $u-main-color;
       }
     }
+
     .li-b {
       display: flex;
       font-size: 24rpx;
       line-height: 32rpx;
       color: $u-tips-color;
+
       .li-b-l {
         margin-right: 16rpx;
       }

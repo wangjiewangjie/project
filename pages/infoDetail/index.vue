@@ -1,3 +1,11 @@
+<!--
+ * @Author: your name
+ * @Date: 2022-03-03 16:54:55
+ * @LastEditTime: 2022-03-04 11:25:11
+ * @LastEditors: your name
+ * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @FilePath: \credit-cert-h5\pages\infoDetail\index.vue
+-->
 <template>
   <view class="page">
     <view>
@@ -58,56 +66,5 @@
 </script>
 
 <style lang="scss" scoped>
-  .page {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
-    .title {
-      margin: 24rpx 24rpx 16rpx;
-      font-weight: 500;
-      font-size: 40rpx;
-      line-height: 56rpx;
-      color: #222222;
-    }
-    .basic-info {
-      display: flex;
-      align-items: center;
-      margin: 0 24rpx 16rpx;
-      .basic-info-l {
-        margin-right: 32rpx;
-        padding-right: 32rpx;
-        font-size: 24rpx;
-        line-height: 32rpx;
-        color: $u-type-primary;
-        border-right: 2rpx solid #dcdcdc;
-      }
-      .basic-info-r {
-        font-size: 24rpx;
-        line-height: 32rpx;
-        color: $u-tips-color;
-      }
-    }
-    .content {
-      padding: 24rpx;
-    }
-  }
-
-  .share {
-    position: fixed;
-    right: 24rpx;
-    bottom: 50%;
-    .share-btn {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 96rpx;
-      height: 96rpx;
-      background: #fff;
-      border-radius: 100%;
-      & + .share-btn {
-        margin-top: 32rpx;
-      }
-    }
-  }
+  @import './index.scss';
 </style>

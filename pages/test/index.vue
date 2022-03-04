@@ -43,12 +43,12 @@
         </view>
       </view>
     </u-navbar>
+
     <!-- 题干 -->
     <view class="question-title">
       <text class="question-type">{{ examList[examIndex].questionTypeName }}</text>
       <text class="question-content" v-html="examList[examIndex].title"></text>
     </view>
-
     <!-- 选项 -->
     <view class="options-wrap">
       <view
@@ -85,6 +85,7 @@
         ></u-image>
         <view class="options-content">{{ item.content }}</view>
       </view>
+      <!-- 答案 -->
       <view class="answer-wrap" v-show="hideAnalysis || hideAnswerAnalysis">
         <view>
           答案:
@@ -120,8 +121,8 @@
         type="primary"
         shape="circle"
         @click="onChangeQuestion('last')"
-        >上一题</u-button
-      >
+        >上一题
+      </u-button>
       <u-button
         v-show="examIndex !== examList.length - 1"
         type="primary"
@@ -404,6 +405,7 @@
           ...res.data,
         };
       },
+      /* 整个提交试卷 */
       async submitPaperApi(params) {
         let res = await submitPaper(params);
         if (res.rescode === 200) {
@@ -465,299 +467,5 @@
 </script>
 
 <style lang="scss" scoped>
-  .page {
-    height: 100%;
-    overflow: scroll;
-    background: #fff;
-  }
-
-  .right-item {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-right: 24rpx;
-    width: 180rpx;
-    height: 72rpx;
-    background: #f5f5f5;
-    border-radius: 52rpx;
-    font-size: 32rpx;
-    color: #999999;
-
-    .right-item-r {
-      margin-left: 4rpx;
-    }
-  }
-
-  .right-item-success {
-    background: $u-type-success;
-    color: #fff;
-  }
-
-  .question-title {
-    padding: 48rpx 24rpx 0;
-    font-size: 48rpx;
-    color: #333333;
-    background: #fff;
-    .question-type {
-      display: inline-block;
-      vertical-align: middle;
-      margin-right: 12rpx;
-      padding: 4rpx 12rpx;
-      width: 88rpx;
-      height: 48rpx;
-      background: linear-gradient(113deg, #4787f0 1.71%, #266fe8 70.21%);
-      border-radius: 4rpx 24rpx 24rpx 4rpx;
-      font-size: 32rpx;
-      color: #ffffff;
-    }
-    .question-content {
-      vertical-align: middle;
-    }
-  }
-
-  .options-wrap {
-    padding: 80rpx 32rpx 48rpx;
-    background: #fff;
-
-    .options {
-      display: flex;
-      align-items: center;
-      margin-bottom: 48rpx;
-      font-size: 48rpx;
-      color: #333333;
-
-      .radio {
-        flex-shrink: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 64rpx;
-        height: 64rpx;
-        border-radius: 100%;
-        box-shadow: 0rpx 0rpx 16rpx rgba(42, 45, 56, 0.15);
-        font-size: 32rpx;
-      }
-
-      .u-image {
-        flex-shrink: 0;
-      }
-
-      .options-content {
-        margin-left: 32rpx;
-      }
-    }
-  }
-
-  .answer-wrap {
-    display: flex;
-    align-items: center;
-    padding: 24rpx;
-    background: #f7f7f7;
-    border-radius: 16rpx;
-    font-size: 40rpx;
-    line-height: 56rpx;
-    color: #666666;
-
-    .right,
-    .error {
-      margin: 0 48rpx 0 16rpx;
-      font-weight: 500;
-      font-size: 40rpx;
-    }
-
-    .right {
-      color: #00a870;
-    }
-
-    .error {
-      color: #e34d59;
-    }
-  }
-
-  .line {
-    height: 8rpx;
-    background: #f7f7f7;
-  }
-
-  .analysis-wrap {
-    margin: 10rpx 0 208rpx;
-    padding: 24rpx;
-    background: #fff;
-
-    .analysis-title {
-      margin-bottom: 32rpx;
-      font-weight: 500;
-      font-size: 32rpx;
-      line-height: 40rpx;
-      color: #333333;
-    }
-
-    .analysis-content {
-      font-size: 48rpx;
-      line-height: 68rpx;
-      color: #666666;
-    }
-  }
-
-  .question-stat-wrap {
-    position: fixed;
-    bottom: 0;
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    height: 112rpx;
-    padding: 36rpx 24rpx 24rpx;
-    background: #fff;
-  }
-
-  .question-stat {
-    display: flex;
-    align-items: center;
-
-    .right-stat,
-    .error-stat,
-    .total-stat {
-      display: flex;
-      margin-right: 32rpx;
-      font-size: 40rpx;
-      color: #666666;
-
-      .u-image {
-        margin-right: 8rpx;
-      }
-    }
-  }
-
-  .change-question-btn {
-    position: fixed;
-    bottom: 112rpx;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    padding: 0 82rpx;
-    background: #fff;
-
-    .u-btn {
-      margin: 0;
-      width: 268rpx;
-      height: 96rpx;
-
-      & + .u-btn {
-        margin-left: 24rpx;
-      }
-    }
-
-    .u-btn--primary--plain {
-      background: #fff !important;
-    }
-  }
-
-  .paper-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 160rpx;
-    height: 56rpx;
-    font-size: 32rpx;
-    color: #ffffff;
-    background: #0052d9;
-    border-radius: 52rpx;
-
-    .u-image {
-      margin-right: 8rpx;
-    }
-  }
-
-  .slot-wrap {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    font-size: 32rpx;
-    line-height: 40rpx;
-    color: #333333;
-
-    .u-image {
-      margin-right: 8rpx;
-    }
-
-    .u-countdown-time {
-      font-size: 32rpx !important;
-      line-height: 40rpx !important;
-      color: #333333 !important;
-    }
-  }
-
-  /deep/ .exam-result-wrap {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 48rpx;
-
-    .title {
-      font-weight: 500;
-      font-size: 52rpx;
-      line-height: 72rpx;
-
-      color: #e34d59;
-    }
-
-    .exam-pass {
-      color: #00a870;
-    }
-
-    .u-image {
-      margin: 48rpx 0;
-    }
-
-    .exam-result-content {
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      width: 100%;
-    }
-
-    .exam-result-num {
-      display: flex;
-      align-items: flex-end;
-      .exam-result-num-l {
-        font-weight: bold;
-        font-size: 48rpx;
-        line-height: 48rpx;
-        color: #121212;
-      }
-
-      .exam-result-num-r {
-        margin-left: 4rpx;
-        font-size: 22rpx;
-        color: #999999;
-      }
-    }
-
-    .exam-result-title {
-      margin-top: 12rpx;
-      font-size: 22rpx;
-      color: #999999;
-    }
-
-    .btn-wrap {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      width: 100%;
-      margin-top: 48rpx;
-
-      .u-btn {
-        margin: 0;
-        width: 268rpx;
-        height: 96rpx;
-        font-size: 36rpx;
-      }
-
-      .u-btn--primary--plain {
-        background: #fff !important;
-      }
-    }
-  }
+  @import './index.scss';
 </style>

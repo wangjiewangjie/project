@@ -28,7 +28,8 @@
       :icon-size="54"
       active-color="#0052d9"
       inactive-color="#666"
-    ></u-tabbar>
+    >
+    </u-tabbar>
   </view>
 </template>
 

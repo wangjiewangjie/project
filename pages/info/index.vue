@@ -51,11 +51,15 @@
     },
     onPullDownRefresh() {
       this.dataList = [];
-      this.queryInformationPageListApi({ pageNum: 0 });
+      this.queryInformationPageListApi({
+        pageNum: 0,
+      });
     },
     onReachBottom() {
       if (hasMoreData) {
-        this.queryInformationPageListApi({ pageNum: this.pageNum });
+        this.queryInformationPageListApi({
+          pageNum: this.pageNum,
+        });
       }
     },
     methods: {
@@ -68,7 +72,11 @@
       async queryInformationPageListApi(params) {
         let { pageNum = 0, pageSize = 10, columnId = this.options.columnId } = params;
 
-        const data = await queryInformationPageList({ pageNum, pageSize, columnId });
+        const data = await queryInformationPageList({
+          pageNum,
+          pageSize,
+          columnId,
+        });
 
         if (data) {
           uni.stopPullDownRefresh();
@@ -92,46 +100,5 @@
 </script>
 
 <style lang="scss" scoped>
-  .page {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
-    overflow: scroll;
-  }
-  .ul {
-    margin: 24rpx;
-    .li {
-      padding: 24rpx;
-      background: #ffffff;
-      border-radius: 16rpx;
-      margin-bottom: 24rpx;
-    }
-    .li-t {
-      margin-bottom: 24rpx;
-      font-weight: 500;
-      font-size: 32rpx;
-      line-height: 48rpx;
-      color: $u-main-color;
-    }
-    .li-m {
-      margin-bottom: 24rpx;
-      font-size: 28rpx;
-      line-height: 36rpx;
-      color: $u-content-color;
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 2;
-      overflow: hidden;
-    }
-    .li-b {
-      font-size: 24rpx;
-      line-height: 32rpx;
-      color: $u-tips-color;
-    }
-  }
-  .follow-wrap {
-    position: fixed;
-    bottom: 0;
-  }
+  @import './index.scss';
 </style>

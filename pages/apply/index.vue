@@ -307,7 +307,9 @@
         }
         this.$refs.uForm.validate(async (valid) => {
           if (valid) {
-            let params = { ...this.form };
+            let params = {
+              ...this.form,
+            };
             let examIneSchedule = this.examIneScheduleList.find((item) => {
               return item.title == this.form.scheduleId;
             });
@@ -392,60 +394,5 @@
 </script>
 
 <style lang="scss" scoped>
-  .tips {
-    display: flex;
-    align-items: center;
-    margin: 24rpx 24rpx 0;
-    padding: 8rpx 16rpx 12rpx;
-    background: rgba(237, 123, 47, 0.1);
-    border-radius: 8rpx;
-    font-size: 28rpx;
-    line-height: 36rpx;
-    color: #ed7b2f;
-    .u-image {
-      margin-right: 8rpx;
-    }
-  }
-
-  .u-form {
-    margin: 24rpx 24rpx 0;
-    padding: 0 24rpx;
-    background: #fff;
-    border-radius: 16rpx;
-  }
-
-  .exam-info {
-    margin: 24rpx 24rpx 152rpx;
-    padding: 24rpx;
-    background: #ffffff;
-    border-radius: 16rpx;
-    font-size: 28rpx;
-    line-height: 36rpx;
-    color: $u-tips-color;
-    .exam-info-li {
-      & + .exam-info-li {
-        margin-top: 16rpx;
-      }
-    }
-  }
-
-  .footer {
-    position: fixed;
-    bottom: 0;
-    padding: 16rpx 24rpx 0;
-    width: 100%;
-    border-top: 1rpx solid #e0e0e0;
-    background: #f7f7f7;
-    .u-checkbox {
-      margin-bottom: 24rpx;
-    }
-    .u-checkbox__label {
-      font-size: 24rpx;
-      line-height: 32rpx;
-      color: $u-content-color;
-    }
-    .a {
-      color: $u-type-primary;
-    }
-  }
+  @import './css/apply_1.scss';
 </style>

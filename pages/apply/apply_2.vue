@@ -130,10 +130,22 @@
           permanentaddress: '',
         },
         photosampleList: [
-          { photosamplePic: 'apply_2-upload_1.png', tips: ['纯色背景', '白色最佳'] },
-          { photosamplePic: 'apply_2-upload_2.png', tips: ['光线均匀'] },
-          { photosamplePic: 'apply_2-upload_3.png', tips: ['正对镜头', '双耳露出'] },
-          { photosamplePic: 'apply_2-upload_4.png', tips: ['发型整洁', '不浓妆'] },
+          {
+            photosamplePic: 'apply_2-upload_1.png',
+            tips: ['纯色背景', '白色最佳'],
+          },
+          {
+            photosamplePic: 'apply_2-upload_2.png',
+            tips: ['光线均匀'],
+          },
+          {
+            photosamplePic: 'apply_2-upload_3.png',
+            tips: ['正对镜头', '双耳露出'],
+          },
+          {
+            photosamplePic: 'apply_2-upload_4.png',
+            tips: ['发型整洁', '不浓妆'],
+          },
         ],
         formList: form.formList,
         hideformList: form.hideformList,
@@ -213,6 +225,78 @@
               trigger: 'blur,change',
             },
           ],
+          certName: [
+            {
+              validator: (rule, value) => {
+                return this.$u.test.chinese(value);
+              },
+              message: '对不起，工种名称填写格式有误，请检查并重新填写。',
+              trigger: ['change', 'blur'],
+            },
+          ],
+          workMajor: [
+            {
+              validator: (rule, value) => {
+                return this.$u.test.chinese(value);
+              },
+              message: '对不起，从事专业填写格式有误，请检查并重新填写。',
+              trigger: ['change', 'blur'],
+            },
+          ],
+          nation: [
+            {
+              validator: (rule, value) => {
+                return this.$u.test.chinese(value);
+              },
+              message: '对不起，民族填写格式有误，请检查并重新填写。',
+              trigger: ['change', 'blur'],
+            },
+          ],
+          politicalLandscape: [
+            {
+              validator: (rule, value) => {
+                return this.$u.test.chinese(value);
+              },
+              message: '对不起，政治面貌填写格式有误，请检查并重新填写。',
+              trigger: ['change', 'blur'],
+            },
+          ],
+          mail: [
+            {
+              validator: (rule, value) => {
+                return this.$u.test.email(value);
+              },
+              message: '对不起，户籍所在地填写格式有误，请检查并重新填写。',
+              trigger: ['change', 'blur'],
+            },
+          ],
+          permanentaddress: [
+            {
+              validator: (rule, value) => {
+                return this.$u.test.chinese(value);
+              },
+              message: '对不起，户籍所在地填写格式有误，请检查并重新填写。',
+              trigger: ['change', 'blur'],
+            },
+          ],
+          originalProfessionName: [
+            {
+              validator: (rule, value) => {
+                return this.$u.test.chinese(value);
+              },
+              message: '对不起，原证书职业填写格式有误，请检查并重新填写。',
+              trigger: ['change', 'blur'],
+            },
+          ],
+          originalCertificateId: [
+            {
+              validator: (rule, value) => {
+                return uni.$u.test.enOrNum(value);
+              },
+              message: '对不起，原证书编号填写格式有误，请检查并重新填写。',
+              trigger: ['change', 'blur'],
+            },
+          ],
         },
         /* 表单样式 */
         errorType: ['toast'],
@@ -240,7 +324,10 @@
         return item.prop == 'province';
       });
       city.forEach((el) => {
-        this.province.push({ value: el.value, label: el.label });
+        this.province.push({
+          value: el.value,
+          label: el.label,
+        });
       });
       this.$set(this.formList[index], 'selectList', this.province);
 
@@ -303,7 +390,9 @@
       submit() {
         this.$refs.uForm.validate(async (valid) => {
           if (valid) {
-            let params = { ...this.form };
+            let params = {
+              ...this.form,
+            };
             let educationObj = form.educationList.find((item) => {
               return item.label == this.form.education;
             });
@@ -340,7 +429,10 @@
       async queryCertificatereservationApi(params) {
         let res = await queryCertificatereservation(params);
         this.cartDetail = res.data;
-        let editObj = { ...this.cartDetail, ...this.cartDetail.examineScheduleVO };
+        let editObj = {
+          ...this.cartDetail,
+          ...this.cartDetail.examineScheduleVO,
+        };
         /* 数据回显循环 */
         this.formList.forEach((el) => {
           this.setValue(this.formList, el.prop, editObj[el.prop]);
@@ -355,153 +447,5 @@
 </script>
 
 <style lang="scss" scoped>
-  .page {
-    overflow: scroll;
-  }
-
-  .tips {
-    display: flex;
-    align-items: center;
-    margin: 24rpx 24rpx 0;
-    padding: 8rpx 16rpx 12rpx;
-    background: rgba(237, 123, 47, 0.1);
-    border-radius: 8rpx;
-    font-size: 28rpx;
-    line-height: 36rpx;
-    color: #ed7b2f;
-    .u-image {
-      margin-right: 8rpx;
-    }
-  }
-
-  .photo-wrap {
-    margin: 24rpx;
-    padding: 0;
-    background: #fff;
-    border-radius: 16rpx;
-    /deep/.u-form-item--right__content__slot {
-      display: flex;
-      flex-direction: column;
-    }
-    /deep/.u-list-item {
-      border-radius: 0;
-    }
-    /deep/.u-preview-wrap {
-      width: 240rpx !important;
-      height: 336rpx !important;
-    }
-    .h2 {
-      width: 100%;
-      padding: 24rpx;
-      font-size: 32rpx;
-      line-height: 40rpx;
-      color: $u-main-color;
-    }
-    .u-upload {
-      margin: 24rpx 0 48rpx;
-      width: 240rpx;
-      height: 336rpx;
-    }
-    .h3 {
-      width: 100%;
-      padding: 24rpx;
-      font-size: 28rpx;
-      line-height: 36rpx;
-      color: $u-tips-color;
-    }
-    .ul {
-      display: flex;
-      justify-content: space-between;
-      padding: 0 24rpx 24rpx;
-      width: 100%;
-      font-size: 24rpx;
-      line-height: 32rpx;
-      color: $u-tips-color;
-      .li {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        border: 1rpx solid #dcdcdc;
-      }
-      .li-tips-wrap {
-        padding: 8rpx 0;
-      }
-      .li-tips {
-        text-align: center;
-        width: 96rpx;
-        white-space: nowrap;
-      }
-    }
-
-    .contact {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin: 0 24rpx 24rpx;
-      padding: 16rpx;
-      width: calc(100% - 48rpx);
-      background: #f5f5f5;
-      border-radius: 8rpx;
-      font-size: 28rpx;
-      line-height: 36rpx;
-      color: $u-content-color;
-      .contact-btn {
-        flex-shrink: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-left: 24rpx;
-        width: 200rpx;
-        height: 64rpx;
-        border-radius: 32rpx;
-        background: $u-type-primary;
-        font-size: 24rpx;
-        line-height: 32rpx;
-        color: #ffffff;
-        .u-image {
-          margin-right: 8rpx;
-        }
-      }
-    }
-  }
-
-  .basics-info-title {
-    padding: 24rpx;
-    font-size: 32rpx;
-    line-height: 40rpx;
-    color: $u-content-color;
-  }
-  .basics-info-wrap {
-    margin: 24rpx 24rpx 120rpx;
-    padding: 0 24rpx;
-    background: #fff;
-    border-radius: 16rpx;
-  }
-
-  .more-wrap {
-    display: flex;
-    justify-content: center;
-    padding: 32rpx;
-    .more-btn {
-      display: flex;
-      align-items: center;
-      margin-right: 12rpx;
-      padding: 14rpx 32rpx;
-      background: #f5f5f5;
-      border-radius: 48rpx;
-      font-size: 28rpx;
-      line-height: 36rpx;
-      color: $u-tips-color;
-    }
-  }
-
-  .footer {
-    position: fixed;
-    bottom: 0;
-    z-index: 999;
-    padding: 16rpx 24rpx 0;
-    width: 100%;
-    border-top: 1rpx solid #e0e0e0;
-    background: #f7f7f7;
-  }
+  @import './css/apply_2.scss';
 </style>

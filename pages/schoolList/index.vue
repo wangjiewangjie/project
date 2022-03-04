@@ -34,20 +34,28 @@
       };
     },
     onShow() {
-      this.queryDistancePageListApi({ pageNum: 0 });
+      this.queryDistancePageListApi({
+        pageNum: 0,
+      });
     },
     onPullDownRefresh() {
       this.dataList = [];
-      this.queryDistancePageListApi({ pageNum: 0 });
+      this.queryDistancePageListApi({
+        pageNum: 0,
+      });
     },
     onReachBottom() {
       if (hasMoreData) {
-        this.queryDistancePageListApi({ pageNum: this.pageNum });
+        this.queryDistancePageListApi({
+          pageNum: this.pageNum,
+        });
       }
     },
     methods: {
       onSearch() {
-        this.queryDistancePageListApi({ pageNum: 0 });
+        this.queryDistancePageListApi({
+          pageNum: 0,
+        });
       },
       onCancelSearch() {
         this.nameLike = '';
@@ -92,6 +100,7 @@
     align-items: center;
     padding: 8px 0;
     background: #fff;
+
     .input {
       flex: 1;
       display: flex;
@@ -102,10 +111,12 @@
       box-sizing: border-box;
       background: #f5f5f5;
       border-radius: 16px;
+
       .u-image {
         margin-right: 4px;
       }
     }
+
     .cancel-btn {
       padding: 6px 12px;
       font-size: 15px;
@@ -116,6 +127,7 @@
 
   .school-card {
     margin: 24rpx 24rpx 0;
+
     &:last-child {
       margin-bottom: 24rpx;
     }

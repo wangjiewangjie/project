@@ -55,11 +55,15 @@
     },
     onPullDownRefresh() {
       this.dataList = [];
-      this.queryCertificatePageListApi({ pageNum: 0 });
+      this.queryCertificatePageListApi({
+        pageNum: 0,
+      });
     },
     onReachBottom() {
       if (hasMoreData) {
-        this.queryCertificatePageListApi({ pageNum: this.pageNum });
+        this.queryCertificatePageListApi({
+          pageNum: this.pageNum,
+        });
       }
     },
     methods: {
@@ -75,7 +79,10 @@
       async queryCertificatePageListApi(params) {
         let { pageNum = 0, pageSize = 10 } = params;
 
-        const data = await queryCertificatePageList({ pageNum, pageSize });
+        const data = await queryCertificatePageList({
+          pageNum,
+          pageSize,
+        });
 
         if (data) {
           uni.stopPullDownRefresh();
@@ -99,52 +106,5 @@
 </script>
 
 <style lang="scss" scoped>
-  .page {
-    height: 100%;
-    overflow: scroll;
-  }
-
-  .cert-card {
-    margin: 12px 12px 0;
-    border-radius: 8px;
-    background: #fff;
-    &:last-child {
-      margin-bottom: 12px;
-    }
-    .card-hd,
-    .card-ft {
-      padding: 12px;
-    }
-    .card-hd {
-      display: flex;
-      border-bottom: 0.5px solid #eaeaea;
-      .card-hd-r {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        flex: 1;
-        margin-left: 12px;
-      }
-      .card-hd-r-t {
-        font-weight: 500;
-        font-size: 16px;
-        line-height: 22px;
-        color: #333333;
-      }
-      .card-hd-r-b {
-        font-size: 16px;
-        line-height: 24px;
-        color: #e34d59;
-      }
-    }
-    .card-ft-li {
-      display: flex;
-      font-size: 14px;
-      line-height: 18px;
-      color: #666666;
-      & + .card-ft-li {
-        margin-top: 8px;
-      }
-    }
-  }
+  @import './index.scss';
 </style>

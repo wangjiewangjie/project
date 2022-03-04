@@ -1,0 +1,102 @@
+$margin: 24rpx 24rpx 0rpx;
+$background: #fff;
+$borderRadius: 16rpx;
+
+.header-wrap {
+  width: 750rpx;
+  height: 288rpx;
+  background: url($ossUrl + 'mine-bg.png') no-repeat;
+  background-size: 750rpx 400rpx;
+
+  .header {
+    display: flex;
+    align-items: center;
+    padding: 64rpx 48rpx;
+  }
+
+  .name {
+    margin-left: 24rpx;
+    font-weight: 500;
+    font-size: 40rpx;
+    line-height: 56rpx;
+    color: #ffffff;
+  }
+}
+
+.ul {
+  position: relative;
+  top: -60rpx;
+  margin: 0 24rpx;
+  width: calc(100% - 48rpx);
+  border-radius: 16rpx;
+  background: #fff;
+
+  .li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 32rpx;
+    height: 112rpx;
+    font-size: 32rpx;
+    line-height: 44rpx;
+    color: #363d46;
+
+    .li-l {
+      display: flex;
+      align-items: center;
+
+      .u-image {
+        margin-right: 16rpx;
+      }
+    }
+
+    & + .li {
+      border-top: 1rpx solid $u-form-item-border-color;
+    }
+  }
+}
+
+.school-wrap {
+  position: relative;
+  top: -60rpx;
+  margin: $margin;
+  overflow: hidden;
+
+  .u-tabs {
+    margin: 24rpx 0 16rpx;
+  }
+}
+
+.school-wrap-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24rpx;
+  font-weight: 600;
+  font-size: 36rpx;
+  line-height: 48rpx;
+  color: $u-main-color;
+}
+
+.more-btn {
+  display: flex;
+  align-items: center;
+  font-weight: normal;
+  font-size: 24rpx;
+  line-height: 32rpx;
+  color: $u-tips-color;
+}
+
+.school-card {
+  margin-bottom: 24rpx;
+  background: #fff;
+  border-radius: $borderRadius;
+}
+
+.login-out {
+  position: fixed;
+  bottom: 160rpx;
+  margin: 0 24rpx;
+  width: calc(100% - 48rpx);
+  background: none !important;
+}

@@ -115,9 +115,11 @@
     height: 100%;
     background: #fff;
   }
+
   .u-circle-progress {
     margin: 24px 0;
   }
+
   .u-progress-content {
     display: flex;
     flex-direction: column;
@@ -127,14 +129,17 @@
     .u-progress-score {
       font-size: 60px;
     }
+
     .u-progress-score-r {
       font-size: 14px;
     }
+
     .u-progress-info {
       font-size: 14px;
       line-height: 18px;
     }
   }
+
   .exam-name {
     font-weight: 500;
     font-size: 16px;
@@ -148,24 +153,29 @@
     align-items: center;
     margin-top: 48rpx;
     width: 100%;
+
     .exam-result-li {
       display: flex;
       flex-direction: column;
       align-items: center;
+
       .exam-result-num {
         display: flex;
         align-items: flex-end;
+
         .exam-result-num-l {
           font-weight: bold;
           font-size: 48rpx;
           color: #121212;
         }
+
         .exam-result-num-r {
           margin-left: 4rpx;
           font-size: 22rpx;
           color: #999999;
         }
       }
+
       .exam-result-title {
         margin-top: 12rpx;
         font-size: 22rpx;
@@ -173,6 +183,7 @@
       }
     }
   }
+
   .error-btn {
     display: flex;
     align-items: center;
@@ -193,9 +204,11 @@
     width: 100%;
     font-size: 13px;
     line-height: 18px;
+
     .question-count-l {
       color: #333333;
     }
+
     .question-count-r {
       color: #999999;
     }
@@ -210,6 +223,7 @@
     font-size: 14px;
     line-height: 18px;
     color: #0052d9;
+
     .u-progress {
       width: 295px;
     }

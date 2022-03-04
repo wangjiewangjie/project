@@ -1,3 +1,11 @@
+<!--
+ * @Author: your name
+ * @Date: 2022-03-03 16:54:55
+ * @LastEditTime: 2022-03-04 11:27:53
+ * @LastEditors: your name
+ * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @FilePath: \credit-cert-h5\pages\query\resultList\index.vue
+-->
 <template>
   <view class="page">
     <view class="result-header">
@@ -85,107 +93,5 @@
 </script>
 
 <style lang="scss" scoped>
-  $margin: 24rpx 24rpx 0;
-  $borderRadius: 16rpx;
-  .page {
-    height: 100%;
-  }
-  .result-header {
-    margin: $margin;
-    padding: 24rpx;
-    border-radius: $borderRadius;
-    background: #fff;
-    .result-li {
-      display: flex;
-      align-items: center;
-      .result-li-r {
-        margin-left: 16rpx;
-        font-weight: 600;
-        font-size: 36rpx;
-        line-height: 48rpx;
-        color: $u-main-color;
-      }
-      & + .result-li {
-        margin-top: 8rpx;
-      }
-    }
-  }
-
-  .query-list {
-    margin: $margin;
-    .query-list-header {
-      font-size: 28rpx;
-      line-height: 36rpx;
-      color: $u-tips-color;
-    }
-  }
-
-  .query-list-li {
-    margin-top: 24rpx;
-    padding: 24rpx;
-    border-radius: $borderRadius;
-    background: #fff;
-    .li-t {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 8rpx;
-      .li-t-l {
-        font-weight: 500;
-        font-size: 32rpx;
-        line-height: 40rpx;
-        color: $u-main-color;
-      }
-      .li-t-r {
-        padding: 0 8rpx;
-        background: rgba(255, 180, 51, 0.1);
-        border: 1rpx solid #ffb433;
-        border-radius: 4rpx;
-        font-size: 22rpx;
-        color: #ffb433;
-      }
-    }
-    .li-m {
-      margin-bottom: 8rpx;
-      font-size: 24rpx;
-      line-height: 32rpx;
-      color: $u-content-color;
-    }
-    .li-b {
-      display: flex;
-      justify-content: space-between;
-    }
-    .score {
-      display: flex;
-      justify-content: space-between;
-      padding: 16rpx 24rpx;
-      width: 320rpx;
-      border-radius: 8rpx;
-      .score-l {
-        font-size: 24rpx;
-        line-height: 36rpx;
-        color: #365148;
-      }
-      .score-r {
-        font-size: 36rpx;
-        line-height: 36rpx;
-      }
-      .score-r-text {
-        margin-right: 4rpx;
-        font-size: 24rpx;
-        line-height: 36rpx;
-      }
-    }
-    .exam-success {
-      background: rgba(0, 168, 112, 0.1);
-      .score-r {
-        color: $u-type-success;
-      }
-    }
-    .exam-error {
-      background: rgba(227, 77, 89, 0.1);
-      .score-r {
-        color: $u-type-error;
-      }
-    }
-  }
+  @import './index.scss';
 </style>

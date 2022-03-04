@@ -98,7 +98,9 @@
           if (res.data.isNewExaminePaper == 0) {
             this.showPopup = true;
           } else {
-            await startExamine({ id: res.data.id });
+            await startExamine({
+              id: res.data.id,
+            });
             this.routerTest();
           }
         } else {
@@ -116,7 +118,9 @@
             mockTestPaperId: this.continueExamObj.mockPaperId,
           };
           let res1 = await createMockTestExaminePaper(params1);
-          let res2 = await startExamine({ id: res1.data.id });
+          let res2 = await startExamine({
+            id: res1.data.id,
+          });
 
           if (res2.rescode === 200) {
             let params2 = {
@@ -156,94 +160,5 @@
 </script>
 
 <style lang="scss" scoped>
-  .page {
-    height: 100%;
-  }
-  .mocktest {
-    margin: 24rpx;
-    padding: 48rpx 24rpx;
-    background: #ffffff;
-    border-radius: 16rpx;
-    .mocktest-t {
-      display: flex;
-      align-items: center;
-      margin-bottom: 48rpx;
-      .student-phone {
-        margin-left: 16rpx;
-        font-weight: 500;
-        font-size: 28rpx;
-        line-height: 36rpx;
-        color: #666666;
-      }
-    }
-    .li {
-      display: flex;
-      font-size: 40rpx;
-      line-height: 56rpx;
-      .li-l {
-        flex-shrink: 0;
-        color: #999999;
-      }
-      .li-r {
-        margin-left: 32rpx;
-        color: #333333;
-      }
-      & + .li {
-        margin-top: 16rpx;
-      }
-    }
-    .u-btn {
-      margin: 72rpx 24rpx 48rpx;
-      height: 88rpx;
-      font-size: 40rpx;
-      color: #fff;
-      background: #0052d9;
-      border: 2rpx solid #0052d9;
-      border-radius: 128rpx;
-      image {
-        width: 48rpx;
-        height: 48rpx;
-        margin-right: 16rpx;
-      }
-    }
-    .mocktest-checkbox {
-      display: flex;
-      justify-content: center;
-    }
-  }
-  .tips {
-    text-align: center;
-    font-size: 16px;
-    line-height: 20px;
-    color: #666666;
-  }
-  .exam-result-wrap {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 48rpx;
-    .title {
-      font-weight: 500;
-      font-size: 48rpx;
-      line-height: 72rpx;
-
-      color: #333333;
-    }
-    .btn-wrap {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      width: 100%;
-      margin-top: 48rpx;
-      .u-btn {
-        margin: 0;
-        width: 268rpx;
-        height: 96rpx;
-      }
-      .u-btn--primary--plain {
-        background: #fff !important;
-      }
-    }
-  }
+  @import './index.scss';
 </style>
