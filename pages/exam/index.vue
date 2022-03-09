@@ -194,7 +194,7 @@
       },
       async queryCertTypeListApi() {
         let res = await queryCertTypeList();
-
+        this.certTypeList = [];
         res.data.forEach((el) => {
           this.certTypeList.push({
             name: el.professionalName,

@@ -8,7 +8,9 @@
           <u-image width="32rpx" height="32rpx" :src="`${ossUrl}phone.png`"></u-image>
         </view>
       </view>
-      <view class="school-card-num">培训人数 {{ schoolItem.trainNum }}人</view>
+      <view class="school-card-num" v-show="schoolItem.trainNum"
+        >培训人数 {{ schoolItem.trainNum }}人</view
+      >
       <view class="school-card-tips">
         <text class="school-card-tips-item">养老护理员</text>
       </view>
