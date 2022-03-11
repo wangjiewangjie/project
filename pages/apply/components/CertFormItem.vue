@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2022-02-27 10:27:48
- * @LastEditTime: 2022-03-04 14:53:40
+ * @LastEditTime: 2022-03-11 17:36:14
  * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: \credit-cert-h5\pages\apply\components\CertFormItem.vue
@@ -18,6 +18,7 @@
       :select-open="selectShow"
       @click="selectShow = true"
       @input="handleInput"
+      :clearable="false"
     />
     <u-select
       v-if="type === 'select'"
