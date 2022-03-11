@@ -110,7 +110,7 @@
       async submit() {
         let params = {
           appId: config.h5wxAppId,
-          openId: 'oRGnWw8_abKRh6ZHBahFJ64Qm4NE',
+          openId: commonInfo.getOpenId(),
           paySource: 2, // 支付来源: 1、上岗卡；2、证书；3、订单
           payWayId: 6, // 支付方式编号：4、微信app支付；5、微信公众号支付；6、微信小程序支付；7、微信扫码支付；
           orderId: this.certificatereservation.orderNo,
