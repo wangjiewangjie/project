@@ -145,3 +145,7 @@ export const deleteCert = (params) => {
 export const queryPracticeQuestion = (params) => {
   return Http.post('/s/examinecertpaperrel/queryPracticeQuestion', params, true);
 }; //查询错题
+
+export const queryShareConfig = (params) => {
+  return Http.post('/core/share/config', params, true);
+}; //查询h5微信分享配置信息
