@@ -266,7 +266,7 @@
               validator: (rule, value) => {
                 return this.$u.test.email(value);
               },
-              message: '对不起，户籍所在地填写格式有误，请检查并重新填写。',
+              message: '对不起，邮箱填写格式有误，请检查并重新填写。',
               trigger: ['change', 'blur'],
             },
           ],
