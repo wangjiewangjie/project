@@ -228,7 +228,7 @@
           certName: [
             {
               validator: (rule, value) => {
-                return this.$u.test.chinese(value);
+                return value ? this.$u.test.chinese(value) : true;
               },
               message: '对不起，工种名称填写格式有误，请检查并重新填写。',
               trigger: ['change', 'blur'],
@@ -237,7 +237,7 @@
           workMajor: [
             {
               validator: (rule, value) => {
-                return this.$u.test.chinese(value);
+                return value ? this.$u.test.chinese(value) : true;
               },
               message: '对不起，从事专业填写格式有误，请检查并重新填写。',
               trigger: ['change', 'blur'],
@@ -246,7 +246,7 @@
           nation: [
             {
               validator: (rule, value) => {
-                return this.$u.test.chinese(value);
+                return value ? this.$u.test.chinese(value) : true;
               },
               message: '对不起，民族填写格式有误，请检查并重新填写。',
               trigger: ['change', 'blur'],
@@ -255,7 +255,7 @@
           politicalLandscape: [
             {
               validator: (rule, value) => {
-                return this.$u.test.chinese(value);
+                return value ? this.$u.test.chinese(value) : true;
               },
               message: '对不起，政治面貌填写格式有误，请检查并重新填写。',
               trigger: ['change', 'blur'],
@@ -264,7 +264,7 @@
           mail: [
             {
               validator: (rule, value) => {
-                return this.$u.test.email(value);
+                return value ? this.$u.test.email(value) : true;
               },
               message: '对不起，邮箱填写格式有误，请检查并重新填写。',
               trigger: ['change', 'blur'],
@@ -273,7 +273,7 @@
           permanentaddress: [
             {
               validator: (rule, value) => {
-                return this.$u.test.chinese(value);
+                return value ? this.$u.test.chinese(value) : true;
               },
               message: '对不起，户籍所在地填写格式有误，请检查并重新填写。',
               trigger: ['change', 'blur'],
@@ -282,7 +282,7 @@
           originalProfessionName: [
             {
               validator: (rule, value) => {
-                return this.$u.test.chinese(value);
+                return value ? this.$u.test.chinese(value) : true;
               },
               message: '对不起，原证书职业填写格式有误，请检查并重新填写。',
               trigger: ['change', 'blur'],
@@ -291,7 +291,7 @@
           originalCertificateId: [
             {
               validator: (rule, value) => {
-                return uni.$u.test.enOrNum(value);
+                return value ? this.$u.test.enOrNum(value) : true;
               },
               message: '对不起，原证书编号填写格式有误，请检查并重新填写。',
               trigger: ['change', 'blur'],
