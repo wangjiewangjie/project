@@ -45,8 +45,8 @@ let tabbarList = [
 // 开发环境配置
 const DEVELOPMENT_CONFIG = {
   // apiHost: 'http://172.19.132.22:8080/',
-  // apiHost: 'https://creditapi-test1.devp.bm001.com/',
-  apiHost: 'http://172.19.134.25:8080/',
+  apiHost: 'https://creditapi-test1.devp.bm001.com/',
+  // apiHost: 'http://172.19.134.25:8080/',
   wxAppId,
   jwtjson: '',
   shareH5BaseUrl:

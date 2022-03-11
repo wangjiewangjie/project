@@ -1,5 +1,5 @@
 <template>
-  <div class="paper-type2">
+  <view class="paper-type2">
     <u-circle-progress
       active-color="#5CC7A4"
       inactive-color="#E6F6F1"
@@ -45,7 +45,7 @@
 
     <u-popup v-model="showPopup" mode="bottom">
       <view>
-        <div class="share-wrap" ref="share">
+        <view class="share-wrap" ref="share">
           <view class="share">
             <u-circle-progress
               active-color="#00a870"
@@ -82,7 +82,7 @@
             </view>
             <div ref="QRCode"></div>
           </view>
-        </div>
+        </view>
 
         <!-- 分享 -->
         <view class="popup-footer">
@@ -102,7 +102,7 @@
         </view>
       </view>
     </u-popup>
-  </div>
+  </view>
 </template>
 
 <script>

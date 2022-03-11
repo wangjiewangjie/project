@@ -1,14 +1,14 @@
 /*
  * @Author: your name
  * @Date: 2022-03-02 11:27:47
- * @LastEditTime: 2022-03-02 14:52:36
+ * @LastEditTime: 2022-03-11 15:38:01
  * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: \credit-cert-h5\util\H5Share.js
  */
 import jweixin from 'jweixin-module';
 import config from '@/config/config.js';
-import { queryShareConfig } from '@/util/ajax/services';
+import { queryShareConfig } from './ajax/services';
 
 const queryWechatConfig = (url) => {
   queryShareConfig({

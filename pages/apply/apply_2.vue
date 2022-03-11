@@ -436,6 +436,7 @@
         /* 数据回显循环 */
         this.formList.forEach((el) => {
           this.setValue(this.formList, el.prop, editObj[el.prop]);
+          this.$set(this.form, el.prop, editObj[el.prop]);
         });
         /* 隐藏部分数据回显 */
         this.hideformList.forEach((el) => {
